@@ -8,7 +8,7 @@ const posts = [
     excerpt:
       "Most HVAC companies are invisible online — competing on paid ads with no organic foundation. Here's the exact local SEO strategy that turns that around and builds a lead pipeline that keeps paying.",
     readTime: "5 min read",
-    slug: "hvac-local-seo-double-leads",
+    slug: "hvac-seo-guide",
   },
   {
     category: "Roofing",
@@ -16,7 +16,7 @@ const posts = [
     excerpt:
       "Google's algorithm has changed. Roofing contractors who understand E-E-A-T and local intent are dominating page 1 while others wonder where the calls went. Here's how to be in the first group.",
     readTime: "7 min read",
-    slug: "roofing-contractor-google-ranking-2026",
+    slug: "roofing-contractor-seo",
   },
   {
     category: "Local SEO",
