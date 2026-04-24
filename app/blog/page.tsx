@@ -12,19 +12,59 @@ const posts = [
   },
   {
     category: "Roofing",
-    title: "The Roofing Contractor's Guide to Ranking on Google in 2026",
+    title: "The Roofing Contractor's Complete Guide to Ranking on Google in 2026",
     excerpt:
       "Google's algorithm has changed. Roofing contractors who understand E-E-A-T and local intent are dominating page 1 while others wonder where the calls went. Here's how to be in the first group.",
     readTime: "7 min read",
     slug: "roofing-contractor-seo",
   },
   {
-    category: "Local SEO",
-    title: "Why Your Google Business Profile is Your #1 Lead Generator",
+    category: "Plumbing",
+    title: "How Plumbers Can Get More Calls from Google in 2026",
     excerpt:
-      "Your GBP listing shows up before your website. Before your ads. Before everything. Most businesses set it up once and forget it — here's what to do instead to turn it into a lead machine.",
+      "Plumbers who dominate local search don't rely on word of mouth alone. This guide covers the exact local SEO strategy that keeps your phone ringing without paying for every lead.",
+    readTime: "5 min read",
+    slug: "plumbing-seo",
+  },
+  {
+    category: "Electrical",
+    title: "Electrician SEO: How to Rank #1 in Your Service Area",
+    excerpt:
+      "Most electricians compete on referrals and hope. The ones growing fast have figured out local SEO. Here's the playbook that puts you at the top of Google when homeowners need an electrician.",
+    readTime: "6 min read",
+    slug: "electrician-seo",
+  },
+  {
+    category: "Contracting",
+    title: "General Contractor SEO: The Complete Guide to Getting Found Online",
+    excerpt:
+      "General contractors with strong SEO don't chase leads — leads find them. This guide covers everything from keyword strategy to link building for contractors ready to grow.",
+    readTime: "6 min read",
+    slug: "general-contractor-seo",
+  },
+  {
+    category: "Mortgage",
+    title: "Mortgage Broker SEO: How to Get Consistent Borrower Leads from Google",
+    excerpt:
+      "Mortgage brokers who rank on Google don't depend on referrals to survive rate changes. This guide shows how to build a pipeline of borrowers who are already looking for you.",
+    readTime: "5 min read",
+    slug: "mortgage-broker-seo",
+  },
+  {
+    category: "Local SEO",
+    title: "The Complete Google Business Profile Guide for Home Service Businesses",
+    excerpt:
+      "Your GBP listing shows up before your website, before your ads, before everything. Most businesses set it up once and forget it — here's what to do instead to turn it into a lead machine.",
     readTime: "4 min read",
-    slug: "google-business-profile-lead-generator",
+    slug: "google-business-profile-guide",
+  },
+  {
+    category: "Local SEO",
+    title: "Local SEO in 2026: Everything Home Service Businesses Need to Know",
+    excerpt:
+      "Local SEO has changed more in the last 12 months than in the previous five years. This complete guide covers what actually works in 2026 for home service businesses.",
+    readTime: "8 min read",
+    slug: "local-seo-guide",
   },
 ];
 
