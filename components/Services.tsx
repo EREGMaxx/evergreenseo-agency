@@ -33,7 +33,7 @@ const plans = [
       "On-page SEO optimization (10 pages)",
       "Everything in Starter",
       "8 blog posts/month",
-      "Link building (10 links/month)",
+      "Authority link building (8 links/month)",
       "Competitor gap analysis",
       "Schema markup implementation",
       "Bi-weekly performance updates",
