@@ -87,7 +87,7 @@ export default function Services() {
             Straight-up pricing.{" "}
             <span className="text-green-400">No surprises.</span>
           </h2>
-          <p className="text-[#94a3b8] text-lg">
+          <p className="text-[#d1d5db] text-lg">
             Month-to-month. Cancel anytime. We earn your business every single
             month.
           </p>
@@ -117,10 +117,10 @@ export default function Services() {
 
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-white mb-1">{plan.name}</h3>
-                <p className="text-sm text-[#475569] mb-4">{plan.tagline}</p>
+                <p className="text-sm text-[#d1d5db] mb-4">{plan.tagline}</p>
                 <div className="flex items-baseline gap-1">
                   <span className="text-5xl font-black text-white">{plan.price}</span>
-                  <span className="text-[#475569]">{plan.period}</span>
+                  <span className="text-[#d1d5db]">{plan.period}</span>
                 </div>
               </div>
 
@@ -154,7 +154,7 @@ export default function Services() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center text-sm text-[#475569] mt-8"
+          className="text-center text-sm text-[#d1d5db] mt-8"
         >
           All plans include a free audit before you commit. No card required to
           get started.

@@ -51,7 +51,7 @@ export default function HowItWorks() {
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
             Simple. Transparent. <span className="text-green-400">Effective.</span>
           </h2>
-          <p className="text-[#94a3b8] text-lg">
+          <p className="text-[#d1d5db] text-lg">
             No black boxes, no jargon. Here&apos;s exactly how we take your business from invisible to dominant.
           </p>
         </motion.div>
@@ -84,7 +84,7 @@ export default function HowItWorks() {
                 </div>
 
                 <h3 className="text-xl font-bold text-white mb-4">{step.title}</h3>
-                <p className="text-[#94a3b8] leading-relaxed mb-4">{step.description}</p>
+                <p className="text-[#d1d5db] leading-relaxed mb-4">{step.description}</p>
                 <p className="text-sm text-green-400 font-medium">{step.detail}</p>
               </div>
             </motion.div>

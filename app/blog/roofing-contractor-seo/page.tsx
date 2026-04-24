@@ -74,7 +74,7 @@ export default function RoofingContractorSeoPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-2">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-[#94a3b8] hover:text-white transition-colors text-sm"
+            className="inline-flex items-center gap-2 text-[#d1d5db] hover:text-white transition-colors text-sm"
           >
             <ArrowLeft size={14} />
             Back to Blog
@@ -94,7 +94,7 @@ export default function RoofingContractorSeoPage() {
           </h1>
 
           {/* Meta */}
-          <div className="flex items-center gap-4 text-sm text-[#475569] mb-10 pb-10 border-b border-[#1e1e2e]">
+          <div className="flex items-center gap-4 text-sm text-[#d1d5db] mb-10 pb-10 border-b border-[#1e1e2e]">
             <span>Evergreen SEO Agency</span>
             <span>·</span>
             <span>April 23, 2026</span>
@@ -139,15 +139,15 @@ export default function RoofingContractorSeoPage() {
               <div className="mt-4 space-y-4">
                 <div className="p-4 rounded-xl bg-[#1c1c1c] border border-[#1e1e2e]">
                   <p className="font-semibold text-white mb-1">Layer 1: City-Level Service Keywords</p>
-                  <p className="text-sm text-[#94a3b8]">These are your highest-priority targets. &ldquo;Roof replacement [city]&rdquo;, &ldquo;roofing contractor [city]&rdquo;, &ldquo;roof repair [city]&rdquo;, &ldquo;storm damage roof repair [city]&rdquo;. One dedicated page per service per city.</p>
+                  <p className="text-sm text-[#d1d5db]">These are your highest-priority targets. &ldquo;Roof replacement [city]&rdquo;, &ldquo;roofing contractor [city]&rdquo;, &ldquo;roof repair [city]&rdquo;, &ldquo;storm damage roof repair [city]&rdquo;. One dedicated page per service per city.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-[#1c1c1c] border border-[#1e1e2e]">
                   <p className="font-semibold text-white mb-1">Layer 2: Suburb and Neighborhood Keywords</p>
-                  <p className="text-sm text-[#94a3b8]">Lower competition, high conversion. Homeowners in suburbs often search for contractors in their specific area. &ldquo;Roofing company in [suburb]&rdquo; searches convert at high rates because the searcher wants local. Build location pages for every suburb you serve.</p>
+                  <p className="text-sm text-[#d1d5db]">Lower competition, high conversion. Homeowners in suburbs often search for contractors in their specific area. &ldquo;Roofing company in [suburb]&rdquo; searches convert at high rates because the searcher wants local. Build location pages for every suburb you serve.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-[#1c1c1c] border border-[#1e1e2e]">
                   <p className="font-semibold text-white mb-1">Layer 3: Material and Service-Specific Keywords</p>
-                  <p className="text-sm text-[#94a3b8]">Homeowners researching specific roofing types: &ldquo;metal roof installation [city]&rdquo;, &ldquo;asphalt shingle replacement&rdquo;, &ldquo;flat roof repair&rdquo;, &ldquo;TPO roofing contractor&rdquo;. These have lower volume but near-zero competition and attract highly qualified buyers.</p>
+                  <p className="text-sm text-[#d1d5db]">Homeowners researching specific roofing types: &ldquo;metal roof installation [city]&rdquo;, &ldquo;asphalt shingle replacement&rdquo;, &ldquo;flat roof repair&rdquo;, &ldquo;TPO roofing contractor&rdquo;. These have lower volume but near-zero competition and attract highly qualified buyers.</p>
                 </div>
               </div>
               <p className="mt-4">
@@ -262,19 +262,19 @@ export default function RoofingContractorSeoPage() {
               <div className="mt-4 space-y-4">
                 <div className="flex gap-4 p-4 rounded-xl bg-[#1c1c1c] border border-[#1e1e2e]">
                   <div className="text-green-400 font-bold text-sm w-36 flex-shrink-0 pt-0.5">Before Storm Season</div>
-                  <div className="text-[#94a3b8] text-sm">Create a dedicated &ldquo;storm damage roof repair&rdquo; service page for each major city you serve. Optimize it now so it has domain authority before the season hits. Build your GBP reviews up to 100+. Set up a call tracking number to handle volume spikes.</div>
+                  <div className="text-[#d1d5db] text-sm">Create a dedicated &ldquo;storm damage roof repair&rdquo; service page for each major city you serve. Optimize it now so it has domain authority before the season hits. Build your GBP reviews up to 100+. Set up a call tracking number to handle volume spikes.</div>
                 </div>
                 <div className="flex gap-4 p-4 rounded-xl bg-[#1c1c1c] border border-[#1e1e2e]">
                   <div className="text-green-400 font-bold text-sm w-36 flex-shrink-0 pt-0.5">When a Storm Hits</div>
-                  <div className="text-[#94a3b8] text-sm">Publish a GBP post within 24 hours referencing the specific storm event. Update your storm damage page with content about the specific weather event — hail size, affected neighborhoods. Search volume for storm-specific terms spikes immediately and competitors who move first capture it.</div>
+                  <div className="text-[#d1d5db] text-sm">Publish a GBP post within 24 hours referencing the specific storm event. Update your storm damage page with content about the specific weather event — hail size, affected neighborhoods. Search volume for storm-specific terms spikes immediately and competitors who move first capture it.</div>
                 </div>
                 <div className="flex gap-4 p-4 rounded-xl bg-[#1c1c1c] border border-[#1e1e2e]">
                   <div className="text-green-400 font-bold text-sm w-36 flex-shrink-0 pt-0.5">After Storm Season</div>
-                  <div className="text-[#94a3b8] text-sm">Publish case study content from jobs you completed. Photos, testimonials, insurance claim success stories. This builds authority for the next season and captures homeowners still dealing with delayed claims. Never let your content go dark when the storm season quiets — your competitors will fill the gap.</div>
+                  <div className="text-[#d1d5db] text-sm">Publish case study content from jobs you completed. Photos, testimonials, insurance claim success stories. This builds authority for the next season and captures homeowners still dealing with delayed claims. Never let your content go dark when the storm season quiets — your competitors will fill the gap.</div>
                 </div>
                 <div className="flex gap-4 p-4 rounded-xl bg-[#1c1c1c] border border-[#1e1e2e]">
                   <div className="text-green-400 font-bold text-sm w-36 flex-shrink-0 pt-0.5">Year-Round</div>
-                  <div className="text-[#94a3b8] text-sm">Consistent content about maintenance, inspection, and longevity topics keeps your site generating leads when there&apos;s no storm. &ldquo;Annual roof inspection&rdquo;, &ldquo;how long does a roof last&rdquo;, &ldquo;roof maintenance checklist&rdquo; — these searches happen every month, not just after bad weather.</div>
+                  <div className="text-[#d1d5db] text-sm">Consistent content about maintenance, inspection, and longevity topics keeps your site generating leads when there&apos;s no storm. &ldquo;Annual roof inspection&rdquo;, &ldquo;how long does a roof last&rdquo;, &ldquo;roof maintenance checklist&rdquo; — these searches happen every month, not just after bad weather.</div>
                 </div>
               </div>
               <p className="mt-4">

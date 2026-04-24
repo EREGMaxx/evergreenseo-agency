@@ -41,7 +41,7 @@ export default function BlogPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-[#94a3b8] hover:text-white transition-colors text-sm"
+          className="inline-flex items-center gap-2 text-[#d1d5db] hover:text-white transition-colors text-sm"
         >
           <ArrowLeft size={14} />
           Back to Home
@@ -60,7 +60,7 @@ export default function BlogPage() {
             The Evergreen{" "}
             <span className="text-green-400">SEO Blog</span>
           </h1>
-          <p className="text-[#94a3b8] text-xl max-w-2xl mx-auto">
+          <p className="text-[#d1d5db] text-xl max-w-2xl mx-auto">
             Practical SEO strategies for local service businesses. No fluff, no recycled advice.
           </p>
         </div>
@@ -86,13 +86,13 @@ export default function BlogPage() {
                 </h2>
 
                 {/* Excerpt */}
-                <p className="text-sm text-[#94a3b8] leading-relaxed mb-6 flex-1">
+                <p className="text-sm text-[#d1d5db] leading-relaxed mb-6 flex-1">
                   {post.excerpt}
                 </p>
 
                 {/* Footer */}
                 <div className="flex items-center justify-between pt-4 border-t border-[#252530]">
-                  <div className="flex items-center gap-1.5 text-[#475569] text-xs">
+                  <div className="flex items-center gap-1.5 text-[#d1d5db] text-xs">
                     <Clock size={12} />
                     {post.readTime}
                   </div>
@@ -116,7 +116,7 @@ export default function BlogPage() {
           <h2 className="text-3xl font-bold text-white mb-4">
             Ready to rank?
           </h2>
-          <p className="text-[#94a3b8] mb-8">
+          <p className="text-[#d1d5db] mb-8">
             Get a free SEO audit and see exactly what&apos;s holding your business back from page 1.
           </p>
           <Link

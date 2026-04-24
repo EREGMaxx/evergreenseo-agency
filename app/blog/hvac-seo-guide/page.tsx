@@ -74,7 +74,7 @@ export default function HvacSeoGuidePage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-2">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-[#94a3b8] hover:text-white transition-colors text-sm"
+            className="inline-flex items-center gap-2 text-[#d1d5db] hover:text-white transition-colors text-sm"
           >
             <ArrowLeft size={14} />
             Back to Blog
@@ -94,7 +94,7 @@ export default function HvacSeoGuidePage() {
           </h1>
 
           {/* Meta */}
-          <div className="flex items-center gap-4 text-sm text-[#475569] mb-10 pb-10 border-b border-[#1e1e2e]">
+          <div className="flex items-center gap-4 text-sm text-[#d1d5db] mb-10 pb-10 border-b border-[#1e1e2e]">
             <span>Evergreen SEO Agency</span>
             <span>·</span>
             <span>April 23, 2026</span>
@@ -276,7 +276,7 @@ export default function HvacSeoGuidePage() {
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 p-4 rounded-xl bg-[#1c1c1c] border border-[#1e1e2e]">
                     <div className="text-green-400 font-bold text-sm w-28 flex-shrink-0 pt-0.5">{item.period}</div>
-                    <div className="text-[#94a3b8] text-sm">{item.result}</div>
+                    <div className="text-[#d1d5db] text-sm">{item.result}</div>
                   </div>
                 ))}
               </div>

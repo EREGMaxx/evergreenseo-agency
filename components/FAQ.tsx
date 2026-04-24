@@ -65,7 +65,7 @@ function FAQItem({
         <span className="font-semibold text-white">{question}</span>
         <div
           className={`shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
-            open ? "bg-green-500 text-white" : "bg-[#1e1e2e] text-[#475569]"
+            open ? "bg-green-500 text-white" : "bg-[#1e1e2e] text-[#d1d5db]"
           }`}
         >
           {open ? <Minus size={14} /> : <Plus size={14} />}
@@ -80,7 +80,7 @@ function FAQItem({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
           >
-            <div className="px-6 pb-6 text-[#94a3b8] leading-relaxed border-t border-[#1e1e2e] pt-4">
+            <div className="px-6 pb-6 text-[#d1d5db] leading-relaxed border-t border-[#1e1e2e] pt-4">
               {answer}
             </div>
           </motion.div>
@@ -112,7 +112,7 @@ export default function FAQ() {
             Questions we get{" "}
             <span className="text-green-400">all the time</span>
           </h2>
-          <p className="text-[#94a3b8] text-lg">
+          <p className="text-[#d1d5db] text-lg">
             Straight answers. No sales spin.
           </p>
         </motion.div>

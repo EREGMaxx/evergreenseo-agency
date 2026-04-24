@@ -102,7 +102,7 @@ export default function Results() {
             What Our Clients{" "}
             <span className="text-green-400">Experience</span>
           </h2>
-          <p className="text-[#94a3b8] text-lg">
+          <p className="text-[#d1d5db] text-lg">
             These aren&apos;t vanity metrics. This is what happens when
             businesses stop being invisible.
           </p>
@@ -137,7 +137,7 @@ export default function Results() {
                 )}
               </div>
 
-              <p className="text-[#94a3b8] font-medium">{stat.label}</p>
+              <p className="text-[#d1d5db] font-medium">{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -146,7 +146,7 @@ export default function Results() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center text-xs text-[#475569]"
+          className="text-center text-xs text-[#d1d5db]"
         >
           Results based on client averages across active campaigns. Individual
           results vary based on market, competition, and starting point.

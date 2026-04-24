@@ -60,7 +60,7 @@ export default function Navbar() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-[#94a3b8] hover:text-white transition-colors duration-200"
+                  className="text-sm text-[#d1d5db] hover:text-white transition-colors duration-200"
                 >
                   {link.label}
                 </a>
@@ -79,7 +79,7 @@ export default function Navbar() {
 
             {/* Mobile menu toggle */}
             <button
-              className="md:hidden text-[#94a3b8] hover:text-white transition-colors"
+              className="md:hidden text-[#d1d5db] hover:text-white transition-colors"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -104,7 +104,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-[#94a3b8] hover:text-white transition-colors py-2 border-b border-[#1e1e2e] last:border-0"
+                  className="text-[#d1d5db] hover:text-white transition-colors py-2 border-b border-[#1e1e2e] last:border-0"
                 >
                   {link.label}
                 </a>

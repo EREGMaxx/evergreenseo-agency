@@ -49,13 +49,13 @@ export default function Problem() {
                 <br />
                 <span className="text-white">We fix that.</span>
               </h2>
-              <p className="text-lg text-[#94a3b8] leading-relaxed mb-8">
+              <p className="text-lg text-[#d1d5db] leading-relaxed mb-8">
                 You built a great business. You do great work. But if your
                 customers can&apos;t find you when they search, none of that
                 matters. Your competitors are capturing those leads — leads that
                 should be yours.
               </p>
-              <p className="text-[#94a3b8] leading-relaxed">
+              <p className="text-[#d1d5db] leading-relaxed">
                 Every day you&apos;re not on page 1, you&apos;re handing
                 business to someone else. We change that. Fast.
               </p>
@@ -78,7 +78,7 @@ export default function Problem() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-white mb-2">{problem.title}</h3>
-                  <p className="text-sm text-[#475569] leading-relaxed">{problem.description}</p>
+                  <p className="text-sm text-[#d1d5db] leading-relaxed">{problem.description}</p>
                 </div>
               </motion.div>
             ))}

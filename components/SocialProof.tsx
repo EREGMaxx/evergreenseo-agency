@@ -22,9 +22,9 @@ export default function SocialProof() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center text-sm text-[#475569] font-medium uppercase tracking-widest mb-10"
+          className="text-center text-sm text-[#d1d5db] font-medium uppercase tracking-widest mb-10"
         >
-          Trusted by businesses across 8 markets
+          Trusted by businesses across 6 industries
         </motion.p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">

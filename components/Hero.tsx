@@ -52,7 +52,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-[#94a3b8] max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl text-[#d1d5db] max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             When a homeowner needs an HVAC tech or a roofer, they Google it.
             If you&apos;re not on page 1, you don&apos;t exist. We put you on
@@ -76,7 +76,7 @@ export default function Hero() {
             </a>
             <a
               href="#how-it-works"
-              className="flex items-center gap-2 px-6 py-3.5 text-[#94a3b8] hover:text-white border border-[#1e1e2e] hover:border-[#2a2a3e] rounded-xl transition-all duration-200"
+              className="flex items-center gap-2 px-6 py-3.5 text-[#d1d5db] hover:text-white border border-[#1e1e2e] hover:border-[#2a2a3e] rounded-xl transition-all duration-200"
             >
               See How It Works
             </a>
@@ -99,7 +99,7 @@ export default function Hero() {
               >
                 <stat.icon size={20} className={`${stat.color} mx-auto mb-2`} />
                 <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
-                <div className="text-xs text-[#475569]">{stat.label}</div>
+                <div className="text-xs text-[#d1d5db]">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -112,7 +112,7 @@ export default function Hero() {
           transition={{ delay: 1.2 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-xs text-[#475569]">Scroll to explore</span>
+          <span className="text-xs text-[#d1d5db]">Scroll to explore</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}

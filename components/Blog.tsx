@@ -53,7 +53,7 @@ export default function Blog() {
             Learn what actually{" "}
             <span className="text-green-400">moves the needle.</span>
           </h2>
-          <p className="text-[#94a3b8] text-lg">
+          <p className="text-[#d1d5db] text-lg">
             No fluff. No recycled advice. Just proven tactics for local service businesses.
           </p>
         </motion.div>
@@ -80,13 +80,13 @@ export default function Blog() {
               </h3>
 
               {/* Excerpt */}
-              <p className="text-sm text-[#94a3b8] leading-relaxed mb-6 flex-1">
+              <p className="text-sm text-[#d1d5db] leading-relaxed mb-6 flex-1">
                 {post.excerpt}
               </p>
 
               {/* Footer */}
               <div className="flex items-center justify-between pt-4 border-t border-[#252530]">
-                <div className="flex items-center gap-1.5 text-[#475569] text-xs">
+                <div className="flex items-center gap-1.5 text-[#d1d5db] text-xs">
                   <Clock size={12} />
                   {post.readTime}
                 </div>

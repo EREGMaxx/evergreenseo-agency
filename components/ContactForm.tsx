@@ -78,7 +78,7 @@ export default function ContactForm() {
               Let&apos;s see what&apos;s{" "}
               <span className="text-green-400">holding you back.</span>
             </h2>
-            <p className="text-lg text-[#94a3b8] leading-relaxed mb-8">
+            <p className="text-lg text-[#d1d5db] leading-relaxed mb-8">
               Tell us a bit about your business and we&apos;ll put together a
               free audit showing exactly where you stand and what it would take
               to get you to page 1. No obligation, no hard sell.
@@ -95,13 +95,13 @@ export default function ContactForm() {
                   <div className="w-5 h-5 rounded-full bg-green-500/15 flex items-center justify-center shrink-0">
                     <CheckCircle size={12} className="text-green-400" />
                   </div>
-                  <span className="text-[#94a3b8] text-sm">{item}</span>
+                  <span className="text-[#d1d5db] text-sm">{item}</span>
                 </div>
               ))}
             </div>
 
             <div className="mt-10 p-6 rounded-xl border border-[#1e1e2e] bg-[#050508]">
-              <p className="text-sm text-[#475569] mb-1">Prefer email?</p>
+              <p className="text-sm text-[#d1d5db] mb-1">Prefer email?</p>
               <a
                 href="mailto:maxx@evergreenseo.agency"
                 className="text-green-400 font-medium hover:text-green-300 transition-colors"
@@ -130,7 +130,7 @@ export default function ContactForm() {
                 <h3 className="text-2xl font-bold text-white mb-3">
                   You&apos;re on our radar.
                 </h3>
-                <p className="text-[#94a3b8]">
+                <p className="text-[#d1d5db]">
                   We&apos;ll review your info and get back to you within 24
                   hours with your free audit findings. Keep an eye on your
                   inbox.
@@ -247,7 +247,7 @@ export default function ContactForm() {
                   )}
                 </button>
 
-                <p className="text-xs text-[#475569] text-center">
+                <p className="text-xs text-[#d1d5db] text-center">
                   No spam. No obligation. We respond within 24 hours.
                 </p>
               </form>

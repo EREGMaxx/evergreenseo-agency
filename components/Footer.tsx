@@ -34,13 +34,13 @@ export default function Footer() {
                 Evergreen<span className="text-green-400"> SEO</span>
               </span>
             </a>
-            <p className="text-sm text-[#475569]">
+            <p className="text-sm text-[#d1d5db]">
               Page 1 or it didn&apos;t happen.
             </p>
           </div>
 
           {/* Links */}
-          <nav className="flex items-center gap-6 text-sm text-[#475569]">
+          <nav className="flex items-center gap-6 text-sm text-[#d1d5db]">
             <a href="#how-it-works" className="hover:text-white transition-colors">
               How It Works
             </a>
@@ -58,7 +58,7 @@ export default function Footer() {
           {/* Email */}
           <a
             href="mailto:maxx@evergreenseo.agency"
-            className="flex items-center gap-2 text-sm text-[#475569] hover:text-green-400 transition-colors"
+            className="flex items-center gap-2 text-sm text-[#d1d5db] hover:text-green-400 transition-colors"
           >
             <Mail size={14} />
             maxx@evergreenseo.agency
@@ -66,7 +66,7 @@ export default function Footer() {
         </motion.div>
 
         <div className="mt-8 pt-8 border-t border-[#1e1e2e] text-center">
-          <p className="text-xs text-[#475569]">
+          <p className="text-xs text-[#d1d5db]">
             © {currentYear} Evergreen SEO Agency. All rights reserved.
           </p>
         </div>
