@@ -78,7 +78,7 @@ export default function HowItWorks() {
                       <step.icon size={22} className="text-green-400" />
                     </div>
                   </div>
-                  <span className="text-4xl font-black text-[#1e1e2e] group-hover:text-[#2a2a3e] transition-colors">
+                  <span className="text-4xl font-black text-[#d1d5db] group-hover:text-white transition-colors">
                     {step.number}
                   </span>
                 </div>
