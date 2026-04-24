@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description:
       "Learn how HVAC companies use local SEO to dominate Google search and generate consistent inbound leads. Complete 2026 guide from Evergreen SEO Agency.",
     type: "article",
-    url: "https://evergreenseoagency.com/blog/hvac-seo-guide",
+    url: "https://evergreenseo.agency/blog/hvac-seo-guide",
   },
   twitter: {
     card: "summary_large_image",
@@ -30,18 +30,18 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   publisher: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   datePublished: "2026-04-23",
   dateModified: "2026-04-23",
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "https://evergreenseoagency.com/blog/hvac-seo-guide",
+    "@id": "https://evergreenseo.agency/blog/hvac-seo-guide",
   },
 };
 

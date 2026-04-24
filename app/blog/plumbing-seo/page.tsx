@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description:
       "Complete plumber SEO guide: rank on Google, fill your calendar with inbound calls, and stop relying on expensive pay-per-lead services.",
     type: "article",
-    url: "https://evergreenseoagency.com/blog/plumbing-seo",
+    url: "https://evergreenseo.agency/blog/plumbing-seo",
   },
   twitter: {
     card: "summary_large_image",
@@ -30,18 +30,18 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   publisher: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   datePublished: "2026-04-23",
   dateModified: "2026-04-23",
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "https://evergreenseoagency.com/blog/plumbing-seo",
+    "@id": "https://evergreenseo.agency/blog/plumbing-seo",
   },
 };
 

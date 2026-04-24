@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description:
       "Complete GBP optimization guide for home service businesses. Set up, optimize, and maintain your Google Business Profile to dominate local search.",
     type: "article",
-    url: "https://evergreenseoagency.com/blog/google-business-profile-guide",
+    url: "https://evergreenseo.agency/blog/google-business-profile-guide",
   },
   twitter: {
     card: "summary_large_image",
@@ -30,18 +30,18 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   publisher: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   datePublished: "2026-04-23",
   dateModified: "2026-04-23",
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "https://evergreenseoagency.com/blog/google-business-profile-guide",
+    "@id": "https://evergreenseo.agency/blog/google-business-profile-guide",
   },
 };
 

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description:
       "How roofing contractors use SEO to get consistent leads from Google — not just storm season spikes. Complete guide from Evergreen SEO Agency.",
     type: "article",
-    url: "https://evergreenseoagency.com/blog/roofing-contractor-seo",
+    url: "https://evergreenseo.agency/blog/roofing-contractor-seo",
   },
   twitter: {
     card: "summary_large_image",
@@ -30,18 +30,18 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   publisher: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   datePublished: "2026-04-23",
   dateModified: "2026-04-23",
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "https://evergreenseoagency.com/blog/roofing-contractor-seo",
+    "@id": "https://evergreenseo.agency/blog/roofing-contractor-seo",
   },
 };
 

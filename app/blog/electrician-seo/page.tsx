@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description:
       "Complete electrician SEO guide: GBP optimization, keywords, on-page SEO, and link building to dominate your local market.",
     type: "article",
-    url: "https://evergreenseoagency.com/blog/electrician-seo",
+    url: "https://evergreenseo.agency/blog/electrician-seo",
   },
   twitter: {
     card: "summary_large_image",
@@ -30,18 +30,18 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   publisher: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   datePublished: "2026-04-23",
   dateModified: "2026-04-23",
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "https://evergreenseoagency.com/blog/electrician-seo",
+    "@id": "https://evergreenseo.agency/blog/electrician-seo",
   },
 };
 

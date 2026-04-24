@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description:
       "How mortgage brokers use local SEO to generate consistent borrower leads from Google and reduce dependence on expensive referral networks.",
     type: "article",
-    url: "https://evergreenseoagency.com/blog/mortgage-broker-seo",
+    url: "https://evergreenseo.agency/blog/mortgage-broker-seo",
   },
   twitter: {
     card: "summary_large_image",
@@ -30,18 +30,18 @@ const articleSchema = {
   author: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   publisher: {
     "@type": "Organization",
     name: "Evergreen SEO Agency",
-    url: "https://evergreenseoagency.com",
+    url: "https://evergreenseo.agency",
   },
   datePublished: "2026-04-23",
   dateModified: "2026-04-23",
   mainEntityOfPage: {
     "@type": "WebPage",
-    "@id": "https://evergreenseoagency.com/blog/mortgage-broker-seo",
+    "@id": "https://evergreenseo.agency/blog/mortgage-broker-seo",
   },
 };
 
