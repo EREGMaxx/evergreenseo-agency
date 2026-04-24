@@ -10,13 +10,14 @@ const plans = [
     period: "/mo",
     tagline: "Get found locally. Build your foundation.",
     popular: false,
+    bestValue: false,
     features: [
-      "Local SEO optimization",
+      "On-page SEO optimization (3 pages)",
       "Google Business Profile management",
-      "On-page SEO for up to 10 pages",
-      "Monthly keyword ranking report",
-      "Citation cleanup & consistency",
-      "Monthly performance report",
+      "Keyword targeting & research",
+      "Local citations & NAP consistency",
+      "4 blog posts/month",
+      "Monthly ranking report",
     ],
     cta: "Get Started",
     color: "border-[#1e1e2e]",
@@ -27,37 +28,38 @@ const plans = [
     period: "/mo",
     tagline: "Accelerate rankings. Dominate your market.",
     popular: true,
+    bestValue: false,
     features: [
+      "On-page SEO optimization (10 pages)",
       "Everything in Starter",
-      "4 SEO-optimized blog posts/mo",
-      "Authority link building (8 links/mo)",
+      "8 blog posts/month",
+      "Link building (10 links/month)",
       "Competitor gap analysis",
-      "Review generation strategy",
-      "Google Ads integration guidance",
-      "Bi-weekly strategy calls",
-      "Conversion rate recommendations",
+      "Schema markup implementation",
+      "Bi-weekly performance updates",
     ],
     cta: "Start Growing",
-    color: "border-green-500/50",
+    color: "border-green-500",
   },
   {
-    name: "Dominator",
+    name: "Full Stack",
     price: "$997",
     period: "/mo",
-    tagline: "Full market dominance. No mercy.",
+    tagline: "Total dominance. Every advantage, every month.",
     popular: false,
+    bestValue: true,
     features: [
+      "On-page SEO optimization (unlimited pages)",
       "Everything in Growth",
+      "20 premium links/month",
       "Weekly long-form content",
-      "Premium link building (20 links/mo)",
-      "Full market domination strategy",
-      "Video SEO optimization",
-      "Schema markup implementation",
-      "Priority Slack support",
+      "Custom website design + build",
+      "Hosting + security included",
+      "Unlimited site updates & changes",
+      "Priority email support (4-hour response)",
       "Monthly executive report",
-      "Dedicated account manager",
     ],
-    cta: "Dominate Now",
+    cta: "Go Full Stack",
     color: "border-[#1e1e2e]",
   },
 ];
@@ -102,15 +104,14 @@ export default function Services() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className={`relative rounded-2xl border ${plan.color} ${
                 plan.popular
-                  ? "bg-gradient-to-b from-green-500/5 to-[#0d0d14]"
-                  : "bg-[#0d0d14]"
+                  ? "bg-[#1c1c1c] shadow-[0_0_30px_rgba(34,197,94,0.25)]"
+                  : "bg-[#1c1c1c]"
               } p-8`}
             >
-              {/* Popular badge */}
-              {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1.5 bg-green-500 text-white text-xs font-bold rounded-full shadow-lg shadow-green-500/30">
-                  <Star size={12} fill="white" />
-                  MOST POPULAR
+              {/* Best Value badge */}
+              {plan.bestValue && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1.5 bg-[#1c1c1c] border border-green-500/40 text-green-400 text-xs font-bold rounded-full">
+                  Best Value
                 </div>
               )}
 
@@ -128,7 +129,7 @@ export default function Services() {
                 className={`block w-full text-center py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 mb-8 ${
                   plan.popular
                     ? "bg-green-500 text-white hover:bg-green-400 shadow-lg shadow-green-500/25 hover:shadow-green-500/40"
-                    : "bg-[#13131e] text-white hover:bg-[#1e1e2e] border border-[#1e1e2e]"
+                    : "bg-[#13131e] text-white hover:bg-[#252530] border border-[#2a2a3e]"
                 }`}
               >
                 {plan.cta}
@@ -140,7 +141,7 @@ export default function Services() {
                     <div className="shrink-0 w-5 h-5 rounded-full bg-green-500/15 flex items-center justify-center mt-0.5">
                       <Check size={11} className="text-green-400" />
                     </div>
-                    <span className="text-sm text-[#94a3b8]">{feature}</span>
+                    <span className="text-sm text-[#e5e5e5]">{feature}</span>
                   </div>
                 ))}
               </div>

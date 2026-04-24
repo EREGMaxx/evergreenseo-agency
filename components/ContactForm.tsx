@@ -53,7 +53,7 @@ export default function ContactForm() {
   };
 
   const inputClass =
-    "w-full bg-[#0d0d14] border border-[#1e1e2e] rounded-xl px-4 py-3 text-white placeholder-[#475569] focus:border-green-500/50 focus:ring-1 focus:ring-green-500/30 transition-all duration-200 text-sm";
+    "w-full bg-[#1e2a1e] border border-[#2d4a2d] rounded-xl px-4 py-3 text-white placeholder-[#9ca3af] focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e]/30 transition-all duration-200 text-sm outline-none";
 
   return (
     <section id="contact" className="py-28 relative overflow-hidden">
@@ -143,7 +143,7 @@ export default function ContactForm() {
               >
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-[#475569] mb-2 uppercase tracking-wider">
+                    <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
                       Your Name *
                     </label>
                     <input
@@ -157,7 +157,7 @@ export default function ContactForm() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-[#475569] mb-2 uppercase tracking-wider">
+                    <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
                       Business Name *
                     </label>
                     <input
@@ -173,7 +173,7 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-[#475569] mb-2 uppercase tracking-wider">
+                  <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
                     Website URL
                   </label>
                   <input
@@ -187,7 +187,7 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-[#475569] mb-2 uppercase tracking-wider">
+                  <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
                     Monthly Revenue *
                   </label>
                   <select
@@ -208,7 +208,7 @@ export default function ContactForm() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-[#475569] mb-2 uppercase tracking-wider">
+                  <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
                     What&apos;s Your Biggest Challenge Right Now? *
                   </label>
                   <textarea

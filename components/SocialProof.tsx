@@ -38,9 +38,9 @@ export default function SocialProof() {
               className="flex flex-col items-center gap-3 p-4 rounded-xl border border-[#1e1e2e] bg-[#13131e] hover:border-[#2a2a3e] hover:bg-[#1a1a28] transition-all duration-200 group"
             >
               <div className="w-10 h-10 rounded-lg bg-[#1e1e2e] flex items-center justify-center group-hover:bg-green-500/10 transition-colors">
-                <item.icon size={20} className="text-[#475569] group-hover:text-green-400 transition-colors" />
+                <item.icon size={20} className="text-white/80 group-hover:text-green-400 transition-colors" />
               </div>
-              <span className="text-xs text-[#475569] text-center leading-tight">{item.label}</span>
+              <span className="text-xs text-white/80 text-center leading-tight">{item.label}</span>
             </motion.div>
           ))}
         </div>

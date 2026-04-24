@@ -18,6 +18,7 @@ export default function Navbar() {
     { href: "#how-it-works", label: "How It Works" },
     { href: "#services", label: "Pricing" },
     { href: "#results", label: "Results" },
+    { href: "/blog", label: "Blog" },
     { href: "#faq", label: "FAQ" },
   ];
 
