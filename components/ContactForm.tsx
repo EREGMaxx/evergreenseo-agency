@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Send, CheckCircle, AlertCircle } from "lucide-react";
+import { Send, AlertCircle, CheckCircle } from "lucide-react";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
 export default function ContactForm() {
+  const router = useRouter();
   const [formState, setFormState] = useState<FormState>("idle");
   const [form, setForm] = useState({
     name: "",
@@ -36,14 +38,7 @@ export default function ContactForm() {
       });
 
       if (res.ok) {
-        setFormState("success");
-        setForm({
-          name: "",
-          businessName: "",
-          website: "",
-          revenue: "",
-          challenge: "",
-        });
+        router.push("/thank-you");
       } else {
         setFormState("error");
       }
@@ -118,26 +113,7 @@ export default function ContactForm() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {formState === "success" ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="gradient-border bg-[#050508] rounded-2xl p-10 text-center"
-              >
-                <div className="w-16 h-16 rounded-full bg-green-500/15 flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle size={32} className="text-green-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-3">
-                  You&apos;re on our radar.
-                </h3>
-                <p className="text-[#d1d5db]">
-                  We&apos;ll review your info and get back to you within 24
-                  hours with your free audit findings. Keep an eye on your
-                  inbox.
-                </p>
-              </motion.div>
-            ) : (
-              <form
+            <form
                 onSubmit={handleSubmit}
                 className="gradient-border bg-[#050508] rounded-2xl p-8 flex flex-col gap-5"
               >
@@ -251,7 +227,6 @@ export default function ContactForm() {
                   No spam. No obligation. We respond within 24 hours.
                 </p>
               </form>
-            )}
           </motion.div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, TrendingUp, Search, Users } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const floatingStats = [
   { icon: TrendingUp, label: "Organic Traffic", value: "+340%", color: "text-green-400" },
@@ -9,7 +10,25 @@ const floatingStats = [
   { icon: Users, label: "More Inbound Leads", value: "3.2x", color: "text-purple-400" },
 ];
 
+const niches = [
+  "HVAC Companies",
+  "Roofing Contractors",
+  "Plumbers",
+  "Electricians",
+  "General Contractors",
+  "Mortgage Brokers",
+];
+
 export default function Hero() {
+  const [nicheIndex, setNicheIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNicheIndex((prev) => (prev + 1) % niches.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
       {/* Background */}
@@ -47,18 +66,32 @@ export default function Hero() {
             <span className="text-[#f8fafc]">You Should Be Too.</span>
           </motion.h1>
 
-          {/* Subhead */}
-          <motion.p
+          {/* Rotating Subhead */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-[#d1d5db] max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl text-[#d1d5db] max-w-2xl mx-auto mb-10 leading-relaxed min-h-[3.5rem] flex items-center justify-center"
           >
-            When a homeowner needs an HVAC tech or a roofer, they Google it.
-            If you&apos;re not on page 1, you don&apos;t exist. We put you on
-            page 1 — and keep you there — so inbound leads become your new
-            normal.
-          </motion.p>
+            <span>
+              We help{" "}
+              <span className="inline-block relative" style={{ minWidth: "220px" }}>
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={nicheIndex}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="text-[#22c55e] font-semibold inline-block"
+                  >
+                    {niches[nicheIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>{" "}
+              dominate Google search and generate consistent inbound leads.
+            </span>
+          </motion.div>
 
           {/* CTAs */}
           <motion.div

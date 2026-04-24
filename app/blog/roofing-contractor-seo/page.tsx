@@ -302,6 +302,41 @@ export default function RoofingContractorSeoPage() {
               </Link>
             </section>
 
+            {/* Internal links */}
+            <section className="mt-10 pt-10 border-t border-[#1e1e2e] space-y-4">
+              <p className="text-sm font-semibold text-white">You might also like:</p>
+              <Link
+                href="/blog/hvac-seo-guide"
+                className="flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors text-sm"
+              >
+                <ArrowRight size={14} />
+                How HVAC Companies Can Double Their Leads with Local SEO in 2026
+              </Link>
+              <Link
+                href="/blog/google-business-profile-guide"
+                className="flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors text-sm"
+              >
+                <ArrowRight size={14} />
+                The Complete Google Business Profile Guide for Home Service Businesses
+              </Link>
+              <Link
+                href="/blog/local-seo-guide"
+                className="flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors text-sm"
+              >
+                <ArrowRight size={14} />
+                Local SEO in 2026: Everything Home Service Businesses Need to Know
+              </Link>
+              <div className="pt-2">
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 text-[#d1d5db] hover:text-white transition-colors text-sm"
+                >
+                  <ArrowLeft size={14} />
+                  View all articles
+                </Link>
+              </div>
+            </section>
+
           </div>
         </article>
       </main>
