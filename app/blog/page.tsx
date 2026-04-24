@@ -66,6 +66,38 @@ const posts = [
     readTime: "8 min read",
     slug: "local-seo-guide",
   },
+  {
+    category: "Google Reviews",
+    title: "How to Get More 5-Star Google Reviews for Your Home Service Business",
+    excerpt:
+      "Google reviews are the #1 ranking factor for the Local Pack. This guide covers exactly how to build review volume, handle negative reviews, and how many you need to compete in your market.",
+    readTime: "7 min read",
+    slug: "google-reviews-guide",
+  },
+  {
+    category: "HVAC",
+    title: "HVAC Website Design: What Your Site Needs to Convert Visitors into Leads",
+    excerpt:
+      "Most HVAC websites describe the business instead of converting visitors. Here are the 5 elements every HVAC site needs — and the common mistakes that are costing you calls right now.",
+    readTime: "7 min read",
+    slug: "hvac-website-design",
+  },
+  {
+    category: "Local SEO",
+    title: "Local Link Building for Contractors: The Complete Guide",
+    excerpt:
+      "Backlinks are a top Google ranking signal and most contractors ignore them. This guide covers every practical link building tactic that moves the needle for home service businesses.",
+    readTime: "8 min read",
+    slug: "local-link-building",
+  },
+  {
+    category: "Local SEO",
+    title: "How Long Does SEO Take? A Realistic Timeline for Home Service Businesses",
+    excerpt:
+      "The honest answer: 3–6 months for meaningful results, 6–12 for strong organic lead flow. Here's a month-by-month breakdown of what actually happens during an SEO campaign.",
+    readTime: "8 min read",
+    slug: "seo-timeline",
+  },
 ];
 
 export const metadata = {
