@@ -1,32 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Zap, CheckCircle, Clock, Shield } from "lucide-react";
+import { Zap, CheckCircle, Clock, Shield, Target, Users } from "lucide-react";
 
 const differentiators = [
   {
-    icon: Zap,
-    title: "24-Hour Mockup Guarantee",
+    icon: Shield,
+    title: "No Long-Term Contracts. Ever.",
     description:
-      "Send us your info, get a design mockup within 24 hours. Not 2 weeks. Not \"we'll be in touch.\" 24 hours.",
+      "Month-to-month by default. Stay because the results speak for themselves — not because you're trapped in a 12-month deal you can't escape.",
   },
   {
-    icon: Clock,
-    title: "Live in 24 Hours After Approval",
+    icon: Zap,
+    title: "90-Day Milestone Guarantee",
     description:
-      "Once you approve the design, your site goes live within 24 hours. Most agencies take weeks. We take a day.",
+      "We set specific benchmarks upfront — GBP performance, keyword movement, lead increases. If we miss them, the next month is on us. Skin in the game, not just promises.",
   },
   {
     icon: CheckCircle,
-    title: "Accurate Work, Every Time",
+    title: "We Report in Booked Jobs, Not Clicks",
     description:
-      "We verify everything before it ships. No sloppy audits, no generic copy, no copy-paste SEO. Every deliverable is built specifically for your business.",
+      "Most agencies send you a PDF showing impressions went up 14%. We report in phone calls tracked to source, cost-per-lead, and estimated revenue. Contractor language, not marketing fluff.",
   },
   {
-    icon: Shield,
-    title: "No Long-Term Contracts",
+    icon: Clock,
+    title: "24-Hour Speed. No Compromises on Quality.",
     description:
-      "Month-to-month. Stay because the results speak for themselves — not because you're locked in. We earn your business every month.",
+      "Mockup in 24 hours. Site live within 24 hours of your approval. Verified, accurate work every time — not fast AND sloppy. Fast AND right.",
+  },
+  {
+    icon: Target,
+    title: "Home Service Businesses Only",
+    description:
+      "We don't also work with restaurants, dentists, and florists. HVAC, roofing, plumbing, electrical, and contractors — that's it. We know your industry, your seasonality, and your customers.",
+  },
+  {
+    icon: Users,
+    title: "Your Account Manager Handles 4 Other Clients",
+    description:
+      "Not 40. We cap our ratio at 1:5 so your account manager knows your market, your competition, and your slow season before you have to explain it.",
   },
 ];
 
@@ -46,14 +58,14 @@ export default function WhyUs() {
             Why Evergreen
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Fast. Accurate. No excuses.
+            Fast. Accurate. Accountable.
           </h2>
           <p className="text-[#d1d5db] text-lg max-w-2xl mx-auto">
-            Most SEO agencies are slow, vague, and hard to hold accountable. We built Evergreen to be the opposite.
+            Most contractors have been burned by SEO agencies that lock them into contracts, report vanity metrics, and disappear after month one. We built Evergreen to be the opposite.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {differentiators.map((item, index) => (
             <motion.div
               key={item.title}
