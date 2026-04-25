@@ -18,9 +18,9 @@ const differentiators = [
   },
   {
     icon: CheckCircle,
-    title: "We Report in Booked Jobs, Not Clicks",
+    title: "We Report in Leads, Not Vanity Metrics",
     description:
-      "Most agencies send you a PDF showing impressions went up 14%. We report in phone calls tracked to source, cost-per-lead, and estimated revenue. Contractor language, not marketing fluff.",
+      "Most agencies send you a PDF showing impressions went up 14%. We report in keyword rankings, GBP call volume, traffic by source, and cost-per-lead — so you see exactly where your leads are coming from, not just that Google noticed you exist.",
   },
   {
     icon: Clock,
@@ -32,7 +32,7 @@ const differentiators = [
     icon: Target,
     title: "Home Service Businesses Only",
     description:
-      "We don't also work with restaurants, dentists, and florists. HVAC, roofing, plumbing, electrical, and contractors — that's it. We know your industry, your seasonality, and your customers.",
+      "We don't also work with restaurants, dentists, and florists. HVAC, roofing, plumbing, electrical, general contractors, and mortgage brokers — that's it. We know your industry, your seasonality, and your customers.",
   },
   {
     icon: Users,
