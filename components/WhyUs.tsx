@@ -12,9 +12,9 @@ const differentiators = [
   },
   {
     icon: Zap,
-    title: "90-Day Milestone Guarantee",
+    title: "90-Day Satisfaction Guarantee",
     description:
-      "We set specific benchmarks upfront — GBP performance, keyword movement, lead increases. If we miss them, the next month is on us. Skin in the game, not just promises.",
+      "Not satisfied with our work quality in the first 90 days? Cancel with no penalty and get your last month refunded. We can't control Google's algorithm — but we guarantee the quality of everything we deliver.",
   },
   {
     icon: CheckCircle,

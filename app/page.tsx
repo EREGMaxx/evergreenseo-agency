@@ -6,6 +6,7 @@ import HowItWorks from "@/components/HowItWorks";
 import Services from "@/components/Services";
 import Results from "@/components/Results";
 import WhyUs from "@/components/WhyUs";
+import Timeline from "@/components/Timeline";
 import Blog from "@/components/Blog";
 import FAQ from "@/components/FAQ";
 import ContactForm from "@/components/ContactForm";
@@ -21,6 +22,7 @@ export default function Home() {
       <HowItWorks />
       <Services />
       <WhyUs />
+      <Timeline />
       <Results />
       <Blog />
       <FAQ />
