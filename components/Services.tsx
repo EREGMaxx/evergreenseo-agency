@@ -54,6 +54,8 @@ const plans = [
       "20 premium links/month",
       "Weekly long-form content",
       "Custom website design + build",
+      "Mockup delivered within 24 hours",
+      "Site live within 24 hours of approval",
       "Hosting + security included",
       "Unlimited site updates & changes",
       "Priority email support (4-hour response)",
