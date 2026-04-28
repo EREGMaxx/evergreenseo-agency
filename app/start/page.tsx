@@ -214,7 +214,7 @@ export default function StartPage() {
         <div className="absolute inset-0 bg-hero-gradient" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-green-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-32 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 pt-32 pb-20 text-center">
 
           {/* Badge */}
           <motion.div
@@ -270,7 +270,7 @@ export default function StartPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto"
           >
             {stats.map((s, i) => (
               <motion.div
@@ -278,11 +278,11 @@ export default function StartPage() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                className="gradient-border bg-[#0d0d14] rounded-xl p-5 text-center"
+                className="gradient-border bg-[#0d0d14] rounded-xl p-7 text-center"
               >
-                <s.icon size={18} className={`${s.color} mx-auto mb-2 opacity-80`} />
-                <div className={`text-2xl font-bold ${s.color} mb-1`}>{s.value}</div>
-                <div className="text-xs text-[#6b7280]">{s.label}</div>
+                <s.icon size={22} className={`${s.color} mx-auto mb-3 opacity-80`} />
+                <div className={`text-4xl font-bold ${s.color} mb-2`}>{s.value}</div>
+                <div className="text-sm text-[#6b7280]">{s.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -291,7 +291,7 @@ export default function StartPage() {
 
       {/* ── How It Works ── */}
       <section className="py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#0a0a10]" />
+        <div className="absolute inset-0 bg-[#050508]" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -398,7 +398,7 @@ export default function StartPage() {
 
       {/* ── Audit Form ── */}
       <section id="audit" className="py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#0a0a10]" />
+        <div className="absolute inset-0 bg-[#050508]" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent to-green-500/30" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-green-500/4 rounded-full blur-3xl pointer-events-none" />
 
