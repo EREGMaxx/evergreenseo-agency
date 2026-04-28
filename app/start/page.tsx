@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, TrendingUp, Search, Users, CheckCircle, AlertCircle, Star, MapPin, Phone } from "lucide-react";
+import { ArrowRight, TrendingUp, Search, Users, CheckCircle, AlertCircle, Star, MapPin, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -56,9 +56,32 @@ const testimonials = [
 
 // ─── Form ─────────────────────────────────────────────────────────────────────
 
+// ─── Cookie helpers ──────────────────────────────────────────────────────────
+
+function getCookie(name: string): string {
+  if (typeof document === "undefined") return "";
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`) );
+  return match ? decodeURIComponent(match[1]) : "";
+}
+
+function setCookie(name: string, value: string, days: number) {
+  if (typeof document === "undefined") return;
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+}
+
+// ─── Form ─────────────────────────────────────────────────────────────────────
+
 type FormState = "idle" | "loading" | "success" | "error";
 
-function AuditForm() {
+interface Tracking {
+  partnerRef: string;
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+}
+
+function AuditForm({ tracking }: { tracking: Tracking }) {
   const router = useRouter();
   const [formState, setFormState] = useState<FormState>("idle");
   const [form, setForm] = useState({
@@ -80,7 +103,7 @@ function AuditForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, ...tracking }),
       });
       if (res.ok) router.push("/thank-you");
       else setFormState("error");
@@ -143,6 +166,23 @@ function AuditForm() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function StartPage() {
+  const [tracking, setTracking] = useState<Tracking>({
+    partnerRef: "",
+    utmSource: "",
+    utmMedium: "",
+    utmCampaign: "",
+  });
+
+  // Capture UTM params + ref on mount, cookie the ref for 30 days
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref") || getCookie("eg_ref") || "";
+    const utmSource = params.get("utm_source") || "";
+    const utmMedium = params.get("utm_medium") || "";
+    const utmCampaign = params.get("utm_campaign") || "";
+    if (ref) setCookie("eg_ref", ref, 30);
+    setTracking({ partnerRef: ref, utmSource, utmMedium, utmCampaign });
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#050508] text-white">
@@ -345,7 +385,7 @@ export default function StartPage() {
             {[
               { icon: CheckCircle, text: "No long-term contracts" },
               { icon: MapPin, text: "Local market expertise" },
-              { icon: Phone, text: "Response guaranteed within 1-2 hours" },
+              { icon: Mail, text: "Response guaranteed within 1-2 hours" },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2">
                 <Icon size={14} className="text-green-400" />
@@ -390,7 +430,7 @@ export default function StartPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="gradient-border bg-[#050508] rounded-2xl p-8"
           >
-            <AuditForm />
+            <AuditForm tracking={tracking} />
           </motion.div>
         </div>
       </section>
