@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, TrendingUp, Search, Users, CheckCircle, Send, AlertCircle, Star, MapPin, Phone } from "lucide-react";
+import { ArrowRight, TrendingUp, Search, Users, CheckCircle, AlertCircle, Star, MapPin, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -130,7 +130,7 @@ function AuditForm() {
         </select>
       </div>
       <div>
-        <label className="block text-xs font-medium text-[#9ca3af] mb-2 uppercase tracking-wider">What's your biggest challenge? *</label>
+        <label className="block text-xs font-medium text-[#9ca3af] mb-2 uppercase tracking-wider">What&apos;s your biggest challenge? *</label>
         <textarea name="challenge" value={form.challenge} onChange={handleChange} required rows={3} placeholder="Not enough calls, losing to competitors, stuck on page 2..." className={`${inputClass} resize-none`} />
       </div>
       {formState === "error" && (

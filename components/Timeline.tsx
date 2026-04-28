@@ -90,7 +90,7 @@ export default function Timeline() {
           </h2>
           <p className="text-[#d1d5db] text-lg max-w-2xl mx-auto">
             Every business is different. We audit your site before we start and give you a
-            personalized timeline — not a generic "3–6 months" non-answer.
+            personalized timeline — not a generic &ldquo;3–6 months&rdquo; non-answer.
           </p>
         </motion.div>
 
