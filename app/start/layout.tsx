@@ -9,11 +9,18 @@ export const metadata: Metadata = {
     url: "https://evergreenseo.agency/start",
     siteName: "Evergreen SEO",
     type: "website",
+    images: [{
+      url: "https://evergreenseo.agency/start/opengraph-image",
+      width: 1200,
+      height: 630,
+      alt: "Evergreen SEO — More Customers. Less Guesswork.",
+    }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Evergreen SEO — More Customers. Less Guesswork.",
     description: "We help businesses get found on Google and turn searches into sales. Get a free SEO audit — no obligation.",
+    images: ["https://evergreenseo.agency/start/opengraph-image"],
   },
 };
 
