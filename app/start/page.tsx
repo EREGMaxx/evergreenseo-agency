@@ -1,24 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowRight, TrendingUp, Search, Users, CheckCircle, AlertCircle, Star, MapPin, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-const industries = [
-  "local businesses",
-  "restaurants",
-  "law firms",
-  "dental practices",
-  "real estate agents",
-  "med spas",
-  "gyms & studios",
-  "retail stores",
-  "auto shops",
-  "chiropractors",
-];
+
 
 const stats = [
   { icon: TrendingUp, label: "Avg. traffic increase", value: "+340%", color: "text-green-400", glow: "shadow-green-500/20" },
@@ -40,7 +29,7 @@ const steps = [
   {
     num: "03",
     title: "Rank & Get Found",
-    desc: "We execute. Most clients see meaningful movement within 90 days. You get monthly reporting and a direct line to us — no account manager runaround.",
+    desc: "We execute. Most clients see meaningful movement within 90 days. You get monthly reporting and transparent updates every step of the way.",
   },
 ];
 
@@ -154,12 +143,6 @@ function AuditForm() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function StartPage() {
-  const [industryIndex, setIndustryIndex] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setIndustryIndex((p) => (p + 1) % industries.length), 2200);
-    return () => clearInterval(t);
-  }, []);
 
   return (
     <div className="min-h-screen bg-[#050508] text-white">
@@ -221,26 +204,9 @@ export default function StartPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-12 leading-relaxed min-h-[3rem] flex items-center justify-center"
+            className="text-lg sm:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            <span>
-              We help{" "}
-              <span className="inline-block relative" style={{ minWidth: "180px" }}>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={industryIndex}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="text-white font-semibold inline-block"
-                  >
-                    {industries[industryIndex]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>{" "}
-              get found on Google and turn searches into sales.
-            </span>
+            We help <span className="text-white font-semibold">businesses</span> get found on Google and turn searches into sales.
           </motion.div>
 
           {/* CTA */}
@@ -312,7 +278,7 @@ export default function StartPage() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 className="gradient-border bg-[#050508] rounded-2xl p-6 sm:p-8 flex gap-6 items-start"
               >
-                <div className="text-4xl font-black text-green-500/20 leading-none shrink-0 select-none">{step.num}</div>
+                <div className="text-4xl font-black text-green-400/60 leading-none shrink-0 select-none">{step.num}</div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
                   <p className="text-[#9ca3af] leading-relaxed">{step.desc}</p>
@@ -379,7 +345,7 @@ export default function StartPage() {
             {[
               { icon: CheckCircle, text: "No long-term contracts" },
               { icon: MapPin, text: "Local market expertise" },
-              { icon: Phone, text: "Direct line — no account manager" },
+              { icon: Phone, text: "Response guaranteed within 1-2 hours" },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2">
                 <Icon size={14} className="text-green-400" />
