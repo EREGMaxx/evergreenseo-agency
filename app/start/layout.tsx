@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     siteName: "Evergreen SEO",
     type: "website",
     images: [{
-      url: "https://evergreenseo.agency/start/opengraph-image",
+      url: "https://evergreenseo.agency/og-start.png",
       width: 1200,
       height: 630,
       alt: "Evergreen SEO — More Customers. Less Guesswork.",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Evergreen SEO — More Customers. Less Guesswork.",
     description: "We help businesses get found on Google and turn searches into sales. Get a free SEO audit — no obligation.",
-    images: ["https://evergreenseo.agency/start/opengraph-image"],
+    images: ["https://evergreenseo.agency/og-start.png"],
   },
 };
 
