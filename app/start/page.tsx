@@ -451,6 +451,7 @@ export default function StartPage() {
             maxx@evergreenseo.agency
           </a>
           <span>© {new Date().getFullYear()} Evergreen SEO Agency</span>
+          <a href="/terms" className="text-green-400 hover:text-green-300 transition-colors text-xs">Terms of Service</a>
         </div>
       </footer>
 

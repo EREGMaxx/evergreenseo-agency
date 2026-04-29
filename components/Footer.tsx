@@ -65,10 +65,13 @@ export default function Footer() {
           </a>
         </motion.div>
 
-        <div className="mt-8 pt-8 border-t border-[#1e1e2e] text-center">
+        <div className="mt-8 pt-8 border-t border-[#1e1e2e] flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-[#d1d5db]">
             © {currentYear} Evergreen SEO Agency. All rights reserved.
           </p>
+          <a href="/terms" className="text-xs text-[#d1d5db] hover:text-green-400 transition-colors">
+            Terms of Service
+          </a>
         </div>
       </div>
     </footer>
