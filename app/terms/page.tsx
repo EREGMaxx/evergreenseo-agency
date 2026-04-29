@@ -93,9 +93,9 @@ export default function TermsPage() {
                 </div>
                 <ul className="space-y-2 text-sm">
                   {[
-                    "Everything in Growth",
+                    "Everything in Growth (excl. link building)",
                     "On-page SEO optimization (unlimited pages)",
-                    "20 premium links/month",
+                    "20 premium links/month (replaces Growth link building)",
                     "Weekly long-form content",
                     "Custom website design + build",
                     "Mockup delivered within 24 hours",

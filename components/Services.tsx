@@ -50,8 +50,8 @@ const plans = [
     bestValue: true,
     features: [
       "On-page SEO optimization (unlimited pages)",
-      "Everything in Growth",
-      "20 premium links/month",
+      "Everything in Growth (excl. link building)",
+      "20 premium links/month (replaces Growth link building)",
       "Weekly long-form content",
       "Custom website design + build",
       "Mockup delivered within 24 hours",
