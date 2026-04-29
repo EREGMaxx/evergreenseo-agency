@@ -49,33 +49,64 @@ export default function TermsPage() {
           <section>
             <h2 className="text-xl font-semibold text-white mb-3">1. Services</h2>
             <p className="mb-3">We provide local SEO services on a month-to-month basis. The scope of work depends on the package selected:</p>
-            <div className="border border-[#1e1e2e] rounded-xl overflow-hidden">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-[#1e1e2e] bg-[#0d0d14]">
-                    <th className="text-left px-4 py-3 text-white font-medium">Package</th>
-                    <th className="text-left px-4 py-3 text-white font-medium">Price</th>
-                    <th className="text-left px-4 py-3 text-white font-medium">Included</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-[#1e1e2e]">
-                    <td className="px-4 py-3 text-green-400 font-medium">Starter</td>
-                    <td className="px-4 py-3">$297/mo</td>
-                    <td className="px-4 py-3">3 pages optimized, 4 blog posts/mo</td>
-                  </tr>
-                  <tr className="border-b border-[#1e1e2e]">
-                    <td className="px-4 py-3 text-green-400 font-medium">Growth</td>
-                    <td className="px-4 py-3">$597/mo</td>
-                    <td className="px-4 py-3">10 pages optimized, 8 blog posts/mo, 8 authority links/mo</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 text-green-400 font-medium">Full Stack</td>
-                    <td className="px-4 py-3">$997/mo</td>
-                    <td className="px-4 py-3">Unlimited pages, website build, 20 premium links, weekly content</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="space-y-6">
+              {/* Starter */}
+              <div className="border border-[#1e1e2e] rounded-xl p-6">
+                <div className="flex items-baseline justify-between mb-4">
+                  <h3 className="text-lg font-bold text-green-400">Starter</h3>
+                  <span className="text-white font-bold">$297/mo</span>
+                </div>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "On-page SEO optimization (3 pages)",
+                    "Google Business Profile management",
+                    "Keyword targeting & research",
+                    "Local citations & NAP consistency",
+                    "4 blog posts/month",
+                    "Monthly ranking report",
+                  ].map((f) => <li key={f} className="flex gap-2"><span className="text-green-400 shrink-0">—</span>{f}</li>)}
+                </ul>
+              </div>
+              {/* Growth */}
+              <div className="border border-green-500/40 rounded-xl p-6">
+                <div className="flex items-baseline justify-between mb-4">
+                  <h3 className="text-lg font-bold text-green-400">Growth <span className="text-xs font-normal text-green-500 ml-2">Most Popular</span></h3>
+                  <span className="text-white font-bold">$597/mo</span>
+                </div>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "Everything in Starter",
+                    "On-page SEO optimization (10 pages)",
+                    "8 blog posts/month",
+                    "Authority link building (8 links/month)",
+                    "Competitor gap analysis",
+                    "Schema markup implementation",
+                    "Bi-weekly performance updates",
+                  ].map((f) => <li key={f} className="flex gap-2"><span className="text-green-400 shrink-0">—</span>{f}</li>)}
+                </ul>
+              </div>
+              {/* Full Stack */}
+              <div className="border border-[#1e1e2e] rounded-xl p-6">
+                <div className="flex items-baseline justify-between mb-4">
+                  <h3 className="text-lg font-bold text-green-400">Full Stack <span className="text-xs font-normal text-green-500 ml-2">Best Value</span></h3>
+                  <span className="text-white font-bold">$997/mo</span>
+                </div>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "Everything in Growth",
+                    "On-page SEO optimization (unlimited pages)",
+                    "20 premium links/month",
+                    "Weekly long-form content",
+                    "Custom website design + build",
+                    "Mockup delivered within 24 hours",
+                    "Site live within 24 hours of approval",
+                    "Hosting + security included",
+                    "Unlimited site updates & changes",
+                    "Priority email support (4-hour response)",
+                    "Monthly executive report",
+                  ].map((f) => <li key={f} className="flex gap-2"><span className="text-green-400 shrink-0">—</span>{f}</li>)}
+                </ul>
+              </div>
             </div>
             <p className="mt-3 text-sm text-[#6b7280]">
               Specific deliverables will be outlined in a scope of work sent to you before or alongside your first invoice.
