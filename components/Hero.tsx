@@ -16,6 +16,7 @@ const niches = [
   "Plumbers",
   "Electricians",
   "Residential Contractors",
+  "Property Management Companies",
 ];
 
 export default function Hero() {
