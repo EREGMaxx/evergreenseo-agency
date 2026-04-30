@@ -1,14 +1,10 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, TrendingUp, Search, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 
-const floatingStats = [
-  { icon: TrendingUp, label: "Organic Traffic", value: "+340%", color: "text-green-400" },
-  { icon: Search, label: "Page 1 Rankings", value: "90 days", color: "text-blue-400" },
-  { icon: Users, label: "More Inbound Leads", value: "3.2x", color: "text-purple-400" },
-];
+
 
 const niches = [
   "HVAC Companies",
@@ -115,27 +111,7 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          {/* Floating stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto"
-          >
-            {floatingStats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                className="gradient-border bg-[#0d0d14] rounded-xl p-4 text-center"
-              >
-                <stat.icon size={20} className={`${stat.color} mx-auto mb-2`} />
-                <div className={`text-2xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
-                <div className="text-xs text-[#d1d5db]">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+
         </div>
 
         {/* Scroll indicator */}
