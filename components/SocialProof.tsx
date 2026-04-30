@@ -1,15 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Flame, Home, Wrench, DollarSign, Zap, Building } from "lucide-react";
+import { Flame, Home, Wrench, Zap, Building } from "lucide-react";
 
 const industries = [
   { icon: Flame, label: "HVAC Companies" },
   { icon: Home, label: "Roofing Contractors" },
   { icon: Wrench, label: "Plumbing Services" },
-  { icon: DollarSign, label: "Mortgage Brokers" },
   { icon: Zap, label: "Electricians" },
-  { icon: Building, label: "General Contractors" },
+  { icon: Building, label: "Residential Contractors" },
 ];
 
 export default function SocialProof() {

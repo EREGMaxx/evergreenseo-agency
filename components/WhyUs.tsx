@@ -32,7 +32,7 @@ const differentiators = [
     icon: Target,
     title: "Home Service Businesses Only",
     description:
-      "We don't also work with restaurants, dentists, and florists. HVAC, roofing, plumbing, electrical, general contractors, and mortgage brokers — that's it. We know your industry, your seasonality, and your customers.",
+      "We don't also work with restaurants, dentists, and florists. HVAC, roofing, plumbing, electricians, and residential contractors — that's it. We know your industry, your seasonality, and your customers.",
   },
   {
     icon: Users,

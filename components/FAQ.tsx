@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "What industries do you work with?",
     answer:
-      "We specialize in home service businesses: HVAC companies, roofing contractors, plumbers, electricians, general contractors, landscaping companies, and mortgage brokers. This focus means we understand your customers, your search behavior, and your competition better than a generalist agency ever could.",
+      "We specialize in home service businesses: HVAC companies, roofing contractors, plumbers, electricians, and residential contractors. This focus means we understand your customers, your search behavior, and your competition better than a generalist agency ever could.",
   },
   {
     question: "Do you require long-term contracts?",
