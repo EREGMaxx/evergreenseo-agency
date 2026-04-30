@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Flame, Home, Wrench, Zap, Building } from "lucide-react";
+import { Flame, Home, Wrench, Zap, Building, KeyRound } from "lucide-react";
 
 const industries = [
   { icon: Flame, label: "HVAC Companies" },
@@ -9,6 +9,7 @@ const industries = [
   { icon: Wrench, label: "Plumbing Services" },
   { icon: Zap, label: "Electricians" },
   { icon: Building, label: "Residential Contractors" },
+  { icon: KeyRound, label: "Property Management" },
 ];
 
 export default function SocialProof() {
