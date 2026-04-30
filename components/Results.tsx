@@ -47,10 +47,11 @@ function CountUp({
 const stats = [
   {
     icon: TrendingUp,
-    prefix: "+",
-    value: 340,
+    prefix: "",
+    value: 76,
     suffix: "%",
-    label: "Average increase in organic traffic",
+    label: "of local searches result in a business visit within 24 hours",
+    source: "Google",
     color: "text-green-400",
     bgColor: "bg-green-500/10",
     borderColor: "border-green-500/20",
@@ -58,9 +59,10 @@ const stats = [
   {
     icon: Clock,
     prefix: "",
-    value: 90,
-    suffix: " days",
-    label: "Average time to first page 1 ranking",
+    value: 46,
+    suffix: "%",
+    label: "of all Google searches have local intent",
+    source: "Google",
     color: "text-blue-400",
     bgColor: "bg-blue-500/10",
     borderColor: "border-blue-500/20",
@@ -68,14 +70,14 @@ const stats = [
   {
     icon: PhoneIncoming,
     prefix: "",
-    value: 32,
-    suffix: "x",
-    displaySuffix: "x",
-    label: "More inbound leads on average",
+    value: 75,
+    suffix: "%",
+    label: "of local search clicks go to the top 3 results",
+    source: "BrightLocal",
     color: "text-purple-400",
     bgColor: "bg-purple-500/10",
     borderColor: "border-purple-500/20",
-    isDecimal: true,
+    isDecimal: false,
   },
 ];
 
@@ -96,15 +98,14 @@ export default function Results() {
         >
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            Client Results
+            Local Search Data
           </span>
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            What Our Clients{" "}
-            <span className="text-green-400">Experience</span>
+            Why Local SEO{" "}
+            <span className="text-green-400">Wins</span>
           </h2>
           <p className="text-[#d1d5db] text-lg">
-            These aren&apos;t vanity metrics. This is what happens when
-            businesses stop being invisible.
+            Local search is the highest-intent traffic on the internet. These are the numbers that make it the most valuable marketing channel for home service businesses.
           </p>
         </motion.div>
 
@@ -126,18 +127,15 @@ export default function Results() {
               </div>
 
               <div className={`text-5xl lg:text-6xl font-black ${stat.color} mb-3`}>
-                {stat.isDecimal ? (
-                  <>3.2x</>
-                ) : (
-                  <CountUp
-                    prefix={stat.prefix}
-                    end={stat.value}
-                    suffix={stat.suffix}
-                  />
-                )}
+                <CountUp
+                  prefix={stat.prefix}
+                  end={stat.value}
+                  suffix={stat.suffix}
+                />
               </div>
 
-              <p className="text-[#d1d5db] font-medium">{stat.label}</p>
+              <p className="text-[#d1d5db] font-medium mb-2">{stat.label}</p>
+              <p className="text-xs text-[#6b7280]">Source: {stat.source}</p>
             </motion.div>
           ))}
         </div>
@@ -146,10 +144,9 @@ export default function Results() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center text-xs text-[#d1d5db]"
+          className="text-center text-xs text-[#6b7280]"
         >
-          Results based on client averages across active campaigns. Individual
-          results vary based on market, competition, and starting point.
+          Statistics sourced from Google Think with Google and BrightLocal Local Consumer Review Survey.
         </motion.p>
       </div>
     </section>

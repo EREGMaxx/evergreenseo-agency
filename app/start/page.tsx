@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, TrendingUp, Search, Users, CheckCircle, AlertCircle, Star, MapPin, Mail } from "lucide-react";
+import { ArrowRight, TrendingUp, Search, Users, CheckCircle, AlertCircle, MapPin, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -33,24 +33,21 @@ const steps = [
   },
 ];
 
-const testimonials = [
+const whyItWorks = [
   {
-    name: "Marcus T.",
-    biz: "Auto Repair Shop — Phoenix, AZ",
-    quote: "We went from page 4 to the top 3 in 11 weeks. Phone hasn't stopped ringing. Best money I've spent on marketing.",
-    stars: 5,
+    stat: "76%",
+    label: "of local searches result in a business visit within 24 hours",
+    source: "Google",
   },
   {
-    name: "Sarah L.",
-    biz: "Family Law Firm — Austin, TX",
-    quote: "I was skeptical at first — I'd been burned by SEO agencies before. These guys actually showed their work and delivered results.",
-    stars: 5,
+    stat: "46%",
+    label: "of all Google searches have local intent",
+    source: "Google",
   },
   {
-    name: "David K.",
-    biz: "Med Spa — Miami, FL",
-    quote: "Organic leads are up 280% in 4 months. We had to hire two more front desk staff just to handle the volume.",
-    stars: 5,
+    stat: "75%",
+    label: "of local search clicks go to the top 3 results",
+    source: "BrightLocal",
   },
 ];
 
@@ -329,7 +326,7 @@ export default function StartPage() {
         </div>
       </section>
 
-      {/* ── Social Proof ── */}
+      {/* ── Why It Works ── */}
       <section className="py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-[#050508]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-green-500/3 rounded-full blur-3xl pointer-events-none" />
@@ -343,33 +340,27 @@ export default function StartPage() {
             className="text-center mb-16"
           >
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium mb-6">
-              Real results
+              Local search data
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold tracking-tight">
-              What clients say
+              Why local SEO wins
             </h2>
+            <p className="text-[#9ca3af] text-lg mt-4 max-w-xl mx-auto">Local search is the highest-intent traffic on the internet. Your customers are already searching — the question is whether they find you or your competitor.</p>
           </motion.div>
 
           <div className="grid sm:grid-cols-3 gap-5">
-            {testimonials.map((t, i) => (
+            {whyItWorks.map((item, i) => (
               <motion.div
-                key={t.name}
+                key={item.stat}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="gradient-border bg-[#0d0d14] rounded-2xl p-6 flex flex-col gap-4"
+                className="gradient-border bg-[#0d0d14] rounded-2xl p-6 flex flex-col gap-3 text-center"
               >
-                <div className="flex gap-0.5">
-                  {Array.from({ length: t.stars }).map((_, j) => (
-                    <Star key={j} size={14} className="text-green-400 fill-green-400" />
-                  ))}
-                </div>
-                <p className="text-[#d1d5db] text-sm leading-relaxed flex-1">&ldquo;{t.quote}&rdquo;</p>
-                <div>
-                  <div className="font-semibold text-white text-sm">{t.name}</div>
-                  <div className="text-xs text-[#6b7280]">{t.biz}</div>
-                </div>
+                <div className="text-5xl font-black text-green-400">{item.stat}</div>
+                <p className="text-[#d1d5db] text-sm leading-relaxed flex-1">{item.label}</p>
+                <div className="text-xs text-[#6b7280]">Source: {item.source}</div>
               </motion.div>
             ))}
           </div>

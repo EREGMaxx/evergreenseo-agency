@@ -36,9 +36,9 @@ const differentiators = [
   },
   {
     icon: Users,
-    title: "Your Account Manager Handles 4 Other Clients",
+    title: "Dedicated Strategy. Not a Ticket Number.",
     description:
-      "Not 40. We cap our ratio at 1:5 so your account manager knows your market, your competition, and your slow season before you have to explain it.",
+      "You get a single point of contact who knows your market, your competition, and your slow season — not a shared inbox where your question waits in a queue behind 40 other clients.",
   },
 ];
 
