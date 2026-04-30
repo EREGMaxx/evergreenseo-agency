@@ -18,7 +18,7 @@ const stats = [
 const steps = [
   {
     num: "01",
-    title: "Free SEO Audit",
+    title: "Free SEO Assessment",
     desc: "We dig into your site, your competitors, and your market. You get a full breakdown of exactly where you stand and what it'll take to rank.",
   },
   {
@@ -81,7 +81,7 @@ interface Tracking {
   utmCampaign: string;
 }
 
-function AuditForm({ tracking }: { tracking: Tracking }) {
+function AssessmentForm({ tracking }: { tracking: Tracking }) {
   const router = useRouter();
   const [formState, setFormState] = useState<FormState>("idle");
   const [form, setForm] = useState({
@@ -155,7 +155,7 @@ function AuditForm({ tracking }: { tracking: Tracking }) {
         {formState === "loading" ? (
           <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Sending...</>
         ) : (
-          <>Get My Free SEO Audit <ArrowRight size={18} /></>
+          <>Get My Free SEO Assessment <ArrowRight size={18} /></>
         )}
       </button>
       <p className="text-xs text-[#4b5563] text-center">No spam. No obligation. We respond within 24 hours.</p>
@@ -201,8 +201,8 @@ export default function StartPage() {
               Evergreen<span className="text-green-400"> SEO</span>
             </span>
           </a>
-          <a href="#audit" className="px-4 py-1.5 text-sm font-semibold bg-green-500 text-white rounded-lg hover:bg-green-400 transition-all shadow-lg shadow-green-500/20">
-            Free Audit
+          <a href="#assessment" className="px-4 py-1.5 text-sm font-semibold bg-green-500 text-white rounded-lg hover:bg-green-400 transition-all shadow-lg shadow-green-500/20">
+            Free Assessment
           </a>
         </div>
       </header>
@@ -257,10 +257,10 @@ export default function StartPage() {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20"
           >
             <a
-              href="#audit"
+              href="#assessment"
               className="group flex items-center gap-2 px-7 py-4 bg-green-500 text-white font-bold rounded-xl hover:bg-green-400 transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:-translate-y-0.5 text-base"
             >
-              Get Your Free SEO Audit
+              Get Your Free SEO Assessment
               <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform" />
             </a>
           </motion.div>
@@ -396,8 +396,8 @@ export default function StartPage() {
         </div>
       </section>
 
-      {/* ── Audit Form ── */}
-      <section id="audit" className="py-28 relative overflow-hidden">
+      {/* ── Assessment Form ── */}
+      <section id="assessment" className="py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-[#050508]" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent to-green-500/30" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-green-500/4 rounded-full blur-3xl pointer-events-none" />
@@ -419,7 +419,7 @@ export default function StartPage() {
               <span className="text-green-400">holding you back.</span>
             </h2>
             <p className="text-[#9ca3af] text-lg">
-              Tell us about your business. We&apos;ll send back a full audit showing where you rank, where your competitors are beating you, and exactly what to fix.
+              Tell us about your business. We&apos;ll send back a full assessment showing where you rank, where your competitors are beating you, and exactly what to fix.
             </p>
           </motion.div>
 
@@ -430,7 +430,7 @@ export default function StartPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="gradient-border bg-[#050508] rounded-2xl p-8"
           >
-            <AuditForm tracking={tracking} />
+            <AssessmentForm tracking={tracking} />
           </motion.div>
         </div>
       </section>
