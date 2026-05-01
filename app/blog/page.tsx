@@ -91,6 +91,14 @@ const posts = [
     slug: "local-link-building",
   },
   {
+    category: "Painting",
+    title: "Painting Contractor SEO: How to Get More Jobs from Google in 2026",
+    excerpt:
+      "Most painting contractors compete on price because they're stuck in shared-lead platforms. Local SEO changes that — here's the complete playbook to rank on Google and fill your estimate calendar with inbound calls.",
+    readTime: "8 min read",
+    slug: "painting-contractor-seo",
+  },
+  {
     category: "Local SEO",
     title: "How Long Does SEO Take? A Realistic Timeline for Home Service Businesses",
     excerpt:
