@@ -2,18 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, TrendingUp, Search, Users, CheckCircle, AlertCircle, MapPin, Mail } from "lucide-react";
+import { ArrowRight, CheckCircle, AlertCircle, MapPin, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 
 
-const stats = [
-  { icon: TrendingUp, label: "Avg. traffic increase", value: "+340%", color: "text-green-400", glow: "shadow-green-500/20" },
-  { icon: Search, label: "Time to page 1 results", value: "90 days", color: "text-blue-400", glow: "shadow-blue-500/20" },
-  { icon: Users, label: "More inbound leads", value: "3.2x", color: "text-purple-400", glow: "shadow-purple-500/20" },
-];
+
 
 const steps = [
   {
@@ -262,27 +258,7 @@ export default function StartPage() {
             </a>
           </motion.div>
 
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto"
-          >
-            {stats.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-                className="gradient-border bg-[#0d0d14] rounded-xl p-7 text-center"
-              >
-                <s.icon size={22} className={`${s.color} mx-auto mb-3 opacity-80`} />
-                <div className={`text-4xl font-bold ${s.color} mb-2`}>{s.value}</div>
-                <div className="text-sm text-[#6b7280]">{s.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+
         </div>
       </section>
 
