@@ -121,9 +121,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <link rel="icon" href="/favicon.ico" sizes="32x32" />
-        <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="512x512" />
+        <link rel="icon" href="/favicon.ico?v=4" sizes="32x32" />
+        <link rel="icon" href="/favicon-192.png?v=4" type="image/png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4" sizes="512x512" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#050508" />
       </head>
