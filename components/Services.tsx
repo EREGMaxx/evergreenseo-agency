@@ -34,7 +34,7 @@ const plans = [
       "Google Business Profile optimization",
       "Local citation building & cleanup",
       "Review generation system",
-      "Authority link building (8 links/month)",
+      "Local citation & directory placements (8/month)",
       "Competitor gap analysis",
       "Schema markup implementation",
       "Bi-weekly performance updates",
@@ -52,7 +52,7 @@ const plans = [
     features: [
       "On-page SEO optimization (unlimited pages)",
       "Everything in Growth",
-      "20 premium links/month (replaces Growth link building)",
+      "20 local citation & directory placements/month",
       "Weekly long-form content",
       "Ongoing GBP management & weekly posts",
       "Citation monitoring & maintenance",

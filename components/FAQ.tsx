@@ -28,7 +28,7 @@ const faqs = [
   {
     question: "What's included in the monthly reports?",
     answer:
-      "Every month you get a clear breakdown of: keyword rankings and movement, organic traffic trends, Google Business Profile metrics (calls, direction requests, clicks), leads attributed to organic, link building activity, and content published. We write reports that actually make sense — no fluff, no jargon, just clear data and what it means for your business.",
+      "Every month you get a clear breakdown of: keyword rankings and movement, organic traffic trends, Google Business Profile metrics (calls, direction requests, clicks), leads attributed to organic, local citation & directory activity, and content published. We write reports that actually make sense — no fluff, no jargon, just clear data and what it means for your business.",
   },
   {
     question: "How do I get started?",
