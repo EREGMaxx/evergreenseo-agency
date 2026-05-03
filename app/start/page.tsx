@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, AlertCircle, MapPin, Mail } from "lucide-react";
+import { ArrowRight, CheckCircle, AlertCircle, MapPin, Mail, ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -81,7 +81,10 @@ function AssessmentForm({ tracking }: { tracking: Tracking }) {
     name: "",
     businessName: "",
     website: "",
-    revenue: "",
+    serviceArea: "",
+    serviceType: "",
+    competitor: "",
+    seoSituation: "",
     challenge: "",
   });
 
@@ -117,7 +120,7 @@ function AssessmentForm({ tracking }: { tracking: Tracking }) {
         </div>
         <div>
           <label className="block text-xs font-medium text-[#9ca3af] mb-2 uppercase tracking-wider">Business Name *</label>
-          <input type="text" name="businessName" value={form.businessName} onChange={handleChange} required placeholder="Smith Auto Repair" className={inputClass} />
+          <input type="text" name="businessName" value={form.businessName} onChange={handleChange} required placeholder="Smith HVAC Co." className={inputClass} />
         </div>
       </div>
       <div>
@@ -125,13 +128,33 @@ function AssessmentForm({ tracking }: { tracking: Tracking }) {
         <input type="url" name="website" value={form.website} onChange={handleChange} placeholder="https://yourbusiness.com" className={inputClass} />
       </div>
       <div>
-        <label className="block text-xs font-medium text-[#9ca3af] mb-2 uppercase tracking-wider">Monthly Revenue *</label>
-        <select name="revenue" value={form.revenue} onChange={handleChange} required className={inputClass}>
-          <option value="" disabled>Select your range</option>
-          <option value="under-10k">Under $10k/mo</option>
-          <option value="10k-50k">$10k – $50k/mo</option>
-          <option value="50k-100k">$50k – $100k/mo</option>
-          <option value="100k-plus">$100k+/mo</option>
+        <label className="block text-xs font-medium text-[#9ca3af] mb-2 uppercase tracking-wider">Service Area *</label>
+        <input type="text" name="serviceArea" value={form.serviceArea} onChange={handleChange} required placeholder="e.g. Phoenix, AZ and surrounding cities" className={inputClass} />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-[#9ca3af] mb-2 uppercase tracking-wider">Primary Service *</label>
+        <select name="serviceType" value={form.serviceType} onChange={handleChange} required className={inputClass}>
+          <option value="" disabled>Select your industry</option>
+          <option value="hvac">HVAC</option>
+          <option value="roofing">Roofing</option>
+          <option value="plumbing">Plumbing</option>
+          <option value="electrical">Electrical</option>
+          <option value="residential-contractor">Residential Contracting</option>
+          <option value="property-management">Property Management</option>
+        </select>
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-[#9ca3af] mb-2 uppercase tracking-wider">Biggest Local Competitor</label>
+        <input type="text" name="competitor" value={form.competitor} onChange={handleChange} placeholder="e.g. ABC Roofing Co." className={inputClass} />
+      </div>
+      <div>
+        <label className="block text-xs font-medium text-[#9ca3af] mb-2 uppercase tracking-wider">Current SEO Situation *</label>
+        <select name="seoSituation" value={form.seoSituation} onChange={handleChange} required className={inputClass}>
+          <option value="" disabled>Select your situation</option>
+          <option value="nothing">Nothing set up yet</option>
+          <option value="tried-failed">Tried SEO before — didn&apos;t work</option>
+          <option value="current-agency">Currently with another agency</option>
+          <option value="diy">Have done some SEO myself</option>
         </select>
       </div>
       <div>
@@ -239,7 +262,7 @@ export default function StartPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg sm:text-xl text-[#9ca3af] max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            We help <span className="text-white font-semibold">businesses</span> get found on Google and turn searches into sales.
+            We help <span className="text-white font-semibold">home service businesses</span> get found on Google and turn searches into calls.
           </motion.div>
 
           {/* CTA */}
@@ -416,6 +439,9 @@ export default function StartPage() {
           </div>
           <a href="mailto:maxx@evergreenseo.agency" className="text-green-400 hover:text-green-300 transition-colors">
             maxx@evergreenseo.agency
+          </a>
+          <a href="https://www.google.com/maps/search/Evergreen+SEO+Agency" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors">
+            <ExternalLink size={12} /> Find us on Google
           </a>
           <span>© {new Date().getFullYear()} Evergreen SEO Agency</span>
           <a href="/terms" className="text-green-400 hover:text-green-300 transition-colors text-xs">Terms of Service</a>
