@@ -59,9 +59,7 @@ export default function TermsPage() {
                 <ul className="space-y-2 text-sm">
                   {[
                     "On-page SEO optimization (3 pages)",
-                    "Google Business Profile management",
                     "Keyword targeting & research",
-                    "Local citations & NAP consistency",
                     "1 blog post/month",
                     "Monthly ranking report",
                   ].map((f) => <li key={f} className="flex gap-2"><span className="text-green-400 shrink-0">—</span>{f}</li>)}
@@ -78,8 +76,10 @@ export default function TermsPage() {
                     "Everything in Starter",
                     "On-page SEO optimization (10 pages)",
                     "4 blog posts/month",
-                    "Premium directory placements across 25+ home services platforms",
+                    "Google Business Profile optimization",
+                    "Premium directory placements across 25+ home services platforms (Angi, HomeAdvisor, BBB, Thumbtack, Nextdoor, Yelp, and more)",
                     "NAP consistency audit & cleanup",
+                    "Review generation system",
                     "Competitor gap analysis",
                     "Schema markup implementation",
                     "Bi-weekly performance updates",
@@ -99,6 +99,9 @@ export default function TermsPage() {
                     "50+ directory placements including industry-specific platforms with ongoing NAP optimization",
                     "Authority link building — 4 to 6/month (HARO, trade associations, manufacturer networks)",
                     "8 blog posts/month",
+                    "Ongoing GBP management & weekly posts",
+                    "Citation monitoring & maintenance",
+                    "Review management & response",
                     "Custom website design + build",
                     "Mockup delivered within 24–48 hours",
                     "Site live within 1 week of approval",
