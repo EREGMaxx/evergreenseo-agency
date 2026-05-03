@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/missed-call-audit", "destination": "/missed-call-audit/index.html" }
+  ]
+}
