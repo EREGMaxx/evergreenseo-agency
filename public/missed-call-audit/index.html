@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Missed Call Audit — Lost Revenue Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F1ECE1;
+    --paper-2: #E7E0D1;
+    --paper-3: #DDD4BF;
+    --ink: #18140C;
+    --ink-soft: #524A3C;
+    --ink-muted: #8A8170;
+    --accent: #B8341B;     /* burnt vermillion */
+    --money:  #1B5E3F;     /* deep forest */
+    --line:   rgba(24, 20, 12, 0.14);
+    --line-2: rgba(24, 20, 12, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(24, 20, 12, 0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+    padding: 40px 24px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* subtle grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .9;
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Masthead */
+  .masthead {
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 14px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .masthead .edition { color: var(--ink-soft); }
+  .masthead .vol { font-family: 'JetBrains Mono', monospace; }
+
+  /* Hero */
+  .hero {
+    padding: 64px 0 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero .kicker {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 7.5vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .hero .lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(17px, 1.6vw, 21px);
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* Section labels */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 56px 0 24px;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .section-label .num {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 8px;
+    border-radius: 2px;
+    font-size: 10px;
+  }
+  .section-label .line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* Industry chips */
+  .industries {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 10px 18px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border-radius: 999px;
+    letter-spacing: 0.01em;
+  }
+  .chip:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .chip.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* Inputs grid */
+  .inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper-2);
+  }
+  .input-cell {
+    padding: 28px 28px 26px;
+    border-right: 1px solid var(--ink);
+    position: relative;
+  }
+  .input-cell:last-child { border-right: none; }
+  .input-cell .label-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .input-cell label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .input-cell .value-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--accent);
+  }
+  .input-cell .helper {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .input-cell .helper .src-link {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    margin-left: 2px;
+  }
+  .input-cell .helper .src-link:hover {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  /* Custom range slider */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--ink);
+    outline: none;
+    margin: 8px 0;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 3px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
+    transition: transform 0.15s ease;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 3px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+
+  /* Currency input */
+  .currency-input {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 6px;
+  }
+  .currency-input .symbol {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink-soft);
+    margin-right: 6px;
+  }
+  .currency-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--ink);
+    outline: none;
+    width: 100%;
+  }
+  .currency-input input::-webkit-outer-spin-button,
+  .currency-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Result section */
+  .result {
+    margin-top: 64px;
+    padding: 56px 32px 48px;
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .result::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(241, 236, 225, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(241, 236, 225, 0.04) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+  .result-content { position: relative; z-index: 1; }
+  .result .label {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--paper-3);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .result h2 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2vw, 26px);
+    margin-bottom: 28px;
+    color: var(--paper-2);
+  }
+  .big-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(64px, 13vw, 168px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--paper);
+    margin-bottom: 20px;
+    transition: color 0.4s ease;
+  }
+  .big-number.flash { color: #F2C94C; }
+  .result .breakdown-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--paper-3);
+    letter-spacing: 0.04em;
+  }
+  .result .breakdown-line span {
+    color: var(--paper);
+    font-weight: 700;
+  }
+
+  /* ROI grid */
+  .roi-section {
+    margin-top: 72px;
+  }
+  .roi-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 0;
+    border: 1px solid var(--ink);
+  }
+  .roi-pricing {
+    background: var(--paper-2);
+    padding: 32px;
+    border-right: 1px solid var(--ink);
+  }
+  .roi-pricing h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .roi-pricing .sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .pricing-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .pricing-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .pricing-row .pr-label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    width: 130px;
+    flex-shrink: 0;
+  }
+  .pricing-row .pr-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 8px 12px;
+  }
+  .pricing-row .pr-input .symbol {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-right: 4px;
+  }
+  .pricing-row .pr-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    width: 100%;
+  }
+  .pricing-row .pr-input input::-webkit-outer-spin-button,
+  .pricing-row .pr-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .pricing-row .pr-suffix {
+    font-size: 12px;
+    color: var(--ink-muted);
+    width: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .roi-result {
+    background: var(--paper);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .roi-stat {
+    border-bottom: 1px dashed var(--line);
+    padding: 14px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .roi-stat:last-of-type { border-bottom: none; }
+  .roi-stat .key {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .roi-stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .roi-stat.net .val { color: var(--money); }
+  .roi-stat.multiple {
+    margin-top: 14px;
+    padding: 18px 0 6px;
+    border-top: 2px solid var(--ink);
+    border-bottom: none;
+  }
+  .roi-stat.multiple .key {
+    font-style: normal;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .roi-stat.multiple .val {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--money);
+    letter-spacing: -0.02em;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 64px;
+    padding: 32px 0 0;
+    border-top: 1px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* Sources grid */
+  .sources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .src-card {
+    background: var(--paper-2);
+    padding: 20px 24px;
+  }
+  .src-industry {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .src-amount {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .src-card p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  @media (max-width: 720px) {
+    .sources-grid { grid-template-columns: 1fr; }
+  }
+  .footer .formula {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .footer .formula code {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 12px;
+    background: var(--paper-2);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+  }
+  .cta-btn {
+    background: var(--accent);
+    color: var(--paper);
+    border: none;
+    padding: 14px 26px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0;
+  }
+  .cta-btn:hover {
+    background: var(--ink);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--accent);
+  }
+
+  /* Responsive */
+  @media (max-width: 880px) {
+    .inputs { grid-template-columns: 1fr; }
+    .input-cell {
+      border-right: none;
+      border-bottom: 1px solid var(--ink);
+    }
+    .input-cell:last-child { border-bottom: none; }
+    .roi-grid { grid-template-columns: 1fr; }
+    .roi-pricing {
+      border-right: none;
+      border-bottom: 1px solid var(--ink);
+    }
+  }
+  @media (max-width: 540px) {
+    body { padding: 24px 16px 60px; }
+    .hero { padding: 40px 0 28px; }
+    .result { padding: 40px 20px 32px; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* Subtle entrance animation */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .fade-up.d1 { animation-delay: 0.05s; }
+  .fade-up.d2 { animation-delay: 0.15s; }
+  .fade-up.d3 { animation-delay: 0.25s; }
+  .fade-up.d4 { animation-delay: 0.35s; }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Masthead -->
+  <div class="masthead fade-up">
+    <span class="edition">The Missed Call Audit</span>
+    <span class="vol">VOL. 01 · ROI ANALYSIS</span>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero fade-up d1">
+    <span class="kicker">Lost Revenue Calculator</span>
+    <h1>How much are your<br>missed leads <em>costing you every year?</em></h1>
+    <p class="lede">Every unanswered call is a customer choosing your competitor.
+      Run the numbers below — most owners are shocked at the size of the leak.</p>
+  </section>
+
+  <!-- Industry -->
+  <div class="section-label fade-up d2">
+    <span class="num">01</span>
+    <span>Select your industry</span>
+    <span class="line"></span>
+  </div>
+  <div class="industries fade-up d2" id="industries"></div>
+
+  <!-- Inputs -->
+  <div class="section-label fade-up d3">
+    <span class="num">02</span>
+    <span>Tell us about your business</span>
+    <span class="line"></span>
+  </div>
+  <div class="inputs fade-up d3">
+    <div class="input-cell">
+      <div class="label-row">
+        <label for="missedCalls">Missed calls per week</label>
+        <span class="value-display" id="mcDisplay">10</span>
+      </div>
+      <input type="range" id="missedCalls" min="1" max="60" value="10" step="1">
+      <div class="helper">Industry avg: 12–25 calls/week unanswered</div>
+    </div>
+
+    <div class="input-cell">
+      <div class="label-row">
+        <label for="avgJob">Avg revenue per job</label>
+      </div>
+      <div class="currency-input">
+        <span class="symbol">$</span>
+        <input type="number" id="avgJob" value="4500" min="0">
+      </div>
+      <div class="helper">Auto-set by industry · 2025 industry data <a href="#sources" class="src-link">(see sources)</a></div>
+    </div>
+
+    <div class="input-cell">
+      <div class="label-row">
+        <label for="bookingRate">Booking rate recovery</label>
+        <span class="value-display" id="brDisplay">35%</span>
+      </div>
+      <input type="range" id="bookingRate" min="5" max="80" value="35" step="1">
+      <div class="helper">% of recovered calls that become real jobs</div>
+    </div>
+  </div>
+
+  <!-- The Big Reveal -->
+  <section class="result fade-up d4" id="result">
+    <div class="result-content">
+      <div class="label">The Number You're Leaving on the Table</div>
+      <h2>Annual revenue lost to missed calls</h2>
+      <div class="big-number" id="bigNumber">$0</div>
+      <div class="breakdown-line">
+        <span id="bdCalls">10</span> calls/week × 52 weeks ×
+        <span id="bdJob">$4,500</span> ×
+        <span id="bdRate">35%</span> recovery
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI breakdown -->
+  <div class="section-label">
+    <span class="num">03</span>
+    <span>Your return on investment</span>
+    <span class="line"></span>
+  </div>
+  <div class="roi-section">
+    <div class="roi-grid">
+      <div class="roi-pricing">
+        <h3>Adjust the investment</h3>
+        <p class="sub">Setup fee + 12 months of retainer, auto-tuned to your industry. Tweak to match your specific quote.</p>
+        <div class="pricing-rows">
+          <div class="pricing-row">
+            <div class="pr-label">One-time setup</div>
+            <div class="pr-input">
+              <span class="symbol">$</span>
+              <input type="number" id="setupFee" value="3000" min="0">
+            </div>
+            <div class="pr-suffix">once</div>
+          </div>
+          <div class="pricing-row">
+            <div class="pr-label">Monthly retainer</div>
+            <div class="pr-input">
+              <span class="symbol">$</span>
+              <input type="number" id="monthlyFee" value="600" min="0">
+            </div>
+            <div class="pr-suffix">/ mo</div>
+          </div>
+        </div>
+      </div>
+      <div class="roi-result">
+        <div>
+          <div class="roi-stat">
+            <span class="key">Recovered annual revenue</span>
+            <span class="val" id="rRecovered">$0</span>
+          </div>
+          <div class="roi-stat">
+            <span class="key">Total Year 1 investment</span>
+            <span class="val" id="rInvest">$0</span>
+          </div>
+          <div class="roi-stat net">
+            <span class="key">Net annual gain</span>
+            <span class="val" id="rNet">$0</span>
+          </div>
+          <div class="roi-stat multiple">
+            <span class="key">Return Multiple</span>
+            <span class="val" id="rMultiple">0×</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sources -->
+  <div class="section-label" id="sources">
+    <span class="num">04</span>
+    <span>Where the defaults come from</span>
+    <span class="line"></span>
+  </div>
+  <div class="sources-grid">
+    <div class="src-card">
+      <div class="src-industry">HVAC <span class="src-amount">$4,000</span></div>
+      <p>Blended avg of repair and install tickets. Housecall Pro 2025 platform data: avg repair ticket $1,205 (up 47% since 2021). Modernize 2026 data: avg replacement $11,590–$14,100 nationally.</p>
+    </div>
+    <div class="src-card">
+      <div class="src-industry">Roofing <span class="src-amount">$11,000</span></div>
+      <p>HomeAdvisor 2025: avg replacement $9,540 ($5,892–$13,272). Angi/NerdWallet 2026 national avg $9,500–$11,000. Storm-driven leads skew toward full replacement.</p>
+    </div>
+    <div class="src-card">
+      <div class="src-industry">Plumbing <span class="src-amount">$500</span></div>
+      <p>HomeAdvisor 2024–25 avg service call $375. BDR 2026: high-performing residential plumbers maintain $300–$500 avg ticket. Water heater installs commonly $850–$1,700.</p>
+    </div>
+    <div class="src-card">
+      <div class="src-industry">Electrical <span class="src-amount">$400</span></div>
+      <p>HomeAdvisor 2025 avg project $350 ($163–$538). Angi 2026 confirms $350 avg. Larger projects (panel upgrades, rewiring) run $2,000–$10,000 separately.</p>
+    </div>
+    <div class="src-card">
+      <div class="src-industry">Residential Contractors <span class="src-amount">$25,000</span></div>
+      <p>Angi 2025 avg full renovation $52,275 (1,250–1,600 sq ft homes). HomeAdvisor full-reno range $19,500–$88,400. Default biased toward mid-range kitchen/bath remodels.</p>
+    </div>
+    <div class="src-card">
+      <div class="src-industry">Home Builders <span class="src-amount">$500,000</span></div>
+      <p>Direct gross revenue per home to the builder. Blended midpoint between custom-build contract value ($300K–$500K) and production sale price (NAHB 2024: $665,298 avg new home with land, $428,215 construction cost only). Excludes land cost.</p>
+    </div>
+    <div class="src-card">
+      <div class="src-industry">Property Management <span class="src-amount">$2,400</span></div>
+      <p>Industry standard 8–12% of monthly rent. Avg annual gross rental income per landlord ~$20,000–$24,000 (Buildium, iPropertyManagement). Year-1 fee per signed unit.</p>
+    </div>
+    <div class="src-card">
+      <div class="src-industry">PI Attorneys <span class="src-amount">$25,000</span></div>
+      <p>Avg settlement with attorney representation $77,600 (Martindale-Nolo survey) × 33⅓% standard pre-litigation contingency = ~$25,600 firm revenue per case.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="formula">
+      <em>Formula:</em>
+      <code>Annual Loss = Missed Calls/Wk × 52 × Avg Job × Recovery Rate</code>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+const industries = [
+  { id: 'hvac',         name: 'HVAC',                    avgJob: 4000,   setup: 3000, monthly: 600 },
+  { id: 'roofing',      name: 'Roofing',                 avgJob: 11000,  setup: 4000, monthly: 750 },
+  { id: 'plumbing',     name: 'Plumbing',                avgJob: 500,    setup: 2500, monthly: 500 },
+  { id: 'electrical',   name: 'Electrical',              avgJob: 400,    setup: 2000, monthly: 400 },
+  { id: 'residential',  name: 'Residential Contractors', avgJob: 25000,  setup: 4000, monthly: 750 },
+  { id: 'homebuilder',  name: 'Home Builders',           avgJob: 500000, setup: 5000, monthly: 900 },
+  { id: 'property',     name: 'Property Management',     avgJob: 2400,   setup: 3000, monthly: 600 },
+  { id: 'pi-attorney',  name: 'PI Attorneys',            avgJob: 25000,  setup: 5000, monthly: 900 },
+];
+
+let activeIndustry = 'hvac';
+let userEditedJob = false;
+
+// Build industry chips
+const indContainer = document.getElementById('industries');
+industries.forEach(ind => {
+  const btn = document.createElement('button');
+  btn.className = 'chip' + (ind.id === activeIndustry ? ' active' : '');
+  btn.textContent = ind.name;
+  btn.dataset.id = ind.id;
+  btn.dataset.avg = ind.avgJob;
+  btn.addEventListener('click', () => {
+    activeIndustry = ind.id;
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    // Reset job value AND pricing tier to industry defaults whenever industry switches
+    document.getElementById('avgJob').value = ind.avgJob;
+    document.getElementById('setupFee').value = ind.setup;
+    document.getElementById('monthlyFee').value = ind.monthly;
+    userEditedJob = false;
+    update(true);
+  });
+  indContainer.appendChild(btn);
+});
+
+// Element refs
+const missedCalls  = document.getElementById('missedCalls');
+const bookingRate  = document.getElementById('bookingRate');
+const avgJob       = document.getElementById('avgJob');
+const setupFee     = document.getElementById('setupFee');
+const monthlyFee   = document.getElementById('monthlyFee');
+
+const mcDisplay    = document.getElementById('mcDisplay');
+const brDisplay    = document.getElementById('brDisplay');
+const bigNumber    = document.getElementById('bigNumber');
+const bdCalls      = document.getElementById('bdCalls');
+const bdJob        = document.getElementById('bdJob');
+const bdRate       = document.getElementById('bdRate');
+
+const rRecovered   = document.getElementById('rRecovered');
+const rInvest      = document.getElementById('rInvest');
+const rNet         = document.getElementById('rNet');
+const rMultiple    = document.getElementById('rMultiple');
+
+const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+const fmtNum = new Intl.NumberFormat('en-US');
+
+let prevValue = 0;
+function animateNumber(el, from, to, duration = 700) {
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const val = from + (to - from) * eased;
+    el.textContent = fmt.format(Math.round(val));
+    if (t < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt.format(to);
+  }
+  requestAnimationFrame(tick);
+}
+
+function update(animate = false) {
+  const mc = parseInt(missedCalls.value, 10) || 0;
+  const br = parseInt(bookingRate.value, 10) || 0;
+  const aj = parseFloat(avgJob.value) || 0;
+  const sf = parseFloat(setupFee.value) || 0;
+  const mf = parseFloat(monthlyFee.value) || 0;
+
+  mcDisplay.textContent = mc;
+  brDisplay.textContent = br + '%';
+
+  const recovered = mc * 52 * aj * (br / 100);
+  const invest    = sf + mf * 12;
+  const net       = recovered - invest;
+  const multiple  = invest > 0 ? recovered / invest : 0;
+
+  // Big number animated
+  if (animate) {
+    animateNumber(bigNumber, prevValue, recovered);
+    bigNumber.classList.add('flash');
+    setTimeout(() => bigNumber.classList.remove('flash'), 400);
+  } else {
+    bigNumber.textContent = fmt.format(Math.round(recovered));
+  }
+  prevValue = recovered;
+
+  bdCalls.textContent = mc;
+  bdJob.textContent   = fmt.format(aj);
+  bdRate.textContent  = br + '%';
+
+  rRecovered.textContent = fmt.format(Math.round(recovered));
+  rInvest.textContent    = fmt.format(Math.round(invest));
+  rNet.textContent       = (net >= 0 ? '+' : '') + fmt.format(Math.round(net));
+  rMultiple.textContent  = (multiple >= 100 ? Math.round(multiple) : multiple.toFixed(1)) + '×';
+}
+
+// Listeners
+[missedCalls, bookingRate].forEach(el => {
+  el.addEventListener('input', () => update(true));
+});
+avgJob.addEventListener('input', () => { userEditedJob = true; update(true); });
+[setupFee, monthlyFee].forEach(el => {
+  el.addEventListener('input', () => update(false));
+});
+
+// URL query parameter support
+const urlParams = new URLSearchParams(window.location.search);
+
+// industry param: match against id field, auto-select chip and apply defaults
+const industryParam = urlParams.get('industry');
+if (industryParam) {
+  const matchedIndustry = industries.find(i => i.id === industryParam);
+  if (matchedIndustry) {
+    activeIndustry = matchedIndustry.id;
+    document.querySelectorAll('.chip').forEach(c => {
+      c.classList.toggle('active', c.dataset.id === matchedIndustry.id);
+    });
+    document.getElementById('avgJob').value = matchedIndustry.avgJob;
+    document.getElementById('setupFee').value = matchedIndustry.setup;
+    document.getElementById('monthlyFee').value = matchedIndustry.monthly;
+  }
+}
+
+// calls param: integer 1-60, sets missed calls slider
+const callsParam = urlParams.get('calls');
+if (callsParam !== null) {
+  const callsNum = parseInt(callsParam, 10);
+  if (!isNaN(callsNum) && callsNum >= 1 && callsNum <= 60) {
+    document.getElementById('missedCalls').value = callsNum;
+  }
+}
+
+// Initial render — animated from 0 for drama
+update(true);
+</script>
+</body>
+</html>
