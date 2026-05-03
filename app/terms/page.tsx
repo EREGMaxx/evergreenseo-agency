@@ -71,7 +71,7 @@ export default function TermsPage() {
               <div className="border border-green-500/40 rounded-xl p-6">
                 <div className="flex items-baseline justify-between mb-4">
                   <h3 className="text-lg font-bold text-green-400">Growth <span className="text-xs font-normal text-green-500 ml-2">Most Popular</span></h3>
-                  <span className="text-white font-bold">$597/mo</span>
+                  <span className="text-white font-bold">$897/mo</span>
                 </div>
                 <ul className="space-y-2 text-sm">
                   {[
@@ -89,13 +89,14 @@ export default function TermsPage() {
               <div className="border border-[#1e1e2e] rounded-xl p-6">
                 <div className="flex items-baseline justify-between mb-4">
                   <h3 className="text-lg font-bold text-green-400">Full Stack <span className="text-xs font-normal text-green-500 ml-2">Best Value</span></h3>
-                  <span className="text-white font-bold">$997/mo</span>
+                  <span className="text-white font-bold">$1,297/mo</span>
                 </div>
                 <ul className="space-y-2 text-sm">
                   {[
                     "Everything in Growth (excl. link building)",
                     "On-page SEO optimization (unlimited pages)",
-                    "20 local citation & directory placements/month",
+                    "20+ industry-specific citation placements/month",
+                    "Authority building (HARO, trade associations, press outreach)",
                     "Weekly long-form content",
                     "Custom website design + build",
                     "Mockup delivered within 24 hours",

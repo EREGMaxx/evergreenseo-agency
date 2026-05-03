@@ -22,7 +22,7 @@ const plans = [
   },
   {
     name: "Growth",
-    price: "$597",
+    price: "$897",
     period: "/mo",
     tagline: "Accelerate rankings. Dominate your market.",
     popular: true,
@@ -43,7 +43,7 @@ const plans = [
   },
   {
     name: "Full Stack",
-    price: "$997",
+    price: "$1,297",
     period: "/mo",
     tagline: "Total dominance. Every advantage, every month.",
     popular: false,
@@ -51,7 +51,8 @@ const plans = [
     features: [
       "On-page SEO optimization (unlimited pages)",
       "Everything in Growth",
-      "20 local citation & directory placements/month",
+      "20+ industry-specific citation placements/month",
+      "Authority building (HARO, trade associations, press outreach)",
       "Weekly long-form content",
       "Ongoing GBP management & weekly posts",
       "Citation monitoring & maintenance",
