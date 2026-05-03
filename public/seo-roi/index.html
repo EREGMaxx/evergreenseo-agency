@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The SEO Revenue Audit — Ranking Upside Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F1ECE1;
+    --paper-2: #E7E0D1;
+    --paper-3: #DDD4BF;
+    --ink: #18140C;
+    --ink-soft: #524A3C;
+    --ink-muted: #8A8170;
+    --accent: #B8341B;     /* burnt vermillion */
+    --money:  #1B5E3F;     /* deep forest */
+    --line:   rgba(24, 20, 12, 0.14);
+    --line-2: rgba(24, 20, 12, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(24, 20, 12, 0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+    padding: 40px 24px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* subtle grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .9;
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Masthead */
+  .masthead {
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 14px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .masthead .edition { color: var(--ink-soft); }
+  .masthead .vol { font-family: 'JetBrains Mono', monospace; }
+
+  /* Hero */
+  .hero {
+    padding: 64px 0 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero .kicker {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 7.5vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .hero .lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(17px, 1.6vw, 21px);
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* Section labels */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 56px 0 24px;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .section-label .num {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 8px;
+    border-radius: 2px;
+    font-size: 10px;
+  }
+  .section-label .line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* Chip rows (industry, market) */
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 10px 18px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border-radius: 999px;
+    letter-spacing: 0.01em;
+  }
+  .chip:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .chip.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* Inputs grid (Section 03) */
+  .inputs {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper-2);
+  }
+  .input-cell {
+    padding: 28px 28px 26px;
+    border-right: 1px solid var(--ink);
+    position: relative;
+  }
+  .input-cell:last-child { border-right: none; }
+  .input-cell .label-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .input-cell label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .input-cell .helper {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Rank chip group (inside input cell) */
+  .rank-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .rank-chip {
+    background: transparent;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 8px 14px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border-radius: 999px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .rank-chip:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .rank-chip.active {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+  }
+
+  /* Currency input */
+  .currency-input {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 6px;
+    margin-top: 6px;
+  }
+  .currency-input .symbol {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink-soft);
+    margin-right: 6px;
+  }
+  .currency-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--ink);
+    outline: none;
+    width: 100%;
+  }
+  .currency-input input::-webkit-outer-spin-button,
+  .currency-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Result section */
+  .result {
+    margin-top: 64px;
+    padding: 56px 32px 48px;
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .result::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(241, 236, 225, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(241, 236, 225, 0.04) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+  .result-content { position: relative; z-index: 1; }
+  .result .label {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--paper-3);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .result h2 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2vw, 26px);
+    margin-bottom: 28px;
+    color: var(--paper-2);
+  }
+  .big-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(64px, 13vw, 168px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--paper);
+    margin-bottom: 20px;
+    transition: color 0.4s ease;
+  }
+  .big-number.flash { color: #F2C94C; }
+  .result .breakdown-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--paper-3);
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .result .breakdown-line span {
+    color: var(--paper);
+    font-weight: 700;
+  }
+
+  /* Keyword table */
+  .kw-table-wrap {
+    border: 1px solid var(--ink);
+    background: var(--paper-2);
+    overflow-x: auto;
+  }
+  .kw-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 720px;
+  }
+  .kw-table thead th {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+    padding: 14px 18px;
+  }
+  .kw-table thead th:first-child { text-align: left; }
+  .kw-table tbody td {
+    padding: 18px 18px;
+    border-bottom: 1px dashed var(--line);
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    vertical-align: middle;
+  }
+  .kw-table tbody td:first-child {
+    text-align: left;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .kw-table tbody td.gap-cell {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .kw-table tbody tr.totals td {
+    border-bottom: none;
+    border-top: 2px solid var(--ink);
+    padding-top: 18px;
+    font-weight: 700;
+    background: var(--paper-3);
+  }
+  .kw-table tbody tr.totals td:first-child {
+    font-style: normal;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+  }
+  .kw-table tbody tr.totals td.gap-cell {
+    font-size: 16px;
+  }
+
+  /* ROI grid (same as Missed Call Audit) */
+  .roi-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 0;
+    border: 1px solid var(--ink);
+  }
+  .roi-pricing {
+    background: var(--paper-2);
+    padding: 32px;
+    border-right: 1px solid var(--ink);
+  }
+  .roi-pricing h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .roi-pricing .sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .pricing-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .pricing-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .pricing-row .pr-label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    width: 130px;
+    flex-shrink: 0;
+  }
+  .pricing-row .pr-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 8px 12px;
+  }
+  .pricing-row .pr-input .symbol {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-right: 4px;
+  }
+  .pricing-row .pr-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    width: 100%;
+  }
+  .pricing-row .pr-input input::-webkit-outer-spin-button,
+  .pricing-row .pr-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .pricing-row .pr-suffix {
+    font-size: 12px;
+    color: var(--ink-muted);
+    width: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .roi-result {
+    background: var(--paper);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .roi-stat {
+    border-bottom: 1px dashed var(--line);
+    padding: 14px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .roi-stat:last-of-type { border-bottom: none; }
+  .roi-stat .key {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .roi-stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .roi-stat.net .val { color: var(--money); }
+  .roi-stat.multiple {
+    margin-top: 14px;
+    padding: 18px 0 6px;
+    border-top: 2px solid var(--ink);
+    border-bottom: none;
+  }
+  .roi-stat.multiple .key {
+    font-style: normal;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .roi-stat.multiple .val {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--money);
+    letter-spacing: -0.02em;
+  }
+
+  /* Methodology grid */
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .method-card {
+    background: var(--paper-2);
+    padding: 24px;
+  }
+  .method-card h4 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .method-card h4 .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .method-card p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+  }
+  .method-card p:last-child { margin-bottom: 0; }
+  .method-card .ctr-list {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .method-card .ctr-list .row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--line);
+    padding: 4px 0;
+  }
+  .method-card .ctr-list .row:last-child { border-bottom: none; }
+  .method-card .ctr-list strong { color: var(--accent); }
+
+  /* Footer */
+  .footer {
+    margin-top: 64px;
+    padding: 32px 0 0;
+    border-top: 1px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer .formula {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .footer .formula code {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 12px;
+    background: var(--paper-2);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+  }
+
+  /* Responsive */
+  @media (max-width: 880px) {
+    .inputs { grid-template-columns: 1fr; }
+    .input-cell {
+      border-right: none;
+      border-bottom: 1px solid var(--ink);
+    }
+    .input-cell:last-child { border-bottom: none; }
+    .roi-grid { grid-template-columns: 1fr; }
+    .roi-pricing {
+      border-right: none;
+      border-bottom: 1px solid var(--ink);
+    }
+    .method-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 540px) {
+    body { padding: 24px 16px 60px; }
+    .hero { padding: 40px 0 28px; }
+    .result { padding: 40px 20px 32px; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* Subtle entrance animation */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .fade-up.d1 { animation-delay: 0.05s; }
+  .fade-up.d2 { animation-delay: 0.15s; }
+  .fade-up.d3 { animation-delay: 0.25s; }
+  .fade-up.d4 { animation-delay: 0.35s; }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Masthead -->
+  <div class="masthead fade-up">
+    <span class="edition">The SEO Revenue Audit</span>
+    <span class="vol">VOL. 01 · RANKING ANALYSIS</span>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero fade-up d1">
+    <span class="kicker">SEO Revenue Calculator</span>
+    <h1>How much revenue is your<br><em>Google ranking</em> costing you?</h1>
+    <p class="lede">Every position you're not at the top of page 1 is a customer choosing your competitor. See exactly what your current rank is leaving on the table.</p>
+  </section>
+
+  <!-- Industry -->
+  <div class="section-label fade-up d2">
+    <span class="num">01</span>
+    <span>Select your industry</span>
+    <span class="line"></span>
+  </div>
+  <div class="chip-row fade-up d2" id="industries"></div>
+
+  <!-- Market size -->
+  <div class="section-label fade-up d3">
+    <span class="num">02</span>
+    <span>Choose your market size</span>
+    <span class="line"></span>
+  </div>
+  <div class="chip-row fade-up d3" id="markets"></div>
+
+  <!-- Current state -->
+  <div class="section-label fade-up d4">
+    <span class="num">03</span>
+    <span>Where do you stand today</span>
+    <span class="line"></span>
+  </div>
+  <div class="inputs fade-up d4">
+    <div class="input-cell">
+      <div class="label-row">
+        <label>Where do you currently rank?</label>
+      </div>
+      <div class="rank-chips" id="rankChips"></div>
+      <div class="helper">Your typical position for the keywords below</div>
+    </div>
+
+    <div class="input-cell">
+      <div class="label-row">
+        <label>Avg revenue per closed job</label>
+      </div>
+      <div class="currency-input">
+        <span class="symbol">$</span>
+        <input type="number" id="avgJob" value="4000" min="0">
+      </div>
+      <div class="helper">Auto-set by industry — adjust to fit</div>
+    </div>
+  </div>
+
+  <!-- The Big Reveal -->
+  <section class="result" id="result">
+    <div class="result-content">
+      <div class="label">Annual Revenue You're Missing From Google</div>
+      <h2>The gap between your rank and #1</h2>
+      <div class="big-number" id="bigNumber">$0</div>
+      <div class="breakdown-line">
+        <span id="bdVolume">5,900</span> monthly searches ×
+        <span id="bdGap">27.5%</span> ranking gap ×
+        <span id="bdFunnel">4.56%</span> visitor-to-job rate ×
+        <span id="bdJob">$4,000</span> avg job
+      </div>
+    </div>
+  </section>
+
+  <!-- Keyword breakdown -->
+  <div class="section-label">
+    <span class="num">04</span>
+    <span>Your top keywords, broken down</span>
+    <span class="line"></span>
+  </div>
+  <div class="kw-table-wrap">
+    <table class="kw-table">
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>Monthly Searches</th>
+          <th>Your Traffic Now</th>
+          <th>Traffic at #1</th>
+          <th>Annual Revenue Gap</th>
+        </tr>
+      </thead>
+      <tbody id="kwBody"></tbody>
+    </table>
+  </div>
+
+  <!-- ROI -->
+  <div class="section-label">
+    <span class="num">05</span>
+    <span>Your return on investment</span>
+    <span class="line"></span>
+  </div>
+  <div class="roi-grid">
+    <div class="roi-pricing">
+      <h3>Adjust the investment</h3>
+      <p class="sub">Setup fee + 12 months of retainer, auto-tuned to your industry. Tweak to match your specific quote.</p>
+      <div class="pricing-rows">
+        <div class="pricing-row">
+          <div class="pr-label">One-time setup</div>
+          <div class="pr-input">
+            <span class="symbol">$</span>
+            <input type="number" id="setupFee" value="3000" min="0">
+          </div>
+          <div class="pr-suffix">once</div>
+        </div>
+        <div class="pricing-row">
+          <div class="pr-label">Monthly retainer</div>
+          <div class="pr-input">
+            <span class="symbol">$</span>
+            <input type="number" id="monthlyFee" value="600" min="0">
+          </div>
+          <div class="pr-suffix">/ mo</div>
+        </div>
+      </div>
+    </div>
+    <div class="roi-result">
+      <div>
+        <div class="roi-stat">
+          <span class="key">Recovered annual revenue</span>
+          <span class="val" id="rRecovered">$0</span>
+        </div>
+        <div class="roi-stat">
+          <span class="key">Total Year 1 investment</span>
+          <span class="val" id="rInvest">$0</span>
+        </div>
+        <div class="roi-stat net">
+          <span class="key">Net annual gain</span>
+          <span class="val" id="rNet">$0</span>
+        </div>
+        <div class="roi-stat multiple">
+          <span class="key">Return Multiple</span>
+          <span class="val" id="rMultiple">0×</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Methodology -->
+  <div class="section-label">
+    <span class="num">06</span>
+    <span>How we calculated this</span>
+    <span class="line"></span>
+  </div>
+  <div class="method-grid">
+    <div class="method-card">
+      <h4>Click-through by rank <span class="tag">CTR</span></h4>
+      <p>Industry-standard organic CTRs. Position #1 captures the lion's share of clicks; everyone below splits the leftovers.</p>
+      <div class="ctr-list">
+        <div class="row"><span>#1</span><strong>28%</strong></div>
+        <div class="row"><span>Top of P1 (#2–3)</span><strong>12%</strong></div>
+        <div class="row"><span>Middle of P1 (#4–5)</span><strong>6%</strong></div>
+        <div class="row"><span>Bottom of P1 (#6–10)</span><strong>3%</strong></div>
+        <div class="row"><span>Page 2</span><strong>0.5%</strong></div>
+        <div class="row"><span>Not Ranking</span><strong>0%</strong></div>
+      </div>
+    </div>
+    <div class="method-card">
+      <h4>Conversion funnel <span class="tag">Funnel</span></h4>
+      <p><strong>12%</strong> of website visitors call or fill out a form. Of those, <strong>38%</strong> become paying jobs.</p>
+      <p>Combined visitor-to-job rate: <strong>4.56%</strong>. These are conservative averages for high-intent local service searches; your real numbers may run higher with strong landing pages and fast follow-up.</p>
+    </div>
+    <div class="method-card">
+      <h4>Keyword volumes <span class="tag">Data</span></h4>
+      <p>Monthly search estimates pulled from 2024–2025 data across Google Keyword Planner, Ahrefs, and SEMrush. Volumes are scaled by market size — a major metro typically sees 3× the search demand of a small market.</p>
+      <p>The <em>[city]</em> placeholder represents your local geography; actual volumes vary by metro.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="formula">
+      <em>Formula:</em>
+      <code>Gap = Volume × (CTR@#1 − CTR@Now) × 12 × 4.56% × Avg Job</code>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+const industries = {
+  hvac: {
+    name: 'HVAC', avgJob: 4000, setup: 3000, monthly: 600,
+    keywords: {
+      metro:   [ {kw:'AC repair [city]', vol:2400}, {kw:'HVAC contractor [city]', vol:1900}, {kw:'furnace repair [city]', vol:1600} ],
+      midsize: [ {kw:'AC repair [city]', vol:800},  {kw:'HVAC contractor [city]', vol:600},  {kw:'furnace repair [city]', vol:500}  ],
+      small:   [ {kw:'AC repair [city]', vol:200},  {kw:'HVAC contractor [city]', vol:150},  {kw:'furnace repair [city]', vol:120}  ]
+    }
+  },
+  roofing: {
+    name: 'Roofing', avgJob: 11000, setup: 4000, monthly: 750,
+    keywords: {
+      metro:   [ {kw:'roofing contractor [city]', vol:2900}, {kw:'roof repair [city]', vol:2400}, {kw:'roof replacement [city]', vol:1600} ],
+      midsize: [ {kw:'roofing contractor [city]', vol:900},  {kw:'roof repair [city]', vol:800},  {kw:'roof replacement [city]', vol:500}  ],
+      small:   [ {kw:'roofing contractor [city]', vol:250},  {kw:'roof repair [city]', vol:200},  {kw:'roof replacement [city]', vol:120}  ]
+    }
+  },
+  plumbing: {
+    name: 'Plumbing', avgJob: 500, setup: 2500, monthly: 500,
+    keywords: {
+      metro:   [ {kw:'plumber [city]', vol:4400}, {kw:'plumbing repair [city]', vol:1600}, {kw:'emergency plumber [city]', vol:1300} ],
+      midsize: [ {kw:'plumber [city]', vol:1200}, {kw:'plumbing repair [city]', vol:500},  {kw:'emergency plumber [city]', vol:400}  ],
+      small:   [ {kw:'plumber [city]', vol:300},  {kw:'plumbing repair [city]', vol:120},  {kw:'emergency plumber [city]', vol:100}  ]
+    }
+  },
+  electrical: {
+    name: 'Electrical', avgJob: 400, setup: 2000, monthly: 400,
+    keywords: {
+      metro:   [ {kw:'electrician [city]', vol:3600}, {kw:'electrical repair [city]', vol:800}, {kw:'licensed electrician [city]', vol:600} ],
+      midsize: [ {kw:'electrician [city]', vol:1000}, {kw:'electrical repair [city]', vol:250}, {kw:'licensed electrician [city]', vol:200} ],
+      small:   [ {kw:'electrician [city]', vol:250},  {kw:'electrical repair [city]', vol:80},  {kw:'licensed electrician [city]', vol:60}  ]
+    }
+  },
+  residential: {
+    name: 'Residential Contractors', avgJob: 25000, setup: 4000, monthly: 750,
+    keywords: {
+      metro:   [ {kw:'general contractor [city]', vol:2400}, {kw:'home remodeling [city]', vol:1900}, {kw:'kitchen remodel contractor [city]', vol:1600} ],
+      midsize: [ {kw:'general contractor [city]', vol:700},  {kw:'home remodeling [city]', vol:600},  {kw:'kitchen remodel contractor [city]', vol:500}  ],
+      small:   [ {kw:'general contractor [city]', vol:180},  {kw:'home remodeling [city]', vol:150},  {kw:'kitchen remodel contractor [city]', vol:120}  ]
+    }
+  }
+};
+
+const markets = [
+  { id: 'metro',   label: 'Major Metro'  },
+  { id: 'midsize', label: 'Mid-Size City' },
+  { id: 'small',   label: 'Small Market' }
+];
+
+const rankOptions = [
+  { id: 'none',   label: 'Not Ranking',     ctr: 0      },
+  { id: 'page2',  label: 'Page 2',          ctr: 0.005  },
+  { id: 'bottom', label: 'P1: #6–10',       ctr: 0.03   },
+  { id: 'middle', label: 'P1: #4–5',        ctr: 0.06   },
+  { id: 'top',    label: 'P1: #2–3',        ctr: 0.12   }
+];
+
+const CTR_AT_ONE = 0.28;
+const FORM_RATE = 0.12;
+const CLOSE_RATE = 0.38;
+const FUNNEL = FORM_RATE * CLOSE_RATE; // 0.0456
+
+let currentIndustry = 'hvac';
+let currentMarket   = 'metro';
+let currentRank     = 'page2';
+
+// Build industry chips
+const indContainer = document.getElementById('industries');
+Object.entries(industries).forEach(([id, ind]) => {
+  const btn = document.createElement('button');
+  btn.className = 'chip' + (id === currentIndustry ? ' active' : '');
+  btn.textContent = ind.name;
+  btn.dataset.id = id;
+  btn.addEventListener('click', () => {
+    currentIndustry = id;
+    document.querySelectorAll('#industries .chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    // Snap avg job + pricing to industry defaults
+    document.getElementById('avgJob').value = ind.avgJob;
+    document.getElementById('setupFee').value = ind.setup;
+    document.getElementById('monthlyFee').value = ind.monthly;
+    update(true);
+  });
+  indContainer.appendChild(btn);
+});
+
+// Build market chips
+const mktContainer = document.getElementById('markets');
+markets.forEach(m => {
+  const btn = document.createElement('button');
+  btn.className = 'chip' + (m.id === currentMarket ? ' active' : '');
+  btn.textContent = m.label;
+  btn.dataset.id = m.id;
+  btn.addEventListener('click', () => {
+    currentMarket = m.id;
+    document.querySelectorAll('#markets .chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    update(true);
+  });
+  mktContainer.appendChild(btn);
+});
+
+// Build rank chips
+const rankContainer = document.getElementById('rankChips');
+rankOptions.forEach(r => {
+  const btn = document.createElement('button');
+  btn.className = 'rank-chip' + (r.id === currentRank ? ' active' : '');
+  btn.textContent = r.label;
+  btn.dataset.id = r.id;
+  btn.addEventListener('click', () => {
+    currentRank = r.id;
+    document.querySelectorAll('.rank-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    update(true);
+  });
+  rankContainer.appendChild(btn);
+});
+
+// Element refs
+const avgJob       = document.getElementById('avgJob');
+const setupFee     = document.getElementById('setupFee');
+const monthlyFee   = document.getElementById('monthlyFee');
+
+const bigNumber    = document.getElementById('bigNumber');
+const bdVolume     = document.getElementById('bdVolume');
+const bdGap        = document.getElementById('bdGap');
+const bdFunnel     = document.getElementById('bdFunnel');
+const bdJob        = document.getElementById('bdJob');
+const kwBody       = document.getElementById('kwBody');
+
+const rRecovered   = document.getElementById('rRecovered');
+const rInvest      = document.getElementById('rInvest');
+const rNet         = document.getElementById('rNet');
+const rMultiple    = document.getElementById('rMultiple');
+
+const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+const fmtNum = new Intl.NumberFormat('en-US');
+
+let prevValue = 0;
+function animateNumber(el, from, to, duration = 700) {
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const val = from + (to - from) * eased;
+    el.textContent = fmt.format(Math.round(val));
+    if (t < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt.format(to);
+  }
+  requestAnimationFrame(tick);
+}
+
+function update(animate = false) {
+  const ind = industries[currentIndustry];
+  const kws = ind.keywords[currentMarket];
+  const rankObj = rankOptions.find(r => r.id === currentRank);
+  const currentCTR = rankObj.ctr;
+  const job = parseFloat(avgJob.value) || 0;
+  const sf  = parseFloat(setupFee.value) || 0;
+  const mf  = parseFloat(monthlyFee.value) || 0;
+
+  // Per-keyword math
+  let totVol = 0, totNow = 0, totOne = 0, totGap = 0;
+  const rows = kws.map(k => {
+    const trafficNow  = k.vol * currentCTR;       // monthly visitors
+    const trafficOne  = k.vol * CTR_AT_ONE;       // monthly visitors at #1
+    const annualVisitors = (trafficOne - trafficNow) * 12;
+    const revGap = annualVisitors * FUNNEL * job;
+    totVol += k.vol;
+    totNow += trafficNow;
+    totOne += trafficOne;
+    totGap += revGap;
+    return { kw: k.kw, vol: k.vol, trafficNow, trafficOne, revGap };
+  });
+
+  // Render keyword table
+  kwBody.innerHTML = '';
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.kw}</td>
+      <td>${fmtNum.format(r.vol)}</td>
+      <td>${fmtNum.format(Math.round(r.trafficNow))}/mo</td>
+      <td>${fmtNum.format(Math.round(r.trafficOne))}/mo</td>
+      <td class="gap-cell">${fmt.format(Math.round(r.revGap))}</td>
+    `;
+    kwBody.appendChild(tr);
+  });
+  // Totals row
+  const totalsTr = document.createElement('tr');
+  totalsTr.className = 'totals';
+  totalsTr.innerHTML = `
+    <td>Totals</td>
+    <td>${fmtNum.format(totVol)}</td>
+    <td>${fmtNum.format(Math.round(totNow))}/mo</td>
+    <td>${fmtNum.format(Math.round(totOne))}/mo</td>
+    <td class="gap-cell">${fmt.format(Math.round(totGap))}</td>
+  `;
+  kwBody.appendChild(totalsTr);
+
+  // Big number
+  if (animate) {
+    animateNumber(bigNumber, prevValue, totGap);
+    bigNumber.classList.add('flash');
+    setTimeout(() => bigNumber.classList.remove('flash'), 400);
+  } else {
+    bigNumber.textContent = fmt.format(Math.round(totGap));
+  }
+  prevValue = totGap;
+
+  // Breakdown line
+  const gapPct = Math.round((CTR_AT_ONE - currentCTR) * 1000) / 10;
+  bdVolume.textContent = fmtNum.format(totVol);
+  bdGap.textContent    = (gapPct % 1 === 0 ? gapPct.toFixed(0) : gapPct.toFixed(1)) + '%';
+  bdFunnel.textContent = (FUNNEL * 100).toFixed(2) + '%';
+  bdJob.textContent    = fmt.format(job);
+
+  // ROI
+  const invest   = sf + mf * 12;
+  const net      = totGap - invest;
+  const multiple = invest > 0 ? totGap / invest : 0;
+
+  rRecovered.textContent = fmt.format(Math.round(totGap));
+  rInvest.textContent    = fmt.format(Math.round(invest));
+  rNet.textContent       = (net >= 0 ? '+' : '') + fmt.format(Math.round(net));
+  rMultiple.textContent  = (multiple >= 100 ? Math.round(multiple) : multiple.toFixed(1)) + '×';
+}
+
+// Listeners
+avgJob.addEventListener('input', () => update(true));
+[setupFee, monthlyFee].forEach(el => {
+  el.addEventListener('input', () => update(false));
+});
+
+// URL query parameter support
+// Supported: industry, market, rank, job
+const urlParams = new URLSearchParams(window.location.search);
+
+const industryParam = urlParams.get('industry');
+if (industryParam && industries[industryParam]) {
+  currentIndustry = industryParam;
+  document.querySelectorAll('#industries .chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.id === industryParam);
+  });
+  const ind = industries[industryParam];
+  avgJob.value = ind.avgJob;
+  setupFee.value = ind.setup;
+  monthlyFee.value = ind.monthly;
+}
+
+const marketParam = urlParams.get('market');
+if (marketParam && markets.find(m => m.id === marketParam)) {
+  currentMarket = marketParam;
+  document.querySelectorAll('#markets .chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.id === marketParam);
+  });
+}
+
+const rankParam = urlParams.get('rank');
+if (rankParam && rankOptions.find(r => r.id === rankParam)) {
+  currentRank = rankParam;
+  document.querySelectorAll('.rank-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.id === rankParam);
+  });
+}
+
+const jobParam = urlParams.get('job');
+if (jobParam !== null) {
+  const n = parseFloat(jobParam);
+  if (!isNaN(n) && n > 0) avgJob.value = n;
+}
+
+// Initial render — animated from 0 for drama
+update(true);
+</script>
+</body>
+</html>
