@@ -62,7 +62,7 @@ export default function TermsPage() {
                     "Google Business Profile management",
                     "Keyword targeting & research",
                     "Local citations & NAP consistency",
-                    "4 blog posts/month",
+                    "1 blog post/month",
                     "Monthly ranking report",
                   ].map((f) => <li key={f} className="flex gap-2"><span className="text-green-400 shrink-0">—</span>{f}</li>)}
                 </ul>
@@ -78,7 +78,8 @@ export default function TermsPage() {
                     "Everything in Starter",
                     "On-page SEO optimization (10 pages)",
                     "4 blog posts/month",
-                    "Authority link building (8 links/month)",
+                    "Premium directory placements across 25+ home services platforms",
+                    "NAP consistency audit & cleanup",
                     "Competitor gap analysis",
                     "Schema markup implementation",
                     "Bi-weekly performance updates",

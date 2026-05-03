@@ -14,7 +14,7 @@ const plans = [
     features: [
       "On-page SEO optimization (3 pages)",
       "Keyword targeting & research",
-      "4 blog posts/month",
+      "1 blog post/month",
       "Monthly ranking report",
     ],
     cta: "Get Started",

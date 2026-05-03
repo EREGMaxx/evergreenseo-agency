@@ -92,7 +92,25 @@ function FAQItem({
 
 export default function FAQ() {
   return (
-    <section id="faq" className="py-28 relative overflow-hidden">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqs.map(faq => ({
+              "@type": "Question",
+              "name": faq.question,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+              }
+            }))
+          })
+        }}
+      />
+      <section id="faq" className="py-28 relative overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-20" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -124,5 +142,6 @@ export default function FAQ() {
         </div>
       </div>
     </section>
+    </>
   );
 }

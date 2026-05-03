@@ -12,9 +12,22 @@ import FAQ from "@/components/FAQ";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Evergreen SEO Agency",
+  "description": "Local SEO services purpose-built for HVAC, roofing, plumbing, electrical, residential contractors, and property management companies.",
+  "url": "https://evergreenseo.agency",
+  "email": "maxx@evergreenseo.agency",
+  "areaServed": "United States",
+  "serviceType": "Search Engine Optimization",
+  "priceRange": "$397 - $1,297/month"
+};
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#050508]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       <Navbar />
       <Hero />
       <SocialProof />

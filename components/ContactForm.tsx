@@ -14,14 +14,15 @@ export default function ContactForm() {
     name: "",
     businessName: "",
     website: "",
-    revenue: "",
+    serviceArea: "",
+    serviceType: "",
+    competitor: "",
+    seoSituation: "",
     challenge: "",
   });
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -74,9 +75,7 @@ export default function ContactForm() {
               <span className="text-green-400">holding you back.</span>
             </h2>
             <p className="text-lg text-[#d1d5db] leading-relaxed mb-8">
-              Tell us a bit about your business and we&apos;ll put together a
-              free audit showing exactly where you stand and what it would take
-              to get you to page 1. No obligation, no hard sell.
+              Tell us about your business and we&apos;ll put together a free audit showing exactly where you stand and what it would take to get you to page 1. No obligation, no hard sell.
             </p>
 
             <div className="flex flex-col gap-4">
@@ -114,119 +113,167 @@ export default function ContactForm() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <form
-                onSubmit={handleSubmit}
-                className="gradient-border bg-[#050508] rounded-2xl p-8 flex flex-col gap-5"
-              >
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
-                      Your Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                      required
-                      placeholder="John Smith"
-                      className={inputClass}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
-                      Business Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="businessName"
-                      value={form.businessName}
-                      onChange={handleChange}
-                      required
-                      placeholder="Smith HVAC Co."
-                      className={inputClass}
-                    />
-                  </div>
-                </div>
-
+              onSubmit={handleSubmit}
+              className="gradient-border bg-[#050508] rounded-2xl p-8 flex flex-col gap-5"
+            >
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
-                    Website URL
+                    Your Name *
                   </label>
                   <input
-                    type="url"
-                    name="website"
-                    value={form.website}
+                    type="text"
+                    name="name"
+                    value={form.name}
                     onChange={handleChange}
-                    placeholder="https://yourbusiness.com"
+                    required
+                    placeholder="John Smith"
                     className={inputClass}
                   />
                 </div>
-
                 <div>
                   <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
-                    Monthly Revenue *
+                    Business Name *
                   </label>
-                  <select
-                    name="revenue"
-                    value={form.revenue}
+                  <input
+                    type="text"
+                    name="businessName"
+                    value={form.businessName}
                     onChange={handleChange}
                     required
+                    placeholder="Smith HVAC Co."
                     className={inputClass}
-                  >
-                    <option value="" disabled>
-                      Select your range
-                    </option>
-                    <option value="under-10k">Under $10k/mo</option>
-                    <option value="10k-50k">$10k – $50k/mo</option>
-                    <option value="50k-100k">$50k – $100k/mo</option>
-                    <option value="100k-plus">$100k+/mo</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
-                    What&apos;s Your Biggest Challenge Right Now? *
-                  </label>
-                  <textarea
-                    name="challenge"
-                    value={form.challenge}
-                    onChange={handleChange}
-                    required
-                    rows={4}
-                    placeholder="Tell us what's not working — not enough leads, losing to competitors, can't get off page 2..."
-                    className={`${inputClass} resize-none`}
                   />
                 </div>
+              </div>
 
-                {formState === "error" && (
-                  <div className="flex items-center gap-2 text-red-400 text-sm">
-                    <AlertCircle size={16} />
-                    Something went wrong. Email us directly at maxx@evergreenseo.agency
-                  </div>
-                )}
+              <div>
+                <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
+                  Website URL
+                </label>
+                <input
+                  type="url"
+                  name="website"
+                  value={form.website}
+                  onChange={handleChange}
+                  placeholder="https://yourbusiness.com"
+                  className={inputClass}
+                />
+              </div>
 
-                <button
-                  type="submit"
-                  disabled={formState === "loading"}
-                  className="w-full flex items-center justify-center gap-2 py-3.5 px-6 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-400 transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
+              <div>
+                <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
+                  Service Area *
+                </label>
+                <input
+                  type="text"
+                  name="serviceArea"
+                  value={form.serviceArea}
+                  onChange={handleChange}
+                  required
+                  placeholder="e.g. Phoenix, AZ and surrounding cities"
+                  className={inputClass}
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
+                  Primary Service *
+                </label>
+                <select
+                  name="serviceType"
+                  value={form.serviceType}
+                  onChange={handleChange}
+                  required
+                  className={inputClass}
                 >
-                  {formState === "loading" ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      Get My Free SEO Audit
-                      <Send size={16} />
-                    </>
-                  )}
-                </button>
+                  <option value="" disabled>Select your industry</option>
+                  <option value="hvac">HVAC</option>
+                  <option value="roofing">Roofing</option>
+                  <option value="plumbing">Plumbing</option>
+                  <option value="electrical">Electrical</option>
+                  <option value="residential-contractor">Residential Contracting</option>
+                  <option value="property-management">Property Management</option>
+                </select>
+              </div>
 
-                <p className="text-xs text-[#d1d5db] text-center">
-                  No spam. No obligation. We respond within 24 hours.
-                </p>
-              </form>
+              <div>
+                <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
+                  Biggest Local Competitor
+                </label>
+                <input
+                  type="text"
+                  name="competitor"
+                  value={form.competitor}
+                  onChange={handleChange}
+                  placeholder="e.g. ABC Roofing Co."
+                  className={inputClass}
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
+                  Current SEO Situation *
+                </label>
+                <select
+                  name="seoSituation"
+                  value={form.seoSituation}
+                  onChange={handleChange}
+                  required
+                  className={inputClass}
+                >
+                  <option value="" disabled>Select your situation</option>
+                  <option value="nothing">Nothing set up yet</option>
+                  <option value="tried-failed">Tried SEO before — didn&apos;t work</option>
+                  <option value="current-agency">Currently with another agency</option>
+                  <option value="diy">Have done some SEO myself</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-[#e5e5e5] mb-2 uppercase tracking-wider">
+                  What&apos;s Your Biggest Challenge Right Now? *
+                </label>
+                <textarea
+                  name="challenge"
+                  value={form.challenge}
+                  onChange={handleChange}
+                  required
+                  rows={3}
+                  placeholder="Not enough leads, losing to competitors, can't get off page 2..."
+                  className={`${inputClass} resize-none`}
+                />
+              </div>
+
+              {formState === "error" && (
+                <div className="flex items-center gap-2 text-red-400 text-sm">
+                  <AlertCircle size={16} />
+                  Something went wrong. Email us at maxx@evergreenseo.agency
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={formState === "loading"}
+                className="w-full flex items-center justify-center gap-2 py-3.5 px-6 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-400 transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {formState === "loading" ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    Get My Free SEO Audit
+                    <Send size={16} />
+                  </>
+                )}
+              </button>
+
+              <p className="text-xs text-[#d1d5db] text-center">
+                No spam. No obligation. We respond within 24 hours.
+              </p>
+            </form>
           </motion.div>
         </div>
       </div>

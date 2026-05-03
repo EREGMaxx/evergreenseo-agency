@@ -15,12 +15,18 @@ function CountUp({
   prefix?: string;
   duration?: number;
 }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(end); // SSR: renders real number for crawlers
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
+  const mounted = useRef(false);
 
   useEffect(() => {
-    if (!inView) return;
+    mounted.current = true;
+    setCount(0); // reset for animation after hydration
+  }, []);
+
+  useEffect(() => {
+    if (!inView || !mounted.current) return;
     let start = 0;
     const step = end / (duration / 16);
     const timer = setInterval(() => {

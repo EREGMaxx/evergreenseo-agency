@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,19 +14,14 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row items-center justify-between gap-6"
+          className="grid md:grid-cols-4 gap-10"
         >
           {/* Logo + tagline */}
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <a href="#" className="flex items-center gap-2">
+          <div className="flex flex-col gap-3">
+            <a href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M8 2L14 6V10L8 14L2 10V6L8 2Z"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinejoin="round"
-                  />
+                  <path d="M8 2L14 6V10L8 14L2 10V6L8 2Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
                   <circle cx="8" cy="8" r="2" fill="white" />
                 </svg>
               </div>
@@ -34,38 +29,77 @@ export default function Footer() {
                 Evergreen<span className="text-green-400"> SEO</span>
               </span>
             </a>
-            <p className="text-sm text-[#d1d5db]">
-              Page 1 or it didn&apos;t happen.
-            </p>
+            <p className="text-sm text-[#d1d5db]">Page 1 or it didn&apos;t happen.</p>
+            <a
+              href="mailto:maxx@evergreenseo.agency"
+              className="flex items-center gap-2 text-sm text-[#d1d5db] hover:text-green-400 transition-colors"
+            >
+              <Mail size={13} />
+              maxx@evergreenseo.agency
+            </a>
+            <a
+              href="https://www.google.com/maps/search/Evergreen+SEO+Agency"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-[#d1d5db] hover:text-green-400 transition-colors"
+            >
+              <MapPin size={13} />
+              Find us on Google
+            </a>
           </div>
 
-          {/* Links */}
-          <nav className="flex items-center gap-6 text-sm text-[#d1d5db]">
-            <a href="#how-it-works" className="hover:text-white transition-colors">
-              How It Works
-            </a>
-            <a href="#services" className="hover:text-white transition-colors">
-              Pricing
-            </a>
-            <a href="#faq" className="hover:text-white transition-colors">
-              FAQ
-            </a>
-            <a href="#contact" className="hover:text-white transition-colors">
-              Contact
-            </a>
-          </nav>
+          {/* Company links */}
+          <div>
+            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-4">Company</p>
+            <nav className="flex flex-col gap-3">
+              {[
+                { href: "/#how-it-works", label: "How It Works" },
+                { href: "/#services", label: "Pricing" },
+                { href: "/about", label: "About" },
+                { href: "/blog", label: "Blog" },
+                { href: "/#faq", label: "FAQ" },
+                { href: "/#contact", label: "Contact" },
+              ].map((link) => (
+                <a key={link.href} href={link.href} className="text-sm text-[#d1d5db] hover:text-white transition-colors">
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          </div>
 
-          {/* Email */}
-          <a
-            href="mailto:maxx@evergreenseo.agency"
-            className="flex items-center gap-2 text-sm text-[#d1d5db] hover:text-green-400 transition-colors"
-          >
-            <Mail size={14} />
-            maxx@evergreenseo.agency
-          </a>
+          {/* Industries */}
+          <div>
+            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-4">Industries</p>
+            <nav className="flex flex-col gap-3">
+              {[
+                { href: "/hvac-seo", label: "HVAC SEO" },
+                { href: "/roofing-seo", label: "Roofing SEO" },
+                { href: "/plumbing-seo", label: "Plumbing SEO" },
+                { href: "/electrician-seo", label: "Electrician SEO" },
+                { href: "/residential-contractor-seo", label: "Residential Contractor SEO" },
+                { href: "/property-management-seo", label: "Property Management SEO" },
+              ].map((link) => (
+                <a key={link.href} href={link.href} className="text-sm text-[#d1d5db] hover:text-green-400 transition-colors">
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          {/* CTA */}
+          <div>
+            <p className="text-xs font-semibold text-white uppercase tracking-wider mb-4">Get Started</p>
+            <p className="text-sm text-[#d1d5db] mb-4">Free audit. No obligation. Response within 24 hours.</p>
+            <a
+              href="/#contact"
+              className="inline-flex items-center px-4 py-2.5 bg-green-500 text-white text-sm font-semibold rounded-lg hover:bg-green-400 transition-colors"
+            >
+              Get a Free Audit
+            </a>
+          </div>
         </motion.div>
 
-        <div className="mt-8 pt-8 border-t border-[#1e1e2e] flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="mt-10 pt-8 border-t border-[#1e1e2e] flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-[#d1d5db]">
             © {currentYear} Evergreen SEO Agency. All rights reserved.
           </p>
