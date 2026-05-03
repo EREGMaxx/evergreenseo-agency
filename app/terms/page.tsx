@@ -94,14 +94,14 @@ export default function TermsPage() {
                 </div>
                 <ul className="space-y-2 text-sm">
                   {[
-                    "Everything in Growth (excl. link building)",
+                    "Everything in Growth",
                     "On-page SEO optimization (unlimited pages)",
                     "50+ directory placements including industry-specific platforms with ongoing NAP optimization",
                     "Authority link building — 4 to 6/month (HARO, trade associations, manufacturer networks)",
                     "8 blog posts/month",
                     "Custom website design + build",
-                    "Mockup delivered within 24 hours",
-                    "Site live within 24 hours of approval",
+                    "Mockup delivered within 24–48 hours",
+                    "Site live within 1 week of approval",
                     "Hosting + security included",
                     "Unlimited site updates & changes",
                     "Priority email support (4-hour response)",
