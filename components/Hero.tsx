@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 
 
 const niches = [
+  "Home Service Businesses",
   "HVAC Companies",
   "Roofing Contractors",
   "Plumbers",
