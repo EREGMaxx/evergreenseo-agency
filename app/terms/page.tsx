@@ -95,7 +95,7 @@ export default function TermsPage() {
                   {[
                     "Everything in Growth (excl. link building)",
                     "On-page SEO optimization (unlimited pages)",
-                    "20 premium links/month (replaces Growth link building)",
+                    "20 local citation & directory placements/month",
                     "Weekly long-form content",
                     "Custom website design + build",
                     "Mockup delivered within 24 hours",
