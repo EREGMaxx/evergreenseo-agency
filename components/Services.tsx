@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 const plans = [
   {
     name: "Starter",
-    price: "$297",
+    price: "$397",
     period: "/mo",
     tagline: "Get found locally. Build your foundation.",
     popular: false,
@@ -30,9 +30,10 @@ const plans = [
     features: [
       "On-page SEO optimization (10 pages)",
       "Everything in Starter",
-      "8 blog posts/month",
+      "4 blog posts/month",
       "Google Business Profile optimization",
-      "Local citation & directory placements (8/month) + cleanup",
+      "Premium directory placements across 25+ home services platforms (Angi, HomeAdvisor, BBB, Thumbtack, Nextdoor, Yelp, and more)",
+      "NAP consistency audit & cleanup",
       "Review generation system",
       "Competitor gap analysis",
       "Schema markup implementation",
@@ -51,9 +52,9 @@ const plans = [
     features: [
       "On-page SEO optimization (unlimited pages)",
       "Everything in Growth",
-      "20+ industry-specific citation placements/month",
-      "Authority building (HARO, trade associations, press outreach)",
-      "Weekly long-form content",
+      "50+ directory placements including industry-specific platforms with ongoing NAP optimization",
+      "Authority link building — 4 to 6/month (HARO, trade associations, manufacturer networks)",
+      "8 blog posts/month",
       "Ongoing GBP management & weekly posts",
       "Citation monitoring & maintenance",
       "Review management & response",
