@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, AlertCircle, MapPin, Mail, ExternalLink } from "lucide-react";
+import { ArrowRight, CheckCircle, AlertCircle, MapPin, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
