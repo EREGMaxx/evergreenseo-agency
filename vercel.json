@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/missed-call-audit", "destination": "/missed-call-audit/index.html" }
+    { "source": "/missed-call-audit", "destination": "/missed-call-audit/index.html" },
+    { "source": "/universal-missed-call-audit", "destination": "/universal-missed-call-audit/index.html" }
   ]
 }

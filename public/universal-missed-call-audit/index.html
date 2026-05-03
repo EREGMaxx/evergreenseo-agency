@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Missed Call Audit — Lost Revenue Calculator (Universal Edition)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F1ECE1;
+    --paper-2: #E7E0D1;
+    --paper-3: #DDD4BF;
+    --ink: #18140C;
+    --ink-soft: #524A3C;
+    --ink-muted: #8A8170;
+    --accent: #B8341B;     /* burnt vermillion */
+    --money:  #1B5E3F;     /* deep forest */
+    --line:   rgba(24, 20, 12, 0.14);
+    --line-2: rgba(24, 20, 12, 0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter Tight', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(24, 20, 12, 0.06) 1px, transparent 0);
+    background-size: 22px 22px;
+    padding: 40px 24px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* subtle grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: .9;
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Masthead */
+  .masthead {
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 14px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .masthead .edition { color: var(--ink-soft); }
+  .masthead .vol { font-family: 'JetBrains Mono', monospace; }
+
+  /* Hero */
+  .hero {
+    padding: 64px 0 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero .kicker {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(44px, 7.5vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .hero .lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(17px, 1.6vw, 21px);
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* Section labels */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 56px 0 24px;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .section-label .num {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 8px;
+    border-radius: 2px;
+    font-size: 10px;
+  }
+  .section-label .line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* Inputs grid */
+  .inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper-2);
+  }
+  .input-cell {
+    padding: 28px 28px 26px;
+    border-right: 1px solid var(--ink);
+    position: relative;
+  }
+  .input-cell:last-child { border-right: none; }
+  .input-cell .label-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .input-cell label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .input-cell .value-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--accent);
+  }
+  .input-cell .helper {
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Custom range slider */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--ink);
+    outline: none;
+    margin: 8px 0;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 3px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
+    transition: transform 0.15s ease;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 3px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+
+  /* Currency input */
+  .currency-input {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 6px;
+  }
+  .currency-input .symbol {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink-soft);
+    margin-right: 6px;
+  }
+  .currency-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--ink);
+    outline: none;
+    width: 100%;
+  }
+  .currency-input input::-webkit-outer-spin-button,
+  .currency-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Result section */
+  .result {
+    margin-top: 64px;
+    padding: 56px 32px 48px;
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .result::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(241, 236, 225, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(241, 236, 225, 0.04) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+  .result-content { position: relative; z-index: 1; }
+  .result .label {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--paper-3);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .result h2 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(20px, 2vw, 26px);
+    margin-bottom: 28px;
+    color: var(--paper-2);
+  }
+  .big-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(64px, 13vw, 168px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--paper);
+    margin-bottom: 20px;
+    transition: color 0.4s ease;
+  }
+  .big-number.flash { color: #F2C94C; }
+  .result .breakdown-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--paper-3);
+    letter-spacing: 0.04em;
+  }
+  .result .breakdown-line span {
+    color: var(--paper);
+    font-weight: 700;
+  }
+
+  /* ROI grid */
+  .roi-section {
+    margin-top: 72px;
+  }
+  .roi-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 0;
+    border: 1px solid var(--ink);
+  }
+  .roi-pricing {
+    background: var(--paper-2);
+    padding: 32px;
+    border-right: 1px solid var(--ink);
+  }
+  .roi-pricing h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+  .roi-pricing .sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .pricing-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .pricing-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .pricing-row .pr-label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    width: 130px;
+    flex-shrink: 0;
+  }
+  .pricing-row .pr-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 8px 12px;
+  }
+  .pricing-row .pr-input .symbol {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-right: 4px;
+  }
+  .pricing-row .pr-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    width: 100%;
+  }
+  .pricing-row .pr-input input::-webkit-outer-spin-button,
+  .pricing-row .pr-input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .pricing-row .pr-suffix {
+    font-size: 12px;
+    color: var(--ink-muted);
+    width: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .roi-result {
+    background: var(--paper);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .roi-stat {
+    border-bottom: 1px dashed var(--line);
+    padding: 14px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .roi-stat:last-of-type { border-bottom: none; }
+  .roi-stat .key {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .roi-stat .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+  }
+  .roi-stat.net .val { color: var(--money); }
+  .roi-stat.multiple {
+    margin-top: 14px;
+    padding: 18px 0 6px;
+    border-top: 2px solid var(--ink);
+    border-bottom: none;
+  }
+  .roi-stat.multiple .key {
+    font-style: normal;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .roi-stat.multiple .val {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--money);
+    letter-spacing: -0.02em;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 64px;
+    padding: 32px 0 0;
+    border-top: 1px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer .formula {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .footer .formula code {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: normal;
+    font-size: 12px;
+    background: var(--paper-2);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+  }
+
+  /* Responsive */
+  @media (max-width: 880px) {
+    .inputs { grid-template-columns: 1fr; }
+    .input-cell {
+      border-right: none;
+      border-bottom: 1px solid var(--ink);
+    }
+    .input-cell:last-child { border-bottom: none; }
+    .roi-grid { grid-template-columns: 1fr; }
+    .roi-pricing {
+      border-right: none;
+      border-bottom: 1px solid var(--ink);
+    }
+  }
+  @media (max-width: 540px) {
+    body { padding: 24px 16px 60px; }
+    .hero { padding: 40px 0 28px; }
+    .result { padding: 40px 20px 32px; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* Subtle entrance animation */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .fade-up.d1 { animation-delay: 0.05s; }
+  .fade-up.d2 { animation-delay: 0.15s; }
+  .fade-up.d3 { animation-delay: 0.25s; }
+  .fade-up.d4 { animation-delay: 0.35s; }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Masthead -->
+  <div class="masthead fade-up">
+    <span class="edition">The Missed Call Audit</span>
+    <span class="vol">UNIVERSAL EDITION · ROI ANALYSIS</span>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero fade-up d1">
+    <span class="kicker">Lost Revenue Calculator</span>
+    <h1>How much are your<br>missed leads <em>costing you every year?</em></h1>
+    <p class="lede">Every unanswered call is a customer choosing your competitor.
+      Run the numbers below — most owners are shocked at the size of the leak.</p>
+  </section>
+
+  <!-- Inputs -->
+  <div class="section-label fade-up d3">
+    <span class="num">01</span>
+    <span>Tell us about your business</span>
+    <span class="line"></span>
+  </div>
+  <div class="inputs fade-up d3">
+    <div class="input-cell">
+      <div class="label-row">
+        <label for="missedCalls">Missed calls per week</label>
+        <span class="value-display" id="mcDisplay">10</span>
+      </div>
+      <input type="range" id="missedCalls" min="1" max="60" value="10" step="1">
+      <div class="helper">Industry avg: 12–25 calls/week unanswered</div>
+    </div>
+
+    <div class="input-cell">
+      <div class="label-row">
+        <label for="avgJob">Avg revenue per job</label>
+      </div>
+      <div class="currency-input">
+        <span class="symbol">$</span>
+        <input type="number" id="avgJob" value="4500" min="0">
+      </div>
+      <div class="helper">Average revenue per closed job or client</div>
+    </div>
+
+    <div class="input-cell">
+      <div class="label-row">
+        <label for="bookingRate">Booking rate recovery</label>
+        <span class="value-display" id="brDisplay">35%</span>
+      </div>
+      <input type="range" id="bookingRate" min="5" max="80" value="35" step="1">
+      <div class="helper">% of recovered calls that become real jobs</div>
+    </div>
+  </div>
+
+  <!-- The Big Reveal -->
+  <section class="result fade-up d4" id="result">
+    <div class="result-content">
+      <div class="label">The Number You're Leaving on the Table</div>
+      <h2>Annual revenue lost to missed calls</h2>
+      <div class="big-number" id="bigNumber">$0</div>
+      <div class="breakdown-line">
+        <span id="bdCalls">10</span> calls/week × 52 weeks ×
+        <span id="bdJob">$4,500</span> ×
+        <span id="bdRate">35%</span> recovery
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI breakdown -->
+  <div class="section-label">
+    <span class="num">02</span>
+    <span>Your return on investment</span>
+    <span class="line"></span>
+  </div>
+  <div class="roi-section">
+    <div class="roi-grid">
+      <div class="roi-pricing">
+        <h3>Adjust the investment</h3>
+        <p class="sub">Setup fee + 12 months of retainer. Tweak to match your specific quote.</p>
+        <div class="pricing-rows">
+          <div class="pricing-row">
+            <div class="pr-label">One-time setup</div>
+            <div class="pr-input">
+              <span class="symbol">$</span>
+              <input type="number" id="setupFee" value="3000" min="0">
+            </div>
+            <div class="pr-suffix">once</div>
+          </div>
+          <div class="pricing-row">
+            <div class="pr-label">Monthly retainer</div>
+            <div class="pr-input">
+              <span class="symbol">$</span>
+              <input type="number" id="monthlyFee" value="600" min="0">
+            </div>
+            <div class="pr-suffix">/ mo</div>
+          </div>
+        </div>
+      </div>
+      <div class="roi-result">
+        <div>
+          <div class="roi-stat">
+            <span class="key">Recovered annual revenue</span>
+            <span class="val" id="rRecovered">$0</span>
+          </div>
+          <div class="roi-stat">
+            <span class="key">Total Year 1 investment</span>
+            <span class="val" id="rInvest">$0</span>
+          </div>
+          <div class="roi-stat net">
+            <span class="key">Net annual gain</span>
+            <span class="val" id="rNet">$0</span>
+          </div>
+          <div class="roi-stat multiple">
+            <span class="key">Return Multiple</span>
+            <span class="val" id="rMultiple">0×</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="formula">
+      <em>Formula:</em>
+      <code>Annual Loss = Missed Calls/Wk × 52 × Avg Job × Recovery Rate</code>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+// Element refs
+const missedCalls  = document.getElementById('missedCalls');
+const bookingRate  = document.getElementById('bookingRate');
+const avgJob       = document.getElementById('avgJob');
+const setupFee     = document.getElementById('setupFee');
+const monthlyFee   = document.getElementById('monthlyFee');
+
+const mcDisplay    = document.getElementById('mcDisplay');
+const brDisplay    = document.getElementById('brDisplay');
+const bigNumber    = document.getElementById('bigNumber');
+const bdCalls      = document.getElementById('bdCalls');
+const bdJob        = document.getElementById('bdJob');
+const bdRate       = document.getElementById('bdRate');
+
+const rRecovered   = document.getElementById('rRecovered');
+const rInvest      = document.getElementById('rInvest');
+const rNet         = document.getElementById('rNet');
+const rMultiple    = document.getElementById('rMultiple');
+
+const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+let prevValue = 0;
+function animateNumber(el, from, to, duration = 700) {
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const val = from + (to - from) * eased;
+    el.textContent = fmt.format(Math.round(val));
+    if (t < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt.format(to);
+  }
+  requestAnimationFrame(tick);
+}
+
+function update(animate = false) {
+  const mc = parseInt(missedCalls.value, 10) || 0;
+  const br = parseInt(bookingRate.value, 10) || 0;
+  const aj = parseFloat(avgJob.value) || 0;
+  const sf = parseFloat(setupFee.value) || 0;
+  const mf = parseFloat(monthlyFee.value) || 0;
+
+  mcDisplay.textContent = mc;
+  brDisplay.textContent = br + '%';
+
+  const recovered = mc * 52 * aj * (br / 100);
+  const invest    = sf + mf * 12;
+  const net       = recovered - invest;
+  const multiple  = invest > 0 ? recovered / invest : 0;
+
+  // Big number animated
+  if (animate) {
+    animateNumber(bigNumber, prevValue, recovered);
+    bigNumber.classList.add('flash');
+    setTimeout(() => bigNumber.classList.remove('flash'), 400);
+  } else {
+    bigNumber.textContent = fmt.format(Math.round(recovered));
+  }
+  prevValue = recovered;
+
+  bdCalls.textContent = mc;
+  bdJob.textContent   = fmt.format(aj);
+  bdRate.textContent  = br + '%';
+
+  rRecovered.textContent = fmt.format(Math.round(recovered));
+  rInvest.textContent    = fmt.format(Math.round(invest));
+  rNet.textContent       = (net >= 0 ? '+' : '') + fmt.format(Math.round(net));
+  rMultiple.textContent  = (multiple >= 100 ? Math.round(multiple) : multiple.toFixed(1)) + '×';
+}
+
+// Listeners
+[missedCalls, bookingRate].forEach(el => {
+  el.addEventListener('input', () => update(true));
+});
+avgJob.addEventListener('input', () => update(true));
+[setupFee, monthlyFee].forEach(el => {
+  el.addEventListener('input', () => update(false));
+});
+
+// URL query parameter support
+// Supported: calls (1-60), job (>0), rate (5-80), setup (>=0), monthly (>=0)
+const urlParams = new URLSearchParams(window.location.search);
+
+const callsParam = urlParams.get('calls');
+if (callsParam !== null) {
+  const n = parseInt(callsParam, 10);
+  if (!isNaN(n) && n >= 1 && n <= 60) missedCalls.value = n;
+}
+
+const jobParam = urlParams.get('job');
+if (jobParam !== null) {
+  const n = parseFloat(jobParam);
+  if (!isNaN(n) && n > 0) avgJob.value = n;
+}
+
+const rateParam = urlParams.get('rate');
+if (rateParam !== null) {
+  const n = parseInt(rateParam, 10);
+  if (!isNaN(n) && n >= 5 && n <= 80) bookingRate.value = n;
+}
+
+const setupParam = urlParams.get('setup');
+if (setupParam !== null) {
+  const n = parseFloat(setupParam);
+  if (!isNaN(n) && n >= 0) setupFee.value = n;
+}
+
+const monthlyParam = urlParams.get('monthly');
+if (monthlyParam !== null) {
+  const n = parseFloat(monthlyParam);
+  if (!isNaN(n) && n >= 0) monthlyFee.value = n;
+}
+
+// Initial render — animated from 0 for drama
+update(true);
+</script>
+</body>
+</html>
