@@ -440,9 +440,6 @@ export default function StartPage() {
           <a href="mailto:maxx@evergreenseo.agency" className="text-green-400 hover:text-green-300 transition-colors">
             maxx@evergreenseo.agency
           </a>
-          <a href="https://www.google.com/maps/search/Evergreen+SEO+Agency" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-green-400 hover:text-green-300 transition-colors">
-            <ExternalLink size={12} /> Find us on Google
-          </a>
           <span>© {new Date().getFullYear()} Evergreen SEO Agency</span>
           <a href="/terms" className="text-green-400 hover:text-green-300 transition-colors text-xs">Terms of Service</a>
         </div>

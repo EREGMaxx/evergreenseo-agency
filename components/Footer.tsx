@@ -37,15 +37,7 @@ export default function Footer() {
               <Mail size={13} />
               maxx@evergreenseo.agency
             </a>
-            <a
-              href="https://www.google.com/maps/search/Evergreen+SEO+Agency"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-[#d1d5db] hover:text-green-400 transition-colors"
-            >
-              <MapPin size={13} />
-              Find us on Google
-            </a>
+
           </div>
 
           {/* Company links */}
