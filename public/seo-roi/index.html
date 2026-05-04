@@ -798,25 +798,8 @@
   <div class="roi-grid">
     <div class="roi-pricing">
       <h3>Adjust the investment</h3>
-      <p class="sub">Setup fee + 12 months of retainer, auto-tuned to your industry. Tweak to match your specific quote.</p>
-      <div class="pricing-rows">
-        <div class="pricing-row">
-          <div class="pr-label">One-time setup</div>
-          <div class="pr-input">
-            <span class="symbol">$</span>
-            <input type="number" id="setupFee" value="3000" min="0">
-          </div>
-          <div class="pr-suffix">once</div>
-        </div>
-        <div class="pricing-row">
-          <div class="pr-label">Monthly retainer</div>
-          <div class="pr-input">
-            <span class="symbol">$</span>
-            <input type="number" id="monthlyFee" value="600" min="0">
-          </div>
-          <div class="pr-suffix">/ mo</div>
-        </div>
-      </div>
+      <p class="sub">Select the package that fits — your 12-month investment is calculated below.</p>
+      <div class="chip-row" id="packages"></div>
     </div>
     <div class="roi-result">
       <div>
@@ -939,6 +922,12 @@ const rankOptions = [
   { id: 'top',    label: 'P1: #2–3',        ctr: 0.12   }
 ];
 
+const packages = [
+  { id: 'starter',  label: 'Starter — $397/mo',     monthly: 397  },
+  { id: 'growth',   label: 'Growth — $897/mo',      monthly: 897  },
+  { id: 'fullstack',label: 'Full Stack — $1,297/mo',monthly: 1297 }
+];
+
 const CTR_AT_ONE = 0.28;
 const CLOSE_RATE = 0.38;
 // FORM_RATE comes from the slider; FUNNEL is recomputed each update()
@@ -946,6 +935,7 @@ const CLOSE_RATE = 0.38;
 let currentIndustry = 'hvac';
 let currentMarket   = 'metro';
 let currentRank     = 'page2';
+let currentPackage  = 'growth';
 
 // Build industry chips
 const indContainer = document.getElementById('industries');
@@ -958,10 +948,8 @@ Object.entries(industries).forEach(([id, ind]) => {
     currentIndustry = id;
     document.querySelectorAll('#industries .chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
-    // Snap avg job + pricing to industry defaults
+    // Snap avg job to industry default
     document.getElementById('avgJob').value = ind.avgJob;
-    document.getElementById('setupFee').value = ind.setup;
-    document.getElementById('monthlyFee').value = ind.monthly;
     update(true);
   });
   indContainer.appendChild(btn);
@@ -999,12 +987,26 @@ rankOptions.forEach(r => {
   rankContainer.appendChild(btn);
 });
 
+// Build package chips
+const pkgContainer = document.getElementById('packages');
+packages.forEach(p => {
+  const btn = document.createElement('button');
+  btn.className = 'chip' + (p.id === currentPackage ? ' active' : '');
+  btn.textContent = p.label;
+  btn.dataset.id = p.id;
+  btn.addEventListener('click', () => {
+    currentPackage = p.id;
+    document.querySelectorAll('#packages .chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    update(false);
+  });
+  pkgContainer.appendChild(btn);
+});
+
 // Element refs
 const avgJob       = document.getElementById('avgJob');
 const formRate     = document.getElementById('formRate');
 const frDisplay    = document.getElementById('frDisplay');
-const setupFee     = document.getElementById('setupFee');
-const monthlyFee   = document.getElementById('monthlyFee');
 
 const bigNumber    = document.getElementById('bigNumber');
 const bdVolume     = document.getElementById('bdVolume');
@@ -1041,8 +1043,8 @@ function update(animate = false) {
   const rankObj = rankOptions.find(r => r.id === currentRank);
   const currentCTR = rankObj.ctr;
   const job = parseFloat(avgJob.value) || 0;
-  const sf  = parseFloat(setupFee.value) || 0;
-  const mf  = parseFloat(monthlyFee.value) || 0;
+  const pkg = packages.find(p => p.id === currentPackage);
+  const monthly = pkg ? pkg.monthly : 0;
   const formRatePct = parseInt(formRate.value, 10) || 0;
   const FUNNEL = (formRatePct / 100) * CLOSE_RATE;
 
@@ -1105,7 +1107,7 @@ function update(animate = false) {
   bdJob.textContent    = fmt.format(job);
 
   // ROI
-  const invest   = sf + mf * 12;
+  const invest   = monthly * 12;
   const net      = totGap - invest;
   const multiple = invest > 0 ? totGap / invest : 0;
 
@@ -1118,9 +1120,6 @@ function update(animate = false) {
 // Listeners
 avgJob.addEventListener('input', () => update(true));
 formRate.addEventListener('input', () => update(true));
-[setupFee, monthlyFee].forEach(el => {
-  el.addEventListener('input', () => update(false));
-});
 
 // URL query parameter support
 // Supported: industry, market, rank, job
@@ -1134,8 +1133,14 @@ if (industryParam && industries[industryParam]) {
   });
   const ind = industries[industryParam];
   avgJob.value = ind.avgJob;
-  setupFee.value = ind.setup;
-  monthlyFee.value = ind.monthly;
+}
+
+const packageParam = urlParams.get('package');
+if (packageParam && packages.find(p => p.id === packageParam)) {
+  currentPackage = packageParam;
+  document.querySelectorAll('#packages .chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.id === packageParam);
+  });
 }
 
 const marketParam = urlParams.get('market');
