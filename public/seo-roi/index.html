@@ -176,7 +176,7 @@
   /* Inputs grid (Section 03) */
   .inputs {
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 0;
     border: 1px solid var(--ink);
     background: var(--paper-2);
@@ -207,6 +207,46 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     font-weight: 500;
+  }
+  .input-cell .value-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--accent);
+  }
+
+  /* Range slider */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--ink);
+    outline: none;
+    margin: 8px 0;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 3px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
+    transition: transform 0.15s ease;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 3px solid var(--paper-2);
+    box-shadow: 0 0 0 1px var(--ink);
   }
 
   /* Rank chip group (inside input cell) */
@@ -702,6 +742,15 @@
       </div>
       <div class="helper">Auto-set by industry — adjust to fit</div>
     </div>
+
+    <div class="input-cell">
+      <div class="label-row">
+        <label>Visits-to-call rate</label>
+        <span class="value-display" id="frDisplay">12%</span>
+      </div>
+      <input type="range" id="formRate" min="3" max="25" value="12" step="1">
+      <div class="helper">% of visitors who call or fill out a form</div>
+    </div>
   </div>
 
   <!-- The Big Reveal -->
@@ -812,8 +861,8 @@
     </div>
     <div class="method-card">
       <h4>Conversion funnel <span class="tag">Funnel</span></h4>
-      <p><strong>12%</strong> of website visitors call or fill out a form. Of those, <strong>38%</strong> become paying jobs.</p>
-      <p>Combined visitor-to-job rate: <strong>4.56%</strong>. These are conservative averages for high-intent local service searches; your real numbers may run higher with strong landing pages and fast follow-up.</p>
+      <p><strong>Visits-to-call rate</strong> is adjustable above (default <strong>12%</strong>) — drag it to match what you actually see, or stress-test the math at lower assumptions.</p>
+      <p>Of those calls, <strong>38%</strong> become paying jobs (industry avg for high-intent local service searches). Combined visitor-to-job rate at the default is <strong>4.56%</strong>.</p>
     </div>
     <div class="method-card">
       <h4>Keyword volumes <span class="tag">Data</span></h4>
@@ -891,9 +940,8 @@ const rankOptions = [
 ];
 
 const CTR_AT_ONE = 0.28;
-const FORM_RATE = 0.12;
 const CLOSE_RATE = 0.38;
-const FUNNEL = FORM_RATE * CLOSE_RATE; // 0.0456
+// FORM_RATE comes from the slider; FUNNEL is recomputed each update()
 
 let currentIndustry = 'hvac';
 let currentMarket   = 'metro';
@@ -953,6 +1001,8 @@ rankOptions.forEach(r => {
 
 // Element refs
 const avgJob       = document.getElementById('avgJob');
+const formRate     = document.getElementById('formRate');
+const frDisplay    = document.getElementById('frDisplay');
 const setupFee     = document.getElementById('setupFee');
 const monthlyFee   = document.getElementById('monthlyFee');
 
@@ -993,6 +1043,10 @@ function update(animate = false) {
   const job = parseFloat(avgJob.value) || 0;
   const sf  = parseFloat(setupFee.value) || 0;
   const mf  = parseFloat(monthlyFee.value) || 0;
+  const formRatePct = parseInt(formRate.value, 10) || 0;
+  const FUNNEL = (formRatePct / 100) * CLOSE_RATE;
+
+  frDisplay.textContent = formRatePct + '%';
 
   // Per-keyword math
   let totVol = 0, totNow = 0, totOne = 0, totGap = 0;
@@ -1063,6 +1117,7 @@ function update(animate = false) {
 
 // Listeners
 avgJob.addEventListener('input', () => update(true));
+formRate.addEventListener('input', () => update(true));
 [setupFee, monthlyFee].forEach(el => {
   el.addEventListener('input', () => update(false));
 });
@@ -1103,6 +1158,12 @@ const jobParam = urlParams.get('job');
 if (jobParam !== null) {
   const n = parseFloat(jobParam);
   if (!isNaN(n) && n > 0) avgJob.value = n;
+}
+
+const formRateParam = urlParams.get('formrate');
+if (formRateParam !== null) {
+  const n = parseInt(formRateParam, 10);
+  if (!isNaN(n) && n >= 3 && n <= 25) formRate.value = n;
 }
 
 // Initial render — animated from 0 for drama
