@@ -99,6 +99,14 @@ const posts = [
     slug: "painting-contractor-seo",
   },
   {
+    category: "Landscaping",
+    title: "Landscaping SEO: How to Get More Clients from Google in 2026",
+    excerpt:
+      "Most landscaping businesses are built entirely on referrals — which means no control over lead volume. Local SEO turns Google into a 24/7 referral engine. Here's the complete playbook for landscaping and lawn care companies ready to rank.",
+    readTime: "8 min read",
+    slug: "landscaping-seo",
+  },
+  {
     category: "Local SEO",
     title: "How Long Does SEO Take? A Realistic Timeline for Home Service Businesses",
     excerpt:
