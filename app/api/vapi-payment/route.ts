@@ -299,51 +299,51 @@ async function sendProspectEmail(params: {
     paymentLinkUrl,
   } = params;
 
-  const htmlBody = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <style>
-    body { font-family: Arial, sans-serif; color: #1a1a1a; line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 24px; }
-    .btn { display: inline-block; background-color: #16a34a; color: #ffffff !important; text-decoration: none; padding: 14px 28px; border-radius: 6px; font-weight: bold; font-size: 16px; margin: 16px 0; }
-    .breakdown { background: #f9f9f9; border-left: 4px solid #16a34a; padding: 16px 20px; margin: 20px 0; }
-    .breakdown p { margin: 4px 0; }
-    .footer { margin-top: 32px; font-size: 13px; color: #666; border-top: 1px solid #e5e5e5; padding-top: 16px; }
-  </style>
-</head>
-<body>
-  <p>Hi ${prospectName},</p>
+  // Simple plain text email first to debug
+  const textBody = `Hi ${prospectName},
 
-  <p>Great speaking with you today. Here's your payment link to get started:</p>
+Great speaking with you today. Here's your payment link to get started:
 
-  <a href="${paymentLinkUrl}" class="btn">Complete Payment →</a>
+${paymentLinkUrl}
 
-  <div class="breakdown">
-    <p><strong>What's included:</strong></p>
-    <p>• Setup fee: $${setupFee.toLocaleString()}</p>
-    <p>• First month: $${monthlyFee.toLocaleString()}</p>
-    <p>• <strong>Total today: $${totalAmount.toLocaleString()}</strong></p>
-  </div>
+What's included:
+- Setup fee: $${setupFee.toLocaleString()}
+- First month: $${monthlyFee.toLocaleString()}
+- Total today: $${totalAmount.toLocaleString()}
 
-  <p>Once payment is processed, we'll send your onboarding form within the hour and have your AI agent live within 5–7 business days.</p>
+Once payment is processed, we'll send your onboarding form within the hour and have your AI agent live within 5–7 business days.
 
-  <p>Questions? Reply to this email or call <strong>(424) 464-8434</strong>.</p>
+Questions? Reply to this email or call (424) 464-8434.
 
-  <div class="footer">
-    <p><strong>Maxx | Evergreen SEO Agency</strong><br />
-    <a href="https://evergreenseo.agency">evergreenseo.agency</a></p>
-  </div>
-</body>
-</html>
-  `.trim();
+Maxx | Evergreen SEO Agency
+https://evergreenseo.agency`;
 
-  await sendEmail({
-    graphToken,
-    toAddress: prospectEmail,
-    subject: "Your Evergreen SEO Agency Payment Link",
-    htmlBody,
-  });
+  // Send as plain text, not HTML
+  const payload = {
+    message: {
+      subject: "Your Evergreen SEO Agency Payment Link",
+      body: { contentType: "Text", content: textBody },
+      toRecipients: [{ emailAddress: { address: prospectEmail } }],
+    },
+    saveToSentItems: true,
+  };
+
+  const res = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${MS_MAILBOX}/sendMail`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${graphToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`sendProspectEmail failed: ${err}`);
+  }
 }
 
 async function sendInternalAlert(params: {
