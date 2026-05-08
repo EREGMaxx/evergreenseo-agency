@@ -33,8 +33,27 @@ interface VapiPayload {
   };
 }
 
-// ── Health check ──────────────────────────────────────────────────────────────
-export async function GET() {
+// ── Health check / debug ─────────────────────────────────────────────────────
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  if (searchParams.get("debug") === "1") {
+    // Test Graph token only — never expose secrets, just confirm they're set
+    const envCheck = {
+      STRIPE_SECRET_KEY: STRIPE_SECRET_KEY ? `set (${STRIPE_SECRET_KEY.length} chars)` : "MISSING",
+      MS_TENANT_ID: MS_TENANT_ID ? `set (${MS_TENANT_ID.length} chars)` : "MISSING",
+      MS_CLIENT_ID: MS_CLIENT_ID ? `set (${MS_CLIENT_ID.length} chars)` : "MISSING",
+      MS_CLIENT_SECRET: MS_CLIENT_SECRET ? `set (${MS_CLIENT_SECRET.length} chars)` : "MISSING",
+      MS_MAILBOX: MS_MAILBOX || "MISSING",
+    };
+    let tokenStatus = "not tested";
+    try {
+      await getMsGraphToken();
+      tokenStatus = "OK";
+    } catch (e) {
+      tokenStatus = `FAILED: ${String(e)}`;
+    }
+    return NextResponse.json({ status: "ok", envCheck, tokenStatus });
+  }
   return NextResponse.json({ status: "ok" });
 }
 
