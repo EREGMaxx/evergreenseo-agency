@@ -46,13 +46,51 @@ export async function GET(req: NextRequest) {
       MS_MAILBOX: MS_MAILBOX || "MISSING",
     };
     let tokenStatus = "not tested";
+    let emailStatus = "not tested";
+    let stripeStatus = "not tested";
     try {
-      await getMsGraphToken();
+      const tok = await getMsGraphToken();
       tokenStatus = "OK";
+      // Try sending a real test email
+      try {
+        const testPayload = {
+          message: {
+            subject: "DEBUG: vapi-payment email test",
+            body: { contentType: "Text", content: "This is a debug test email from the vapi-payment webhook on Vercel." },
+            toRecipients: [{ emailAddress: { address: "eregmaxx2@gmail.com" } }],
+          },
+          saveToSentItems: true,
+        };
+        const r = await fetch(`https://graph.microsoft.com/v1.0/users/${MS_MAILBOX}/sendMail`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${tok}`, "Content-Type": "application/json" },
+          body: JSON.stringify(testPayload),
+        });
+        if (r.ok) {
+          emailStatus = "SENT OK";
+        } else {
+          const err = await r.text();
+          emailStatus = `FAILED: ${err}`;
+        }
+      } catch (e) {
+        emailStatus = `EXCEPTION: ${String(e)}`;
+      }
     } catch (e) {
       tokenStatus = `FAILED: ${String(e)}`;
     }
-    return NextResponse.json({ status: "ok", envCheck, tokenStatus });
+    // Try Stripe
+    try {
+      const r = await fetch("https://api.stripe.com/v1/prices", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${STRIPE_SECRET_KEY}`, "Content-Type": "application/x-www-form-urlencoded" },
+        body: "currency=usd&unit_amount=100&product_data[name]=debug-test",
+      });
+      const d = await r.json();
+      stripeStatus = d.id ? `OK: ${d.id}` : `FAILED: ${JSON.stringify(d.error)}`;
+    } catch (e) {
+      stripeStatus = `EXCEPTION: ${String(e)}`;
+    }
+    return NextResponse.json({ status: "ok", envCheck, tokenStatus, emailStatus, stripeStatus });
   }
   return NextResponse.json({ status: "ok" });
 }
