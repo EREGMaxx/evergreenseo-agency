@@ -29,10 +29,13 @@ interface VapiToolCall {
 }
 
 interface VapiPayload {
-  message: {
-    type: string;
-    toolCallList: VapiToolCall[];
+  message?: {
+    type?: string;
+    toolCallList?: VapiToolCall[];
+    toolCalls?: VapiToolCall[];
   };
+  toolCallList?: VapiToolCall[];
+  toolCalls?: VapiToolCall[];
 }
 
 // ── Health check / debug ─────────────────────────────────────────────────────
@@ -104,10 +107,19 @@ export async function POST(req: NextRequest) {
   try {
     const body: VapiPayload = await req.json();
 
-    const toolCallList = body?.message?.toolCallList ?? [];
+    // Vapi sends tool calls in multiple possible formats — handle all of them
+    const toolCallList =
+      body?.message?.toolCallList ??
+      body?.message?.toolCalls ??
+      body?.toolCallList ??
+      body?.toolCalls ??
+      [];
     const toolCall = toolCallList.find(
-      (tc) => tc.function?.name === "send_payment_link"
+      (tc: VapiToolCall) => tc.function?.name === "send_payment_link"
     );
+
+    // Log raw body for debugging
+    console.log("[vapi-payment] Raw body:", JSON.stringify(body).slice(0, 500));
 
     if (!toolCall) {
       return NextResponse.json(
