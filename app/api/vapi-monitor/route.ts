@@ -10,6 +10,17 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const type = body?.message?.type;
 
+    // If a tool call arrives here, forward it to the payment webhook
+    if (type === "tool-calls") {
+      const res = await fetch("https://www.evergreenseo.agency/api/vapi-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      return NextResponse.json(data);
+    }
+
     if (type === "call-started") {
       const callId = body?.message?.call?.id ?? body?.message?.callId ?? "unknown";
       const from = body?.message?.call?.customer?.number ?? "unknown number";
