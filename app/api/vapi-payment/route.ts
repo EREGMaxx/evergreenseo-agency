@@ -123,16 +123,19 @@ export async function POST(req: NextRequest) {
     // Log raw body for debugging
     console.log("[vapi-payment] Raw body:", JSON.stringify(body).slice(0, 500));
 
-    // Handle call-started — send Telegram alert
+    // Handle call-started — send email alert (Telegram bot conflicts with OpenClaw)
     if (body?.message?.type === "call-started") {
       const callId = body?.message?.call?.id ?? "unknown";
       const from = body?.message?.call?.customer?.number ?? "unknown number";
-      const text = `📞 Incoming call on Evergreen line\nFrom: ${from}\n\nhttps://dashboard.vapi.ai/calls/${callId}`;
-      await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: process.env.TELEGRAM_CHAT_ID, text }),
-      }).catch(() => {});
+      try {
+        const gToken = await getMsGraphToken();
+        await sendEmail({
+          graphToken: gToken,
+          toAddress: INTERNAL_ALERT_EMAIL,
+          subject: "📞 Incoming Call — Evergreen Line",
+          htmlBody: `<p>Incoming call from <strong>${from}</strong></p><p><a href="https://dashboard.vapi.ai/calls/${callId}">Listen / View Call</a></p>`,
+        });
+      } catch {}
       return NextResponse.json({ ok: true });
     }
 
