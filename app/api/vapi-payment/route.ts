@@ -129,7 +129,10 @@ export async function POST(req: NextRequest) {
     }
 
     toolCallId = toolCall.id;
-    const args: ToolCallArgs = JSON.parse(toolCall.function.arguments);
+    // Vapi sends arguments as a pre-parsed object; manual tests send a JSON string — handle both
+    const args: ToolCallArgs = typeof toolCall.function.arguments === "string"
+      ? JSON.parse(toolCall.function.arguments)
+      : toolCall.function.arguments as unknown as ToolCallArgs;
     const { prospect_name, prospect_email, setup_fee, monthly_fee, industry } =
       args;
 
