@@ -1,4 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  logCallStarted,
+  logCallEnded,
+  logEmailSent,
+  logPaymentLinkSent,
+} from "@/lib/call-tracker";
 
 export const maxDuration = 30; // Allow up to 30s for Stripe + email to complete
 
@@ -8,7 +14,7 @@ const MS_TENANT_ID = process.env.MS_TENANT_ID ?? "";
 const MS_CLIENT_ID = process.env.MS_CLIENT_ID ?? "";
 const MS_CLIENT_SECRET = process.env.MS_CLIENT_SECRET ?? "";
 const MS_MAILBOX = process.env.MS_MAILBOX ?? "maxx@evergreenseo.agency";
-const INTERNAL_ALERT_EMAIL = "skyler@mednick.com";
+const INTERNAL_ALERT_EMAIL = "skyler@mednick.com"; // used only for payment link alerts
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface ToolCallArgs {
@@ -34,6 +40,9 @@ interface VapiPayload {
     toolCallList?: VapiToolCall[];
     toolCalls?: VapiToolCall[];
     call?: { id?: string; customer?: { number?: string } };
+    durationSeconds?: number;
+    endedReason?: string;
+    summary?: string;
     [key: string]: unknown;
   };
   toolCallList?: VapiToolCall[];
@@ -123,19 +132,21 @@ export async function POST(req: NextRequest) {
     // Log raw body for debugging
     console.log("[vapi-payment] Raw body:", JSON.stringify(body).slice(0, 500));
 
-    // Handle call-started — send email alert (Telegram bot conflicts with OpenClaw)
+    // Handle call-started — track the event
     if (body?.message?.type === "call-started") {
       const callId = body?.message?.call?.id ?? "unknown";
       const from = body?.message?.call?.customer?.number ?? "unknown number";
-      try {
-        const gToken = await getMsGraphToken();
-        await sendEmail({
-          graphToken: gToken,
-          toAddress: INTERNAL_ALERT_EMAIL,
-          subject: "📞 Incoming Call — Evergreen Line",
-          htmlBody: `<p>Incoming call from <strong>${from}</strong></p><p><a href="https://dashboard.vapi.ai/calls/${callId}">Listen / View Call</a></p>`,
-        });
-      } catch {}
+      await logCallStarted(callId, from);
+      return NextResponse.json({ ok: true });
+    }
+
+    // Handle end-of-call-report — track duration + outcome
+    if (body?.message?.type === "end-of-call-report") {
+      const callId = body?.message?.call?.id ?? "unknown";
+      const duration = body?.message?.durationSeconds ?? 0;
+      const endedReason = body?.message?.endedReason ?? "unknown";
+      const summary = body?.message?.summary ?? "";
+      await logCallEnded(callId, duration, endedReason, summary);
       return NextResponse.json({ ok: true });
     }
 
@@ -153,6 +164,7 @@ export async function POST(req: NextRequest) {
     }
 
     toolCallId = toolCall.id;
+    const callId = body?.message?.call?.id ?? "unknown";
     // Vapi sends arguments as a pre-parsed object; manual tests send a JSON string — handle both
     const args: ToolCallArgs = typeof toolCall.function.arguments === "string"
       ? JSON.parse(toolCall.function.arguments)
@@ -196,12 +208,21 @@ export async function POST(req: NextRequest) {
           totalAmount,
           paymentLinkUrl,
         });
+        await logEmailSent(callId, prospect_email);
       } catch (err) {
         console.error("[vapi-payment] Prospect email error:", err);
       }
     }
 
-    // ── 4. Send internal alert ────────────────────────────────────────────────
+    // ── 4. Log payment link + send internal alert ─────────────────────────────
+    await logPaymentLinkSent({
+      callId,
+      prospectName: prospect_name,
+      prospectEmail: prospect_email,
+      industry,
+      setupFee: setup_fee,
+      monthlyFee: monthly_fee,
+    });
     if (graphToken) {
       try {
         await sendInternalAlert({
