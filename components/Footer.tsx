@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -36,6 +36,13 @@ export default function Footer() {
             >
               <Mail size={13} />
               maxx@evergreenseo.agency
+            </a>
+            <a
+              href="tel:+14244648434"
+              className="flex items-center gap-2 text-sm text-[#d1d5db] hover:text-green-400 transition-colors"
+            >
+              <Phone size={13} />
+              (424) 464-8434
             </a>
 
           </div>
