@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 30; // Allow up to 30s for Stripe + email to complete
+
 // ── Config ────────────────────────────────────────────────────────────────────
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY ?? "";
 const MS_TENANT_ID = process.env.MS_TENANT_ID ?? "";
