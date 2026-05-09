@@ -121,6 +121,25 @@ export async function POST(req: NextRequest) {
     // Log raw body for debugging
     console.log("[vapi-payment] Raw body:", JSON.stringify(body).slice(0, 500));
 
+    // Handle call-started — send Telegram alert
+    if (body?.message?.type === "call-started") {
+      const callId = body?.message?.call?.id ?? "unknown";
+      const from = body?.message?.call?.customer?.number ?? "unknown number";
+      const text = `📞 Incoming call on Evergreen line\nFrom: ${from}\n\nhttps://dashboard.vapi.ai/calls/${callId}`;
+      await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: process.env.TELEGRAM_CHAT_ID, text }),
+      }).catch(() => {});
+      return NextResponse.json({ ok: true });
+    }
+
+    // Return 200 for all non-tool-call events so Vapi doesn't error
+    const msgType = body?.message?.type ?? "";
+    if (msgType && msgType !== "tool-calls") {
+      return NextResponse.json({ ok: true });
+    }
+
     if (!toolCall) {
       return NextResponse.json(
         { error: "No send_payment_link tool call found" },
