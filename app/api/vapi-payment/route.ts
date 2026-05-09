@@ -33,6 +33,8 @@ interface VapiPayload {
     type?: string;
     toolCallList?: VapiToolCall[];
     toolCalls?: VapiToolCall[];
+    call?: { id?: string; customer?: { number?: string } };
+    [key: string]: unknown;
   };
   toolCallList?: VapiToolCall[];
   toolCalls?: VapiToolCall[];
