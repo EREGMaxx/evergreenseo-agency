@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+
 
 const KV_URL = process.env.KV_REST_API_URL!
 const KV_TOKEN = process.env.KV_REST_API_TOKEN!
@@ -31,7 +31,7 @@ async function getProposal(id: string): Promise<ProposalData | null> {
   }
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Your SEO Proposal — Evergreen SEO Agency',
     robots: { index: false, follow: false },
