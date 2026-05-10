@@ -37,6 +37,8 @@ body {
 
 h1, h2 {
   font-family: var(--font-serif), serif;
+  font-style: italic;
+  letter-spacing: 0.01em;
 }
 
 /* Custom scrollbar */
@@ -71,12 +73,10 @@ h1, h2 {
   opacity: 0.4;
 }
 
-/* Grid background pattern */
+/* Dot grid background pattern */
 .grid-bg {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
 /* Gradient borders */

@@ -82,7 +82,7 @@ export default function WhyUs() {
               </div>
               <div>
                 <h3 className="text-white font-semibold text-lg mb-2">{item.title}</h3>
-                <p className="text-[#d1d5db] leading-relaxed">{item.description}</p>
+                <p className="text-[#d1d5db] leading-relaxed max-w-[68ch]">{item.description}</p>
               </div>
             </motion.div>
           ))}

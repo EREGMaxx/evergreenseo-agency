@@ -65,13 +65,13 @@ const milestones = [
     title: "Rankings & Leads",
     description:
       "Most clients see meaningful ranking movement and measurable lead increases in this window. Competitive markets may take longer — we'll tell you upfront which bucket you're in.",
-    color: "#a855f7",
+    color: "var(--accent-green)",
   },
 ];
 
 export default function Timeline() {
   return (
-    <section className="py-24 relative overflow-hidden bg-[#050505]">
+    <section className="py-24 relative overflow-hidden bg-[oklch(17%_0.018_228)]">
       <div className="absolute inset-0 grid-bg opacity-10" />
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         <motion.div
@@ -81,7 +81,7 @@ export default function Timeline() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-[#22c55e] text-sm font-semibold tracking-widest uppercase mb-4">
+          <p className="text-sm font-semibold tracking-widest mb-4" style={{ color: 'var(--accent-green)' }}>
             Honest Expectations
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">

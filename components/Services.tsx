@@ -106,7 +106,7 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`relative rounded-2xl border ${
+              className={`relative rounded-b-2xl border ${
                 plan.popular
                   ? "border-t-2 border-[#1e1e2e]"
                   : "border-[#1e1e2e]"

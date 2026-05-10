@@ -8,7 +8,7 @@ const faqs = [
   {
     question: "How long does SEO take to work?",
     answer:
-      "You'll typically see initial movement within 90 days — new keywords entering the top 50, Google Business Profile impressions climbing, and site traffic ticking up. Significant impact — page 1 rankings, consistent inbound leads — usually happens between 4 and 6 months. SEO is a compounding asset: the longer you invest, the more it pays back. Unlike paid ads, the results don't stop when you stop paying.",
+      "We start with your Google Business Profile, which moves faster than organic SEO. Most clients see map pack movement within the first 30 days — more impressions, more direction requests, more calls from the map. Organic rankings take longer: expect meaningful keyword movement around 90 days, and consistent inbound leads from page 1 rankings between months 3 and 6. SEO is a compounding asset: the longer you invest, the more it pays back. Unlike paid ads, the results don't stop when you stop paying.",
   },
   {
     question: "Do you guarantee rankings?",

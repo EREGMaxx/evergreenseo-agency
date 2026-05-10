@@ -49,13 +49,13 @@ export default function Problem() {
                 <br />
                 <span className="text-white">We fix that.</span>
               </h2>
-              <p className="text-lg text-[#d1d5db] leading-relaxed mb-8">
+              <p className="text-lg text-[#d1d5db] leading-relaxed mb-8 max-w-[68ch]">
                 You built a great business. You do great work. But if your
                 customers can&apos;t find you when they search, none of that
                 matters. Your competitors are capturing those leads — leads that
                 should be yours.
               </p>
-              <p className="text-[#d1d5db] leading-relaxed">
+              <p className="text-[#d1d5db] leading-relaxed max-w-[68ch]">
                 Every day you&apos;re not on page 1, you&apos;re handing
                 business to someone else. We change that. Fast.
               </p>

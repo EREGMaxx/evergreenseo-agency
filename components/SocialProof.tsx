@@ -22,7 +22,7 @@ export default function SocialProof() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center text-sm text-[#d1d5db] font-medium uppercase tracking-widest mb-10"
+          className="text-center text-sm text-[#d1d5db] font-medium tracking-widest mb-10"
         >
           Specialized in 6 home service industries
         </motion.p>

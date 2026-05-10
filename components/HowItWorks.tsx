@@ -84,7 +84,7 @@ export default function HowItWorks() {
                 </div>
 
                 <h3 className="text-xl font-bold text-white mb-4">{step.title}</h3>
-                <p className="text-[#d1d5db] leading-relaxed mb-4">{step.description}</p>
+                <p className="text-[#d1d5db] leading-relaxed mb-4 max-w-[68ch]">{step.description}</p>
                 <p className="text-sm text-green-400 font-medium">{step.detail}</p>
               </div>
             </motion.div>
