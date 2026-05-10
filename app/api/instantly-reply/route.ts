@@ -42,8 +42,10 @@ Rules:
 - Never mention AI, automation, or templates.
 - Move toward booking a call without being pushy.`
 
+  const model = intent === 'skeptical' ? 'claude-sonnet-4-6' : 'claude-haiku-4-5'
+
   const intentGuide: Record<string, string> = {
-    interested: 'They are interested. Confirm excitement, offer 2 specific time slots this week for a quick call. Keep it very short.',
+    interested: "They replied positively and are interested. Express brief enthusiasm. Offer a FREE local SEO audit: 'Want me to put together a free audit of your local search presence in [city]? I can have it to you within the hour.' 2-3 sentences max.",
     pricing: 'They asked about pricing. Say you tailor pricing to each market and want to show them the opportunity first — offer a quick 10-min call to walk through exactly what it would cost for their area.',
     skeptical: 'They are skeptical or have tried SEO before. Acknowledge it briefly, differentiate (you focus only on local map pack, results in 90 days or you work for free), then ask one question to re-engage.',
     not_interested: 'They said no. Be gracious, keep the door open. One sentence max: "No worries — if anything changes, you know where to find me."',
@@ -53,7 +55,7 @@ Rules:
   }
 
   const message = await client.messages.create({
-    model: 'claude-haiku-4-5',
+    model,
     max_tokens: 300,
     system: systemPrompt,
     messages: [
@@ -110,6 +112,12 @@ async function notifyViaKV(event: {
   })
 }
 
+function needsAudit(body: string, intent: string): boolean {
+  const positive = /\byes\b|sure|send it|go ahead|sounds good|let.?s do|please|would love|that would|absolutely|definitely/i.test(body)
+  const short = body.trim().split(/\s+/).length < 60
+  return positive && short && (intent === 'interested' || intent === 'unknown' || intent === 'pricing')
+}
+
 export async function POST(req: NextRequest) {
   try {
     // Verify webhook secret
@@ -164,6 +172,43 @@ export async function POST(req: NextRequest) {
       eaccount,
       timestamp: new Date().toISOString(),
     })
+
+    // Audit trigger: if prospect is saying yes to an audit offer, queue it
+    if (needsAudit(replyBody, intent)) {
+      // Send immediate acknowledgement
+      await sendInstantlyReply(
+        emailId,
+        eaccount,
+        subject.startsWith('Re:') ? subject : `Re: ${subject}`,
+        "On it. Pulling your local search data now — I'll have your audit in your inbox shortly."
+      )
+
+      // Write audit request to KV with 48hr TTL
+      if (KV_URL && KV_TOKEN) {
+        const auditKey = `audit_request:${Date.now()}`
+        const auditData = JSON.stringify({
+          leadEmail,
+          businessName,
+          website: lead.website || lead.custom_variables?.website || '',
+          city,
+          niche,
+          eaccount,
+          emailId,
+          campaignId: data.campaign_id || data.campaignId || '',
+          createdAt: new Date().toISOString(),
+          status: 'pending',
+        })
+        await fetch(`${KV_URL}/set/${encodeURIComponent(auditKey)}`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
+          body: auditData,
+        })
+        await fetch(`${KV_URL}/expire/${encodeURIComponent(auditKey)}/172800`, {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${KV_TOKEN}` },
+        })
+      }
+    }
 
     return NextResponse.json({ ok: true, intent, replyPreview: ourReply.slice(0, 100), sendResult })
 
