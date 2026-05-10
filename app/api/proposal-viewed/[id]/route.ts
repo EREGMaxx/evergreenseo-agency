@@ -3,14 +3,17 @@ import { NextRequest, NextResponse } from 'next/server'
 const KV_URL = process.env.KV_REST_API_URL!
 const KV_TOKEN = process.env.KV_REST_API_TOKEN!
 
-export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+// Next.js 14: params is NOT a Promise. Upstash-compatible POST command format.
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const { id } = await params
+    const { id } = params
     const key = `proposal:${id}`
 
-    // Fetch existing proposal
-    const getRes = await fetch(`${KV_URL}/get/${encodeURIComponent(key)}`, {
-      headers: { Authorization: `Bearer ${KV_TOKEN}` },
+    // GET existing proposal
+    const getRes = await fetch(KV_URL, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(['GET', key]),
     })
     const getJson = await getRes.json()
     if (!getJson.result) {
@@ -21,16 +24,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       ? JSON.parse(getJson.result)
       : getJson.result
 
-    // Update viewed flag
     proposal.viewed = true
 
-    await fetch(`${KV_URL}/set/${encodeURIComponent(key)}`, {
+    // SET updated proposal
+    await fetch(KV_URL, {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${KV_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(proposal),
+      headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(['SET', key, JSON.stringify(proposal)]),
     })
 
     return NextResponse.json({ ok: true })

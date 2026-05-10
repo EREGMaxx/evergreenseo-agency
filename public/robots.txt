@@ -1,2 +1,5 @@
 User-agent: *
 Disallow: /proposals/
+Allow: /
+
+Sitemap: https://evergreenseo.agency/sitemap.xml
