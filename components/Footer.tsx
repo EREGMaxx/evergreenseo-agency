@@ -91,7 +91,10 @@ export default function Footer() {
             <p className="text-sm text-[#d1d5db] mb-4">Free audit. No obligation. Response within 24 hours.</p>
             <a
               href="/#contact"
-              className="inline-flex items-center px-4 py-2.5 bg-green-500 text-white text-sm font-semibold rounded-lg hover:bg-green-400 transition-colors"
+              className="inline-flex items-center px-4 py-2.5 text-sm font-semibold rounded-lg transition-colors"
+              style={{ background: "var(--cta-amber)", color: "#0a0a0a" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "var(--cta-amber-hover)")}
+              onMouseLeave={e => (e.currentTarget.style.background = "var(--cta-amber)")}
             >
               Get a Free Audit
             </a>

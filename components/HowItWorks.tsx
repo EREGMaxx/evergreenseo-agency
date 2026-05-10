@@ -48,10 +48,10 @@ export default function HowItWorks() {
             <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
             The Process
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="text-4xl sm:text-5xl font-normal tracking-tight mb-4">
             Simple. Transparent. <span className="text-green-400">Effective.</span>
           </h2>
-          <p className="text-[#d1d5db] text-lg">
+          <p className="text-[#d1d5db] text-lg max-w-prose mx-auto">
             No black boxes, no jargon. Here&apos;s exactly how we take your business from invisible to dominant.
           </p>
         </motion.div>
@@ -101,7 +101,10 @@ export default function HowItWorks() {
         >
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-400 transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-6 py-3.5 font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-200"
+            style={{ background: "var(--cta-amber)", color: "#0a0a0a" }}
+            onMouseEnter={e => (e.currentTarget.style.background = "var(--cta-amber-hover)")}
+            onMouseLeave={e => (e.currentTarget.style.background = "var(--cta-amber)")}
           >
             Start With a Free Audit
           </a>

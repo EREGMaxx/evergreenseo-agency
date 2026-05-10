@@ -80,9 +80,9 @@ const stats = [
     suffix: "%",
     label: "of local search clicks go to the top 3 results",
     source: "BrightLocal",
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/10",
-    borderColor: "border-purple-500/20",
+    color: "text-amber-400",
+    bgColor: "bg-amber-500/10",
+    borderColor: "border-amber-500/20",
     isDecimal: false,
   },
 ];
@@ -106,11 +106,11 @@ export default function Results() {
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             Local Search Data
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="text-4xl sm:text-5xl font-normal tracking-tight mb-4">
             Why Local SEO{" "}
             <span className="text-green-400">Wins</span>
           </h2>
-          <p className="text-[#d1d5db] text-lg">
+          <p className="text-[#d1d5db] text-lg max-w-prose mx-auto">
             Local search is the highest-intent traffic on the internet. These are the numbers that make it the most valuable marketing channel for home service businesses.
           </p>
         </motion.div>
@@ -141,7 +141,7 @@ export default function Results() {
               </div>
 
               <p className="text-[#d1d5db] font-medium mb-2">{stat.label}</p>
-              <p className="text-xs text-[#6b7280]">Source: {stat.source}</p>
+              <p className="text-xs text-[--text-muted]">Source: {stat.source}</p>
             </motion.div>
           ))}
         </div>
@@ -150,7 +150,7 @@ export default function Results() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center text-xs text-[#6b7280]"
+          className="text-center text-xs text-[--text-muted]"
         >
           Statistics sourced from Google Think with Google and BrightLocal Local Consumer Review Survey.
         </motion.p>

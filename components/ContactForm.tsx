@@ -49,7 +49,7 @@ export default function ContactForm() {
   };
 
   const inputClass =
-    "w-full bg-[#1e2a1e] border border-[#2d4a2d] rounded-xl px-4 py-3 text-white placeholder-[#9ca3af] focus:border-[#22c55e] focus:ring-1 focus:ring-[#22c55e]/30 transition-all duration-200 text-sm outline-none";
+    "w-full bg-[#16161e] border border-[#2a2a3e] rounded-xl px-4 py-3 text-white placeholder-[#9ca3af] focus:border-[#3a3a50] transition-all duration-200 text-sm outline-none";
 
   return (
     <section id="contact" className="py-28 relative overflow-hidden">
@@ -70,11 +70,11 @@ export default function ContactForm() {
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
               Free Audit
             </span>
-            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">
+            <h2 className="text-4xl sm:text-5xl font-normal tracking-tight mb-6">
               Let&apos;s see what&apos;s{" "}
               <span className="text-green-400">holding you back.</span>
             </h2>
-            <p className="text-lg text-[#d1d5db] leading-relaxed mb-8">
+            <p className="text-lg text-[#d1d5db] leading-relaxed mb-8 max-w-prose">
               Tell us about your business and we&apos;ll put together a free audit showing exactly where you stand and what it would take to get you to page 1. No obligation, no hard sell.
             </p>
 
@@ -255,7 +255,10 @@ export default function ContactForm() {
               <button
                 type="submit"
                 disabled={formState === "loading"}
-                className="w-full flex items-center justify-center gap-2 py-3.5 px-6 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-400 transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 py-3.5 px-6 font-semibold rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{ background: "var(--cta-amber)", color: "#0a0a0a" }}
+                onMouseEnter={e => { if (formState !== "loading") (e.currentTarget as HTMLButtonElement).style.background = "var(--cta-amber-hover)"; }}
+                onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.background = "var(--cta-amber)")}
               >
                 {formState === "loading" ? (
                   <>

@@ -5,6 +5,15 @@
 :root {
   --font-inter: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+
+  --bg-base: oklch(17% 0.018 228);
+  --bg-surface: oklch(22% 0.014 228);
+  --bg-border: oklch(30% 0.012 228);
+  --text-body: oklch(88% 0.008 228);
+  --text-muted: oklch(62% 0.010 228);
+  --accent-green: oklch(52% 0.14 155);
+  --cta-amber: oklch(78% 0.16 78);
+  --cta-amber-hover: oklch(82% 0.14 78);
 }
 
 * {
@@ -20,10 +29,14 @@ html {
 }
 
 body {
-  background: #050508;
-  color: #f8fafc;
+  background: var(--bg-base);
+  color: var(--text-body);
   font-family: var(--font-inter);
   overflow-x: hidden;
+}
+
+h1, h2 {
+  font-family: var(--font-serif), serif;
 }
 
 /* Custom scrollbar */
@@ -31,7 +44,7 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #050508;
+  background: var(--bg-base);
 }
 ::-webkit-scrollbar-thumb {
   background: #1e1e2e;
@@ -58,18 +71,9 @@ body {
   opacity: 0.4;
 }
 
-/* Gradient glow effect */
-.glow-green {
-  box-shadow: 0 0 30px rgba(34, 197, 94, 0.3), 0 0 60px rgba(34, 197, 94, 0.1);
-}
-
-.text-glow-green {
-  text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
-}
-
 /* Grid background pattern */
 .grid-bg {
-  background-image: 
+  background-image:
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 60px 60px;
@@ -85,9 +89,9 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.4), rgba(34, 197, 94, 0.05), rgba(255,255,255,0.05));
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.03), rgba(255,255,255,0.04));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;

@@ -18,7 +18,6 @@ const plans = [
       "Monthly ranking report",
     ],
     cta: "Get Started",
-    color: "border-[#1e1e2e]",
   },
   {
     name: "Growth",
@@ -40,7 +39,6 @@ const plans = [
       "Bi-weekly performance updates",
     ],
     cta: "Start Growing",
-    color: "border-green-500",
   },
   {
     name: "Full Stack",
@@ -67,7 +65,6 @@ const plans = [
       "Monthly executive report",
     ],
     cta: "Go Full Stack",
-    color: "border-[#1e1e2e]",
   },
 ];
 
@@ -90,11 +87,11 @@ export default function Services() {
             <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
             Pricing
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
+          <h2 className="text-4xl sm:text-5xl font-normal tracking-tight mb-4">
             Straight-up pricing.{" "}
             <span className="text-green-400">No surprises.</span>
           </h2>
-          <p className="text-[#d1d5db] text-lg">
+          <p className="text-[#d1d5db] text-lg max-w-prose mx-auto">
             Month-to-month. Cancel anytime. We earn your business every single
             month.
           </p>
@@ -109,15 +106,34 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`relative rounded-2xl border ${plan.color} ${
+              className={`relative rounded-2xl border ${
                 plan.popular
-                  ? "bg-[#1c1c1c] shadow-[0_0_30px_rgba(34,197,94,0.25)]"
-                  : "bg-[#1c1c1c]"
+                  ? "border-t-2 border-[#1e1e2e]"
+                  : "border-[#1e1e2e]"
               } p-8`}
+              style={
+                plan.popular
+                  ? { background: "var(--bg-surface)", borderTopColor: "var(--cta-amber)" }
+                  : { background: "#1c1c1c" }
+              }
             >
+              {/* Most Popular badge */}
+              {plan.popular && (
+                <div
+                  className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold rounded-full border"
+                  style={{
+                    background: "var(--bg-surface)",
+                    borderColor: "var(--cta-amber)",
+                    color: "var(--cta-amber)",
+                  }}
+                >
+                  Most Popular
+                </div>
+              )}
+
               {/* Best Value badge */}
               {plan.bestValue && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1.5 bg-[#1c1c1c] border border-green-500/40 text-green-400 text-xs font-bold rounded-full">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1.5 bg-[#1c1c1c] border border-[#2a2a3e] text-[#d1d5db] text-xs font-bold rounded-full">
                   Best Value
                 </div>
               )}
@@ -133,11 +149,20 @@ export default function Services() {
 
               <a
                 href="#contact"
-                className={`block w-full text-center py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 mb-8 ${
+                className={`block w-full text-center py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 mb-8`}
+                style={
                   plan.popular
-                    ? "bg-green-500 text-white hover:bg-green-400 shadow-lg shadow-green-500/25 hover:shadow-green-500/40"
-                    : "bg-[#13131e] text-white hover:bg-[#252530] border border-[#2a2a3e]"
-                }`}
+                    ? { background: "var(--cta-amber)", color: "#0a0a0a" }
+                    : { background: "transparent", color: "var(--text-body)", border: "1px solid var(--bg-border)" }
+                }
+                onMouseEnter={e => {
+                  if (plan.popular) e.currentTarget.style.background = "var(--cta-amber-hover)";
+                  else e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                }}
+                onMouseLeave={e => {
+                  if (plan.popular) e.currentTarget.style.background = "var(--cta-amber)";
+                  else e.currentTarget.style.background = "transparent";
+                }}
               >
                 {plan.cta}
               </a>
@@ -161,7 +186,8 @@ export default function Services() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center text-sm text-[#d1d5db] mt-8"
+          className="text-center text-sm mt-8"
+          style={{ color: "var(--text-muted)" }}
         >
           All plans include a free audit before you commit. No card required to
           get started.

@@ -53,11 +53,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.05]"
+            className="text-5xl sm:text-6xl lg:text-7xl font-normal tracking-tight mb-6 leading-[1.05]"
           >
             Your Competitors Are{" "}
             <span className="relative">
-              <span className="text-green-400 text-glow-green">Ranking.</span>
+              <span className="text-green-400">Ranking.</span>
             </span>
             <br />
             <span className="text-[#f8fafc]">You Should Be Too.</span>
@@ -99,14 +99,18 @@ export default function Hero() {
           >
             <a
               href="#contact"
-              className="group flex items-center gap-2 px-6 py-3.5 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-400 transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:-translate-y-0.5"
+              className="group flex items-center gap-2 px-6 py-3.5 font-semibold rounded-xl hover:-translate-y-0.5 transition-all duration-200"
+              style={{ background: "var(--cta-amber)", color: "#0a0a0a" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "var(--cta-amber-hover)")}
+              onMouseLeave={e => (e.currentTarget.style.background = "var(--cta-amber)")}
             >
               Get Your Free SEO Audit
               <ArrowRight size={18} className="group-hover:translate-x-0.5 transition-transform" />
             </a>
             <a
               href="#how-it-works"
-              className="flex items-center gap-2 px-6 py-3.5 text-[#d1d5db] hover:text-white border border-[#1e1e2e] hover:border-[#2a2a3e] rounded-xl transition-all duration-200"
+              className="flex items-center gap-2 px-6 py-3.5 border rounded-xl transition-all duration-200"
+              style={{ borderColor: "var(--bg-border)", color: "var(--text-body)" }}
             >
               See How It Works
             </a>

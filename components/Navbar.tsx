@@ -51,7 +51,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <a href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center shadow-lg group-hover:shadow-green-500/30 transition-shadow">
+              <div className="w-8 h-8 rounded-lg bg-green-500 flex items-center justify-center">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M8 2L14 6V10L8 14L2 10V6L8 2Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
                   <circle cx="8" cy="8" r="2" fill="white" />
@@ -109,7 +109,10 @@ export default function Navbar() {
             <div className="hidden md:flex items-center gap-3">
               <a
                 href="/#contact"
-                className="px-4 py-2 text-sm font-medium bg-green-500 text-white rounded-lg hover:bg-green-400 transition-all duration-200 shadow-lg shadow-green-500/20 hover:shadow-green-500/40"
+                className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200"
+                style={{ background: "var(--cta-amber)", color: "#0a0a0a" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "var(--cta-amber-hover)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "var(--cta-amber)")}
               >
                 Get a Free Audit
               </a>
@@ -154,7 +157,7 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <p className="text-xs text-[#6b7280] uppercase tracking-wider pt-3 pb-1">Industries</p>
+              <p className="text-xs uppercase tracking-wider pt-3 pb-1" style={{ color: "var(--text-muted)" }}>Industries</p>
               {industries.map((ind) => (
                 <a
                   key={ind.href}
@@ -168,7 +171,8 @@ export default function Navbar() {
               <a
                 href="/#contact"
                 onClick={() => setMenuOpen(false)}
-                className="mt-3 px-4 py-3 text-center font-medium bg-green-500 text-white rounded-lg hover:bg-green-400 transition-colors"
+                className="mt-3 px-4 py-3 text-center font-medium rounded-lg transition-colors"
+                style={{ background: "var(--cta-amber)", color: "#0a0a0a" }}
               >
                 Get a Free Audit
               </a>

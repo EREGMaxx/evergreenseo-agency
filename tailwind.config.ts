@@ -20,6 +20,10 @@ const config: Config = {
           600: "#16a34a",
           glow: "#22c55e",
         },
+        amber: {
+          cta: "oklch(78% 0.16 78)",
+          "cta-hover": "oklch(82% 0.14 78)",
+        },
         text: {
           primary: "#f8fafc",
           secondary: "#94a3b8",
@@ -29,6 +33,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
+        serif: ["var(--font-serif)", "serif"],
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",

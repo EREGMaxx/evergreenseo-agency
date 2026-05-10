@@ -54,13 +54,13 @@ export default function WhyUs() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-[#22c55e] text-sm font-semibold tracking-widest uppercase mb-4">
+          <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: "var(--accent-green)" }}>
             Why Evergreen
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-normal text-white mb-4">
             Fast. Accurate. Accountable.
           </h2>
-          <p className="text-[#d1d5db] text-lg max-w-2xl mx-auto">
+          <p className="text-[#d1d5db] text-lg max-w-prose mx-auto">
             Most contractors have been burned by SEO agencies that lock them into contracts, report vanity metrics, and disappear after month one. We built Evergreen to be the opposite.
           </p>
         </motion.div>
@@ -76,8 +76,8 @@ export default function WhyUs() {
               className="bg-[#111111] border border-[#1e1e2e] rounded-2xl p-8 flex gap-5"
             >
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-xl bg-[#22c55e]/10 flex items-center justify-center">
-                  <item.icon className="w-6 h-6 text-[#22c55e]" />
+                <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
+                  <item.icon className="w-6 h-6 text-green-400" />
                 </div>
               </div>
               <div>
