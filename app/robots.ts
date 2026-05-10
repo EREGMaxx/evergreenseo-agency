@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: "/proposals/",
     },
     sitemap: "https://evergreenseo.agency/sitemap.xml",
   };
