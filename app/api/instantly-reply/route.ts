@@ -38,7 +38,7 @@ Rules:
 - No bullet points. Plain conversational text only.
 - No emojis.
 - Sound like a real person, not a bot. Natural, direct.
-- Sign off as: ${senderNameFormatted} | Evergreen SEO Agency
+- Sign off as: ${senderNameFormatted} | Evergreen SEO Agency | (424) 464-8434
 - Never mention AI, automation, or templates.
 - Move toward booking a call without being pushy.`
 
