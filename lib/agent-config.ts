@@ -5,9 +5,25 @@
  * and to build outbound call payloads with caller context.
  */
 
+// Legacy single-agent ID (kept for reference — no longer used for inbound)
 export const AGENT_ID = "88bb89e1-7e79-4587-bd58-5dea866bc681";
 export const PHONE_NUMBER_ID = "c00e43b0-7bb1-4ed1-99df-a35aa8d4a1d3";
 export const SERVER_URL = "https://www.evergreenseo.agency/api/vapi-monitor";
+
+// Squad IDs
+export const INBOUND_SQUAD_ID = "4edf2556-4044-44ff-82f6-b502629a83d8";
+export const OUTBOUND_SQUAD_ID = "43885c1d-6e7b-47c1-8884-436b3dbcb12e";
+
+// Individual agent IDs
+export const SQUAD_AGENTS = {
+  intake:       "89c65825-2ff8-4953-a5e4-c0d9643d372e",
+  discovery:    "55ceec9e-19f4-4642-a161-2676166a72d3",
+  pitch:        "92bcc1f4-4518-46f4-bee8-7ce63b24922c",
+  close:        "c3ab3163-e7f6-4f2d-8215-d6278c456137",
+  objections:   "c46b7270-0488-4eed-a3b8-1962e8600285",
+  scheduler:    "5cbd6e52-5fa0-450b-8f70-cab1eeaedcab",
+  outboundIntro:"e3e3a30c-e020-4797-acb0-73a351d272d4",
+};
 
 export const BASE_SYSTEM_PROMPT = `## Persona
 

@@ -9,9 +9,8 @@ import {
   scheduleFollowup,
 } from "@/lib/call-tracker";
 import {
-  AGENT_ID,
-  buildReturningCallerPrompt,
-  buildTransientAssistant,
+  INBOUND_SQUAD_ID,
+
 } from "@/lib/agent-config";
 
 export const maxDuration = 20;
@@ -105,36 +104,47 @@ async function handleAssistantRequest(
 
   // Fast path for unknown numbers — return saved assistant immediately
   if (!callerPhone) {
-    return NextResponse.json({ assistantId: AGENT_ID });
+    return NextResponse.json({ squadId: INBOUND_SQUAD_ID });
   }
 
   try {
     const history = await getCallerData(callerPhone);
 
-    // New caller — use the saved assistant as-is
+    // New caller — return the inbound squad
     if (!history || history.callCount === 0) {
-      return NextResponse.json({ assistantId: AGENT_ID });
+      return NextResponse.json({ squadId: INBOUND_SQUAD_ID });
     }
 
-    // Returning caller — build a transient assistant with caller context injected
-    const systemPrompt = buildReturningCallerPrompt(
-      history.name,
-      history.summary || history.transcript.slice(0, 800),
-      history.callCount
-    );
-
+    // Returning caller — use inbound squad with personalized first message on intake agent
     const callerName = history.name && history.name !== "Unknown" ? history.name : null;
     const firstMessage = callerName
-      ? `Hey ${callerName}, good to hear from you again. What's going on?`
-      : "Hey, good to hear from you again. What's going on?";
+      ? `Hey ${callerName}, good to hear from you again. How can I help you out.`
+      : "Hey, good to hear from you again. How can I help you out.";
 
-    const assistantConfig = buildTransientAssistant(systemPrompt, firstMessage);
+    const priorContext = history.summary || history.transcript.slice(0, 600);
+    const contextNote = `\n\nPRIOR CALLER CONTEXT: This is a returning caller. Name: ${callerName || "unknown"}. Prior call summary: ${priorContext}. Pick up naturally — do not ask for info you already have.`;
 
-    return NextResponse.json({ assistant: assistantConfig });
+    return NextResponse.json({
+      squadId: INBOUND_SQUAD_ID,
+      squadOverrides: {
+        members: [
+          {
+            assistantOverrides: {
+              firstMessage,
+              model: {
+                messages: [
+                  { role: "system" as const, content: contextNote },
+                ],
+              },
+            },
+          },
+        ],
+      },
+    });
   } catch (err) {
     // On any error, fall back to the saved assistant — never fail to answer a call
     console.error("[vapi-monitor] assistant-request error, falling back:", err);
-    return NextResponse.json({ assistantId: AGENT_ID });
+    return NextResponse.json({ squadId: INBOUND_SQUAD_ID });
   }
 }
 

@@ -11,7 +11,7 @@ import {
   getCallerData,
   type FollowupData,
 } from "@/lib/call-tracker";
-import { AGENT_ID, PHONE_NUMBER_ID } from "@/lib/agent-config";
+import { OUTBOUND_SQUAD_ID, PHONE_NUMBER_ID } from "@/lib/agent-config";
 
 export const maxDuration = 30;
 
@@ -73,25 +73,29 @@ async function fireOutboundCall(followup: FollowupData): Promise<void> {
     ? `\n\n## This Call Context\nYou scheduled this follow-up call with ${callerName}. Prior conversation summary: ${priorContext}\n\nPick up naturally from where you left off. Do not re-run full discovery — use what you know. Your goal is to get them to a decision.`
     : "";
 
+  // Outbound squad — override first agent (Outbound-Intro) with personalized first message + context
   const payload = {
     phoneNumberId: PHONE_NUMBER_ID,
     customer: { number: followup.phone },
-    assistantId: AGENT_ID,
-    assistantOverrides: {
-      firstMessage,
-      ...(systemMessageAppend
-        ? {
-            model: {
-              messages: [
-                {
-                  role: "system" as const,
-                  // We append context — the base prompt is already on the saved assistant
-                  content: systemMessageAppend,
-                },
-              ],
-            },
-          }
-        : {}),
+    squadId: OUTBOUND_SQUAD_ID,
+    squadOverrides: {
+      members: [
+        {
+          // First member = Max-Outbound-Intro
+          assistantOverrides: {
+            firstMessage,
+            ...(systemMessageAppend
+              ? {
+                  model: {
+                    messages: [
+                      { role: "system" as const, content: systemMessageAppend },
+                    ],
+                  },
+                }
+              : {}),
+          },
+        },
+      ],
     },
   };
 
