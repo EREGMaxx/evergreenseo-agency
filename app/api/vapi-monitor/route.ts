@@ -1,13 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextRequest, NextResponse } from "next/server";
 import {
   logCallStarted,
   logCallEnded,
   logEmailSent,
-  logPaymentLinkSent,
   storeCallerData,
   getCallerData,
   scheduleFollowup,
-  normalizePhone,
 } from "@/lib/call-tracker";
 import {
   AGENT_ID,
