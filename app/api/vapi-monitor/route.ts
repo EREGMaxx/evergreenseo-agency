@@ -191,6 +191,9 @@ async function handleToolCalls(
     } else if (fnName === "schedule_followup") {
       const result = await handleScheduleFollowup(body, toolId, args);
       results.push(result);
+    } else if (fnName === "request_seo_audit") {
+      const result = await handleSeoAuditRequest(body, toolId, args);
+      results.push(result);
     } else {
       results.push({ toolCallId: toolId, result: "Tool executed." });
     }
@@ -416,6 +419,82 @@ async function sendTelegram(text: string): Promise<void> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text }),
   });
+}
+
+// ── SEO audit request handler ─────────────────────────────────────────
+// Stores the audit request in KV and notifies Maxx to run the audit manually.
+async function handleSeoAuditRequest(
+  body: Record<string, unknown>,
+  toolCallId: string,
+  args: Record<string, unknown>
+): Promise<{ toolCallId: string; result: string }> {
+  const {
+    prospect_name,
+    prospect_email,
+    website_url,
+    business_type,
+    city,
+  } = args as {
+    prospect_name: string;
+    prospect_email: string;
+    website_url: string;
+    business_type: string;
+    city: string;
+  };
+
+  const msg = body.message as Record<string, unknown>;
+  const call = msg?.call as Record<string, unknown> ?? {};
+  const callerPhone = (call?.customer as Record<string, unknown>)?.number as string ?? "unknown";
+  const callId = (call?.id as string) ?? "unknown";
+
+  const requestId = `audit_request:${Date.now()}`;
+  const requestData = {
+    status: "pending",
+    requestId,
+    callId,
+    callerPhone,
+    prospectName: prospect_name,
+    prospectEmail: prospect_email,
+    websiteUrl: website_url,
+    businessType: business_type,
+    city,
+    createdAt: new Date().toISOString(),
+  };
+
+  // Store in KV
+  const kvUrl = process.env.KV_REST_API_URL ?? "";
+  const kvToken = process.env.KV_REST_API_TOKEN ?? "";
+  try {
+    await fetch(kvUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${kvToken}`,
+      },
+      body: JSON.stringify(["SET", requestId, JSON.stringify(requestData), "EX", 604800]), // 7-day TTL
+    });
+  } catch (err) {
+    console.error("[vapi-monitor] KV write failed for audit request:", err);
+  }
+
+  // Notify Maxx via OpenClaw webhook (fires a system event to the main session)
+  const ocUrl = process.env.OPENCLAW_WEBHOOK_URL ?? "";
+  const ocToken = process.env.OPENCLAW_WEBHOOK_TOKEN ?? "";
+  if (ocUrl && ocToken) {
+    fetch(ocUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${ocToken}` },
+      body: JSON.stringify({
+        type: "system",
+        text: `SEO audit requested. Prospect: ${prospect_name} | Business: ${business_type} in ${city} | Website: ${website_url} | Email: ${prospect_email} | Phone: ${callerPhone} | KV key: ${requestId}. Run the full SEO audit now, build the proposal, and send it to Skyler for approval before sending to the prospect.`,
+      }),
+    }).catch(console.error);
+  }
+
+  return {
+    toolCallId,
+    result: "Audit request submitted.",
+  };
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
