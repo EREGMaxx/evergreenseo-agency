@@ -53,11 +53,6 @@ export async function POST(req: NextRequest) {
     // Log to KV (non-blocking — don't await, keep response fast)
     logCallStarted(callId, from).catch(console.error);
 
-    // Telegram notification
-    sendTelegram(
-      `📞 Incoming call on Evergreen\nFrom: ${from}\nCall ID: ${callId}\nhttps://dashboard.vapi.ai/calls/${callId}`
-    ).catch(console.error);
-
     return NextResponse.json({ ok: true });
   }
 
