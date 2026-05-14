@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 
-const INSTANTLY_KEY = process.env.INSTANTLY_API_KEY!
+// INSTANTLY_KEY kept in env — used by HITL monitor cron for sending approved replies
+// const INSTANTLY_KEY = process.env.INSTANTLY_API_KEY!
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY!
 const WEBHOOK_SECRET = process.env.INSTANTLY_WEBHOOK_SECRET!
 const KV_URL = process.env.KV_REST_API_URL!
@@ -69,48 +70,7 @@ Rules:
   return (message.content[0] as { text: string }).text.trim()
 }
 
-async function sendInstantlyReply(replyToUuid: string, eaccount: string, subject: string, bodyText: string) {
-  const res = await fetch('https://api.instantly.ai/api/v2/emails/reply', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${INSTANTLY_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      reply_to_uuid: replyToUuid,
-      eaccount,
-      subject: subject.startsWith('Re:') ? subject : `Re: ${subject}`,
-      body: { text: bodyText },
-    }),
-  })
-  return res.json()
-}
-
-async function notifyViaKV(event: {
-  leadEmail: string
-  businessName?: string
-  city?: string
-  niche?: string
-  theirMessage: string
-  ourReply: string
-  intent: string
-  eaccount: string
-  timestamp: string
-}) {
-  if (!KV_URL || !KV_TOKEN) return
-
-  const key = `reply:${Date.now()}`
-  await fetch(`${KV_URL}/set/${encodeURIComponent(key)}`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...event, notified: false }),
-  })
-  // Set 7-day TTL
-  await fetch(`${KV_URL}/expire/${encodeURIComponent(key)}/604800`, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${KV_TOKEN}` },
-  })
-}
+// sendInstantlyReply and notifyViaKV kept for reference — sending now handled by HITL monitor cron
 
 function needsAudit(body: string, intent: string): boolean {
   const positive = /\byes\b|sure|send it|go ahead|sounds good|let.?s do|please|would love|that would|absolutely|definitely/i.test(body)
@@ -157,60 +117,41 @@ export async function POST(req: NextRequest) {
     const intent = classifyIntent(replyBody)
     const ourReply = await generateReply(replyBody, { firstName, businessName, city, niche, eaccount }, intent)
 
-    // Send reply via Instantly (same thread, same from address)
-    const sendResult = await sendInstantlyReply(emailId, eaccount, subject, ourReply)
-
-    // Log to KV for Skyler notification pickup
-    await notifyViaKV({
+    // HITL MODE: Do NOT auto-send. Store draft in KV for agent review.
+    const draftKey = `hitl_reply:${Date.now()}`
+    const draftData = JSON.stringify({
       leadEmail,
+      firstName,
       businessName,
       city,
       niche,
-      theirMessage: replyBody.slice(0, 500),
-      ourReply,
+      theirMessage: replyBody.slice(0, 1000),
+      draftReply: ourReply,
       intent,
       eaccount,
-      timestamp: new Date().toISOString(),
+      replyToUuid: emailId,
+      subject: subject.startsWith('Re:') ? subject : `Re: ${subject}`,
+      isAuditTrigger: needsAudit(replyBody, intent),
+      website: lead.website || lead.custom_variables?.website || '',
+      campaignId: data.campaign_id || data.campaignId || '',
+      createdAt: new Date().toISOString(),
+      status: 'pending_review',
     })
 
-    // Audit trigger: if prospect is saying yes to an audit offer, queue it
-    if (needsAudit(replyBody, intent)) {
-      // Send immediate acknowledgement
-      await sendInstantlyReply(
-        emailId,
-        eaccount,
-        subject.startsWith('Re:') ? subject : `Re: ${subject}`,
-        "On it. Pulling your local search data now — I'll have your audit in your inbox shortly."
-      )
-
-      // Write audit request to KV with 48hr TTL
-      if (KV_URL && KV_TOKEN) {
-        const auditKey = `audit_request:${Date.now()}`
-        const auditData = JSON.stringify({
-          leadEmail,
-          businessName,
-          website: lead.website || lead.custom_variables?.website || '',
-          city,
-          niche,
-          eaccount,
-          emailId,
-          campaignId: data.campaign_id || data.campaignId || '',
-          createdAt: new Date().toISOString(),
-          status: 'pending',
-        })
-        await fetch(`${KV_URL}/set/${encodeURIComponent(auditKey)}`, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
-          body: auditData,
-        })
-        await fetch(`${KV_URL}/expire/${encodeURIComponent(auditKey)}/172800`, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${KV_TOKEN}` },
-        })
-      }
+    if (KV_URL && KV_TOKEN) {
+      await fetch(`${KV_URL}/set/${encodeURIComponent(draftKey)}`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
+        body: draftData,
+      })
+      // 7-day TTL
+      await fetch(`${KV_URL}/expire/${encodeURIComponent(draftKey)}/604800`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${KV_TOKEN}` },
+      })
     }
 
-    return NextResponse.json({ ok: true, intent, replyPreview: ourReply.slice(0, 100), sendResult })
+    return NextResponse.json({ ok: true, intent, draftKey, draftPreview: ourReply.slice(0, 100) })
 
   } catch (err) {
     console.error('instantly-reply error:', err)
