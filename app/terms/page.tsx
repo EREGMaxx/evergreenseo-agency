@@ -112,6 +112,26 @@ export default function TermsPage() {
                   ].map((f) => <li key={f} className="flex gap-2"><span className="text-green-400 shrink-0">—</span>{f}</li>)}
                 </ul>
               </div>
+              {/* Elite */}
+              <div className="border border-purple-500/40 rounded-xl p-6">
+                <div className="flex items-baseline justify-between mb-4">
+                  <h3 className="text-lg font-bold text-purple-400">Elite <span className="text-xs font-normal text-purple-400 ml-2">Premium</span></h3>
+                  <span className="text-white font-bold">$3,497/mo</span>
+                </div>
+                <ul className="space-y-2 text-sm">
+                  {[
+                    "Everything in Full Stack",
+                    "Google Local Service Ads (LSA) setup and monthly management",
+                    "Google Search Ads campaign setup and monthly management",
+                    "Competitor ad research before every campaign launch",
+                    "Conversion tracking setup (calls and form fills)",
+                    "Invalid LSA lead dispute management",
+                    "Monthly integrated report — organic and paid in one report",
+                    "Monthly strategy call",
+                  ].map((f) => <li key={f} className="flex gap-2"><span className="text-purple-400 shrink-0">—</span>{f}</li>)}
+                </ul>
+                <p className="mt-4 text-xs text-[#6b7280]">Ad spend is billed directly by Google and is not included in the monthly retainer. Minimum $1,500/mo ad spend recommended.</p>
+              </div>
             </div>
             <p className="mt-3 text-sm text-[#6b7280]">
               Specific deliverables will be outlined in a scope of work sent to you before or alongside your first invoice.
