@@ -21,7 +21,7 @@ const orgSchema = {
   "email": "maxx@evergreenseo.agency",
   "areaServed": "United States",
   "serviceType": "Search Engine Optimization",
-  "priceRange": "$397 - $1,297/month"
+  "priceRange": "$397 - $3,497/month"
 };
 
 export default function Home() {

@@ -3,7 +3,18 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
-const plans = [
+const plans: {
+  name: string;
+  price: string;
+  period: string;
+  tagline: string;
+  popular: boolean;
+  bestValue: boolean;
+  premium: boolean;
+  features: string[];
+  cta: string;
+  note?: string;
+}[] = [
   {
     name: "Starter",
     price: "$397",
@@ -11,6 +22,7 @@ const plans = [
     tagline: "Get found locally. Build your foundation.",
     popular: false,
     bestValue: false,
+    premium: false,
     features: [
       "On-page SEO optimization (3 pages)",
       "Keyword targeting & research",
@@ -27,6 +39,7 @@ const plans = [
     tagline: "Accelerate rankings. Dominate your market.",
     popular: true,
     bestValue: false,
+    premium: false,
     features: [
       "Everything in Starter",
       "On-page SEO optimization (10 pages)",
@@ -48,6 +61,7 @@ const plans = [
     tagline: "Total dominance. Every advantage, every month.",
     popular: false,
     bestValue: true,
+    premium: false,
     features: [
       "Everything in Growth",
       "On-page SEO optimization (unlimited pages)",
@@ -66,6 +80,27 @@ const plans = [
       "Monthly executive report",
     ],
     cta: "Go Full Stack",
+  },
+  {
+    name: "Elite",
+    price: "$3,497",
+    period: "/mo",
+    tagline: "SEO + paid ads. Own the whole search page.",
+    popular: false,
+    bestValue: false,
+    premium: true,
+    features: [
+      "Everything in Full Stack",
+      "Google Local Service Ads (LSA) setup + monthly management",
+      "Google Search Ads campaign setup + monthly management",
+      "Competitor ad research — top performing ads in your market analyzed before launch",
+      "Conversion tracking setup (calls + form fills via Google Tag Manager)",
+      "Invalid LSA lead dispute management",
+      "Monthly integrated report — organic + paid in one report",
+      "Monthly strategy call",
+    ],
+    note: "Ad spend billed directly by Google. Minimum $1,500/mo recommended.",
+    cta: "Go Elite",
   },
 ];
 
@@ -99,7 +134,7 @@ export default function Services() {
         </motion.div>
 
         {/* Plans */}
-        <div className="grid lg:grid-cols-3 gap-6 items-start">
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
           {plans.map((plan, i) => (
             <motion.div
               key={plan.name}
@@ -139,6 +174,14 @@ export default function Services() {
                 </div>
               )}
 
+              {/* Premium badge */}
+              {plan.premium && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold rounded-full border"
+                  style={{ background: "var(--bg-surface)", borderColor: "#7c3aed", color: "#a78bfa" }}>
+                  Premium
+                </div>
+              )}
+
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-white mb-1">{plan.name}</h3>
                 <p className="text-sm text-[#d1d5db] mb-4">{plan.tagline}</p>
@@ -154,14 +197,18 @@ export default function Services() {
                 style={
                   plan.popular
                     ? { background: "var(--cta-amber)", color: "#0a0a0a" }
+                    : plan.premium
+                    ? { background: "#7c3aed", color: "#ffffff" }
                     : { background: "transparent", color: "var(--text-body)", border: "1px solid var(--bg-border)" }
                 }
                 onMouseEnter={e => {
                   if (plan.popular) e.currentTarget.style.background = "var(--cta-amber-hover)";
+                  else if (plan.premium) e.currentTarget.style.background = "#6d28d9";
                   else e.currentTarget.style.background = "rgba(255,255,255,0.05)";
                 }}
                 onMouseLeave={e => {
                   if (plan.popular) e.currentTarget.style.background = "var(--cta-amber)";
+                  else if (plan.premium) e.currentTarget.style.background = "#7c3aed";
                   else e.currentTarget.style.background = "transparent";
                 }}
               >
@@ -171,13 +218,16 @@ export default function Services() {
               <div className="space-y-3">
                 {plan.features.map((feature) => (
                   <div key={feature} className="flex items-start gap-3">
-                    <div className="shrink-0 w-5 h-5 rounded-full bg-green-500/15 flex items-center justify-center mt-0.5">
-                      <Check size={11} className="text-green-400" />
+                    <div className={`shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${plan.premium ? "bg-purple-500/15" : "bg-green-500/15"}`}>
+                      <Check size={11} className={plan.premium ? "text-purple-400" : "text-green-400"} />
                     </div>
                     <span className="text-sm text-[#e5e5e5]">{feature}</span>
                   </div>
                 ))}
               </div>
+              {plan.note && (
+                <p className="mt-4 text-xs text-[#6b7280] border-t border-[#2a2a3e] pt-4">{plan.note}</p>
+              )}
             </motion.div>
           ))}
         </div>
