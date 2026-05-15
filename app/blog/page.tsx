@@ -107,6 +107,14 @@ const posts = [
     slug: "landscaping-seo",
   },
   {
+    category: "Windows & Doors",
+    title: "Window & Door Replacement SEO: How to Get More Projects from Google in 2026",
+    excerpt:
+      "Window and door replacement is one of the highest-ticket home improvement categories — and most local contractors are invisible online. Here's the complete SEO playbook to outrank national chains in your market and generate your own inbound pipeline.",
+    readTime: "9 min read",
+    slug: "window-door-seo",
+  },
+  {
     category: "Local SEO",
     title: "How Long Does SEO Take? A Realistic Timeline for Home Service Businesses",
     excerpt:
